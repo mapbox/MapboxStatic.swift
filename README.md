@@ -140,7 +140,7 @@ When creating a map, you can also specify PNG or JPEG image format as well as va
 
 #### Attribution
 
-Be sure to [attribute your map](https://www.mapbox.com/developers/api/static/#attribution) properly! 
+Be sure to [attribute your map](https://www.mapbox.com/developers/api/static/#attribution) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from. 
 
 ### More info
 
