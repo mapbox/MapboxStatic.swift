@@ -50,7 +50,7 @@ private extension UIColor {
 
 public class MapboxStaticMap {
 
-    let requestURLStringBase = "https://api.tiles.mapbox.com/v4/"
+    private let requestURLStringBase = "https://api.tiles.mapbox.com/v4/"
 
     public enum ImageFormat: String {
         case PNG    = "png"
@@ -64,7 +64,7 @@ public class MapboxStaticMap {
         case JPEG70 = "jpg70"
     }
 
-    public var requestURL: NSURL
+    private(set) var requestURL: NSURL
 
     public lazy var image: UIImage? = {
         if let data = NSData(contentsOfURL: self.requestURL) {
@@ -127,11 +127,7 @@ public class MapboxStaticMap {
 
     public class Overlay {
 
-        var requestString: String
-
-        init() {
-            requestString = ""
-        }
+        private(set) var requestString: String = ""
 
     }
 
