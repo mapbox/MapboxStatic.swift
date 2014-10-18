@@ -117,7 +117,28 @@ let path = MapboxStaticMap.Path(
 
 ### Other options
 
+#### Auto-fitting features
+
+If you're adding overlays to your map, you can use the `autoFitFeatures` flag to automatically calculate the center and zoom that best shows them off. 
+
+```swift
+let map = MapboxStaticMap(
+    mapID: mapID,
+    size: rect.size,
+    accessToken: token,
+    overlays: [path, GeoJSONOverlay, markerOverlay],
+    autoFitFeatures: true,
+    retina: (UIScreen.mainScreen().scale > 1.0)
+)
+```
+
+![](screenshots/autofit.png)
+
+#### File format & quality
+
 When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/developers/api/static/#format). 
+
+#### Attribution
 
 Be sure to [attribute your map](https://www.mapbox.com/developers/api/static/#attribution) properly! 
 

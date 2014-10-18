@@ -85,13 +85,14 @@ public class MapboxStaticMap {
     }
 
     init(mapID: String,
-         center: CLLocationCoordinate2D,
-         zoom: Int,
+         center: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0),
+         zoom: Int = 0,
          size: CGSize,
          accessToken: String,
          format: ImageFormat = .PNG,
          retina: Bool = false,
-         overlays: [Overlay] = []) {
+         overlays: [Overlay] = [],
+         autoFitFeatures: Bool = false) {
 
         var requestURLString = requestURLStringBase
         requestURLString += mapID
@@ -102,7 +103,12 @@ public class MapboxStaticMap {
             requestURLString += "/"
         }
 
-        requestURLString += "\(center.longitude),\(center.latitude),\(zoom)/"
+        if (autoFitFeatures) {
+            requestURLString += "auto/"
+        } else {
+            requestURLString += "\(center.longitude),\(center.latitude),\(zoom)/"
+        }
+
         requestURLString += "\(Int(size.width))x\(Int(size.height))"
         requestURLString += (retina ? "@2x" : "")
         requestURLString += "."
