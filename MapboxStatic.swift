@@ -66,13 +66,15 @@ public class MapboxStaticMap {
 
     private(set) var requestURL: NSURL
 
-    private(set) lazy var image: UIImage? = {
-        if let data = NSData(contentsOfURL: self.requestURL) {
-            return UIImage(data: data)
-        } else {
-            return nil
+    public var image: UIImage? {
+        get {
+            if let data = NSData(contentsOfURL: self.requestURL) {
+                return UIImage(data: data)
+            } else {
+                return nil
+            }
         }
-        }()
+    }
 
     public func imageWithCompletionHandler(handler: (UIImage? -> Void)) {
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) in
