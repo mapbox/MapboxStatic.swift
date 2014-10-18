@@ -33,7 +33,7 @@ Then, to retrieve an image, you can do it either synchronously (blocking the cal
 self.imageView.image = map.image
 ```
 
-![](./screenshot_map.png)
+![](./screenshots/map.png)
 
 Or you can pass a completion handler to update the UI thread after the image is retrieved: 
 
@@ -66,7 +66,7 @@ let markerOverlay = MapboxStaticMap.Marker(
 )
 ```
 
-![](./screenshot_marker.png)
+![](./screenshots/marker.png)
 
 #### GeoJSON
 
@@ -80,7 +80,7 @@ let GeoJSONOverlay = MapboxStaticMap.GeoJSON(
 )
 ```
 
-![](./screenshot_geojson.png)
+![](./screenshots/geojson.png)
 
 #### Path
 
@@ -113,7 +113,7 @@ let path = MapboxStaticMap.Path(
 )
 ```
 
-![](./screenshot_path.png)
+![](./screenshots/path.png)
 
 ### Other options
 
