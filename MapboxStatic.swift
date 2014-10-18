@@ -94,6 +94,14 @@ public class MapboxStaticMap {
          overlays: [Overlay] = [],
          autoFitFeatures: Bool = false) {
 
+        assert(zoom >= 0,  "minimum zoom is 0")
+        assert(zoom <= 20, "maximum zoom is 20")
+
+        assert(size.width  <= 640 * (retina ? 1 : 2), "maximum width is 1280px (640px for retina)")
+        assert(size.height <= 640 * (retina ? 1 : 2), "maximum height is 1280px (640px for retina)")
+
+        assert(countElements(overlays) <= 100, "maximum number of overlays is 100")
+
         var requestURLString = requestURLStringBase
         requestURLString += mapID
         requestURLString += "/"
