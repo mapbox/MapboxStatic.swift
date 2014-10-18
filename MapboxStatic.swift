@@ -84,6 +84,12 @@ public class MapboxStaticMap {
         task.resume()
     }
 
+    private class func allowedCharacterSet() -> NSMutableCharacterSet {
+        let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as NSMutableCharacterSet
+        characterSet.removeCharactersInString("/")
+        return characterSet
+    }
+
     init(mapID: String,
          center: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0),
          zoom: Int = 0,
@@ -162,6 +168,20 @@ public class MapboxStaticMap {
 
     }
 
+    public class CustomMarker: Overlay {
+
+        init(coordinate: CLLocationCoordinate2D,
+             URLString: String) {
+
+            super.init()
+
+            requestString = "url-"
+            requestString += URLString.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
+            requestString += "(\(coordinate.longitude),\(coordinate.latitude))"
+        }
+
+    }
+
     public class GeoJSON: Overlay {
 
         init(GeoJSON: String) {
@@ -169,7 +189,7 @@ public class MapboxStaticMap {
             super.init()
 
             requestString = "geojson("
-            requestString += GeoJSON.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            requestString += GeoJSON.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
             requestString += ")"
 
         }

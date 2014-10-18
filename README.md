@@ -50,7 +50,7 @@ let requestURLToFetch = map.requestURL
 
 ### Overlays
 
-Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki/), GeoJSON geometries, and even paths made of bare coordinates. 
+Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki/), custom marker imagery, GeoJSON geometries, and even paths made of bare coordinates. 
 
 You pass overlays as the `overlays: [Overlay]` parameter during map creation. Here are some versions of our map with various overlays added. 
 
@@ -66,6 +66,17 @@ let markerOverlay = MapboxStaticMap.Marker(
 ```
 
 ![](./screenshots/marker.png)
+
+#### Custom Marker
+
+```swift
+let customMarker = MapboxStaticMap.CustomMarker(
+    coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
+    URLString: "https://mapbox.com/foundations/img/pages/rocket.png"
+)
+```
+
+![](./screenshots/custom.png)
 
 #### GeoJSON
 
