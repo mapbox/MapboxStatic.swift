@@ -136,7 +136,7 @@ let map = MapboxStaticMap(
     mapID: <your map ID>,
     size: CGSize(width: 500, height: 300),
     accessToken: <your API token>,
-    overlays: [path, GeoJSONOverlay, markerOverlay],
+    overlays: [path, GeoJSONOverlay, markerOverlay, customMarker],
     autoFitFeatures: true)
 )
 ```
