@@ -66,7 +66,7 @@ public class MapboxStaticMap {
 
     private(set) var requestURL: NSURL
 
-    public lazy var image: UIImage? = {
+    private(set) lazy var image: UIImage? = {
         if let data = NSData(contentsOfURL: self.requestURL) {
             return UIImage(data: data)
         } else {
