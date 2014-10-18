@@ -124,7 +124,7 @@ If you're adding overlays to your map, you can use the `autoFitFeatures` flag to
 ```swift
 let map = MapboxStaticMap(
     mapID: mapID,
-    size: rect.size,
+    size: CGSize(width: 200, height: 200),
     accessToken: token,
     overlays: [path, GeoJSONOverlay, markerOverlay],
     autoFitFeatures: true,
