@@ -77,7 +77,7 @@ public class MapboxStaticMap {
     public func imageWithCompletionHandler(handler: (UIImage? -> Void)) {
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) in
             let image = UIImage(data: data)
-            dispatch_async(dispatch_get_main_queue(), { Void -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
                 handler(image)
             })
         })
