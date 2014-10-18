@@ -2,7 +2,7 @@
 
 MapboxStatic is a Swift library for Mapbox's [static maps API](https://www.mapbox.com/developers/api/static/), with support for overlays, asynchronous imagery fetching, and first-class Swift data types. 
 
-Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. 
+Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*. 
 
 ## Installation 
 
