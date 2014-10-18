@@ -21,7 +21,7 @@ let map = MapboxStaticMap(
     mapID: <your map ID>,
     center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoom: 13,
-    size: CGSize(width: 500, height: 300),
+    size: CGSize(width: 200, height: 200),
     accessToken: <your API token>,
     retina: (UIScreen.mainScreen().scale > 1.0)
 )
