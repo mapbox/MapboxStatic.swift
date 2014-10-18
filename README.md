@@ -14,7 +14,7 @@ You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) fro
 
 ### Basics
 
-The main map class is `MapboxStaticMap`. To create a basic map, specify the center, zoom level, pixel size, and retina scale: 
+The main map class is `MapboxStaticMap`. To create a basic map, specify the center, zoom level, and pixel size: 
 
 ```swift
 let map = MapboxStaticMap(
@@ -22,8 +22,7 @@ let map = MapboxStaticMap(
     center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoom: 13,
     size: CGSize(width: 200, height: 200),
-    accessToken: <your API token>,
-    retina: (UIScreen.mainScreen().scale > 1.0)
+    accessToken: <your API token>)
 )
 ```
 
@@ -127,8 +126,7 @@ let map = MapboxStaticMap(
     size: CGSize(width: 500, height: 300),
     accessToken: <your API token>,
     overlays: [path, GeoJSONOverlay, markerOverlay],
-    autoFitFeatures: true,
-    retina: (UIScreen.mainScreen().scale > 1.0)
+    autoFitFeatures: true)
 )
 ```
 
