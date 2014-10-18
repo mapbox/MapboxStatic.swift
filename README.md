@@ -35,7 +35,7 @@ self.imageView.image = map.image
 
 ![](./screenshot_map.png)
 
-Or you can pass a completion handler to update the UI thread when after the image is retrieved: 
+Or you can pass a completion handler to update the UI thread after the image is retrieved: 
 
 ```swift
 map.imageWithCompletionHandler({ (image: UIImage?) in
