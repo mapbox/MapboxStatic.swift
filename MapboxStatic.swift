@@ -141,7 +141,7 @@ public class MapboxStaticMap {
 
     public class Overlay {
 
-        private(set) var requestString: String = ""
+        private var requestString: String = ""
 
     }
 
