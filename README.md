@@ -53,7 +53,7 @@ let requestURLToFetch = map.requestURL
 
 Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki/), GeoJSON geometries, and even paths made of bare coordinates. 
 
-You pass overlays as the `overlays: [Overlays]` parameter during map creation. Here are some versions of our map with various overlays added. 
+You pass overlays as the `overlays: [Overlay]` parameter during map creation. Here are some versions of our map with various overlays added. 
 
 #### Marker
 
