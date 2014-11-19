@@ -38,7 +38,7 @@ Or you can pass a completion handler to update the UI thread after the image is 
 
 ```swift
 map.imageWithCompletionHandler({ (image: UIImage?) in
-    self.imageView.image = image
+    imageView.image = image
 })
 ```
 
