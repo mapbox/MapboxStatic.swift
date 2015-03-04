@@ -22,7 +22,7 @@ let map = MapboxStaticMap(
     center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoom: 13,
     size: CGSize(width: 200, height: 200),
-    accessToken: <your API token>)
+    accessToken: <your API token>
 )
 ```
 
