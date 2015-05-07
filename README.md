@@ -37,9 +37,9 @@ self.imageView.image = map.image
 Or you can pass a completion handler to update the UI thread after the image is retrieved: 
 
 ```swift
-map.imageWithCompletionHandler({ (image: UIImage?) in
+map.imageWithCompletionHandler { image in
     imageView.image = image
-})
+}
 ```
 
 If you're using your own HTTP library or routines, you can also retrieve a map object's `requestURL` property. 
