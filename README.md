@@ -6,7 +6,7 @@ Static maps are flattened PNG or JPG images, ideal for use in table views, image
 
 ## Installation 
 
-Drag the `MapboxStatic.swift` file into your project. 
+Drag the `MapboxStatic.swift` file into your project. If calling from Objective-C code, import `<TargetName>-Swift.h` first. 
 
 ## Usage
 
