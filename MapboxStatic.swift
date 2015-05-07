@@ -17,18 +17,18 @@ private extension UIColor {
         g *= 255
         b *= 255
 
-        return NSString(format: "%02x%02x%02x", Int(r), Int(g), Int(b))
+        return NSString(format: "%02x%02x%02x", Int(r), Int(g), Int(b)) as String
     }
 
     private class func colorWithHexString(var hexString: String) -> UIColor {
 
         hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
 
-        if (countElements(hexString) == 3) {
+        if (count(hexString) == 3) {
             hexString = "\(Array(hexString)[0])\(Array(hexString)[0])\(Array(hexString)[1])\(Array(hexString)[1])\(Array(hexString)[2])\(Array(hexString)[2])"
         }
 
-        if (countElements(hexString) == 6) {
+        if (count(hexString) == 6) {
             var r: CGFloat = 0
             var g: CGFloat = 0
             var b: CGFloat = 0
@@ -87,7 +87,7 @@ public class MapboxStaticMap {
     }
 
     private class func allowedCharacterSet() -> NSMutableCharacterSet {
-        let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as NSMutableCharacterSet
+        let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
         characterSet.removeCharactersInString("/")
         return characterSet
     }
@@ -108,7 +108,7 @@ public class MapboxStaticMap {
         assert(size.width  <= 640 * (retina ? 1 : 2), "maximum width is 1280px (640px for retina)")
         assert(size.height <= 640 * (retina ? 1 : 2), "maximum height is 1280px (640px for retina)")
 
-        assert(countElements(overlays) <= 100, "maximum number of overlays is 100")
+        assert(count(overlays) <= 100, "maximum number of overlays is 100")
 
         var requestURLString = requestURLStringBase
         requestURLString += mapID
@@ -159,7 +159,7 @@ public class MapboxStaticMap {
             requestString = "pin-"
             requestString += size.rawValue
 
-            if (countElements(label) > 0) {
+            if (count(label) > 0) {
                 requestString += "-" + label
             }
 
@@ -228,7 +228,7 @@ public class MapboxStaticMap {
 
             var output = encodeCoordinate(coordinates[0].latitude) + encodeCoordinate(coordinates[0].longitude)
 
-            for var i = 1; i < countElements(coordinates); ++i {
+            for var i = 1; i < count(coordinates); ++i {
                 let a = coordinates[i]
                 let b = coordinates[i - 1]
                 output += encodeCoordinate(a.latitude - b.latitude)
