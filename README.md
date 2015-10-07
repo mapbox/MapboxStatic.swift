@@ -81,13 +81,13 @@ let customMarker = MapboxStaticMap.CustomMarker(
 #### GeoJSON
 
 ```swift
-let GeoJSONOverlay = MapboxStaticMap.GeoJSON(
-    GeoJSON: NSString(
-        contentsOfFile: NSBundle.mainBundle().pathForResource("sample", ofType: "geojson")!,
-        encoding: NSUTF8StringEncoding,
-        error: nil
-    )!
-)
+var geojsonOverlay: MapboxStaticMap.GeoJSON!
+
+do {
+    let geojsonURL = NSURL(string: "http://git.io/vCv9U")
+    let geojsonString = try NSString(contentsOfURL: geojsonURL!, encoding: NSUTF8StringEncoding)
+    geojsonOverlay = MapboxStaticMap.GeoJSON(string: geojsonString as String)
+}
 ```
 
 ![](./screenshots/geojson.png)
@@ -136,7 +136,7 @@ let map = MapboxStaticMap(
     mapID: <your map ID>,
     size: CGSize(width: 500, height: 300),
     accessToken: <your API token>,
-    overlays: [path, GeoJSONOverlay, markerOverlay, customMarker],
+    overlays: [path, geojsonOverlay, markerOverlay, customMarker],
     autoFitFeatures: true
 )
 ```
