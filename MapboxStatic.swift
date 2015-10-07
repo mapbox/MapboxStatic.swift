@@ -190,12 +190,12 @@ public class MapboxStaticMap {
 
     public class GeoJSON: Overlay {
 
-        init(GeoJSON: String) {
+        init(string: String) {
 
             super.init()
 
             requestString = "geojson("
-            requestString += GeoJSON.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
+            requestString += string.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
             requestString += ")"
 
         }
