@@ -72,7 +72,7 @@ let markerOverlay = MapboxStaticMap.Marker(
 ```swift
 let customMarker = MapboxStaticMap.CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    URLString: "https://mapbox.com/foundations/img/pages/rocket.png"
+    URLString: "https://mapbox.com/guides/img/pages/rocket.png"
 )
 ```
 
