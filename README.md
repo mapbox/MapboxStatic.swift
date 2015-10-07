@@ -14,7 +14,7 @@ You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) fro
 
 ### Basics
 
-The main map class is `MapboxStaticMap`. To create a basic map, specify the center, zoom level, and pixel size: 
+The main map class is `MapboxStaticMap`. To create a basic map, specify the center, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and pixel size: 
 
 ```swift
 let map = MapboxStaticMap(
