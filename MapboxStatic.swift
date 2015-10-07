@@ -54,7 +54,7 @@ private extension UIColor {
 
 public class MapboxStaticMap {
 
-    private let requestURLStringBase = "https://api.tiles.mapbox.com/v4/"
+    private let requestURLStringBase = "https://api.mapbox.com/v4/"
 
     public enum ImageFormat: String {
         case PNG    = "png"
