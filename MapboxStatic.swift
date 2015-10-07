@@ -24,18 +24,22 @@ private extension UIColor {
 
         hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
 
-        if (count(hexString) == 3) {
-            hexString = "\(Array(hexString)[0])\(Array(hexString)[0])\(Array(hexString)[1])\(Array(hexString)[1])\(Array(hexString)[2])\(Array(hexString)[2])"
+        if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 3 {
+            let r = Array(arrayLiteral: hexString)[0]
+            let g = Array(arrayLiteral: hexString)[1]
+            let b = Array(arrayLiteral: hexString)[2]
+
+            hexString = r + r + g + g + b + b
         }
 
-        if (count(hexString) == 6) {
+        if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 6 {
             var r: CGFloat = 0
             var g: CGFloat = 0
             var b: CGFloat = 0
 
             var hexInt: UInt32 = 0
 
-            if (NSScanner(string: hexString).scanHexInt(&hexInt)) {
+            if NSScanner(string: hexString).scanHexInt(&hexInt) {
                 r = CGFloat((hexInt >> 16) & 0xff) / 255
                 g = CGFloat((hexInt >> 8) & 0xff) / 255
                 b = CGFloat(hexInt & 0xff) / 255
@@ -77,11 +81,11 @@ public class MapboxStaticMap {
     }
 
     public func imageWithCompletionHandler(handler: (UIImage? -> Void)) {
-        let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) in
-            let image = UIImage(data: data)
-            dispatch_async(dispatch_get_main_queue(), {
+        let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) in
+            let image = UIImage(data: data!)
+            dispatch_async(dispatch_get_main_queue()) {
                 handler(image)
-            })
+            }
         })
         task.resume()
     }
@@ -108,18 +112,18 @@ public class MapboxStaticMap {
         assert(size.width  <= 640 * (retina ? 1 : 2), "maximum width is 1280px (640px for retina)")
         assert(size.height <= 640 * (retina ? 1 : 2), "maximum height is 1280px (640px for retina)")
 
-        assert(count(overlays) <= 100, "maximum number of overlays is 100")
+        assert(overlays.count <= 100, "maximum number of overlays is 100")
 
         var requestURLString = requestURLStringBase
         requestURLString += mapID
         requestURLString += "/"
 
-        if (overlays.count > 0) {
-            requestURLString += join(",", overlays.map({ return $0.requestString }))
+        if overlays.count > 0 {
+            requestURLString += overlays.map({ return $0.requestString }).joinWithSeparator(",")
             requestURLString += "/"
         }
 
-        if (autoFitFeatures) {
+        if autoFitFeatures {
             requestURLString += "auto/"
         } else {
             requestURLString += "\(center.longitude),\(center.latitude),\(zoom)/"
@@ -159,7 +163,7 @@ public class MapboxStaticMap {
             requestString = "pin-"
             requestString += size.rawValue
 
-            if (count(label) > 0) {
+            if label.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
                 requestString += "-" + label
             }
 
@@ -204,19 +208,19 @@ public class MapboxStaticMap {
 
         private func polylineEncode(coordinates: [CLLocationCoordinate2D]) -> String {
 
-            func encodeCoordinate(var coordinate: CLLocationDegrees) -> String {
+            func encodeCoordinate(let coordinate: CLLocationDegrees) -> String {
 
                 var c = Int(round(coordinate * 1e5))
 
                 c = c << 1
 
-                if (c < 0) {
+                if c < 0 {
                     c = ~c
                 }
 
                 var output = ""
 
-                while (c >= 0x20) {
+                while c >= 0x20 {
                     output += String(UnicodeScalar((0x20 | (c & 0x1f)) + 63))
                     c = c >> 5
                 }
@@ -228,14 +232,14 @@ public class MapboxStaticMap {
 
             var output = encodeCoordinate(coordinates[0].latitude) + encodeCoordinate(coordinates[0].longitude)
 
-            for var i = 1; i < count(coordinates); ++i {
+            for var i = 1; i < coordinates.count; ++i {
                 let a = coordinates[i]
                 let b = coordinates[i - 1]
                 output += encodeCoordinate(a.latitude - b.latitude)
                 output += encodeCoordinate(a.longitude - b.longitude)
             }
 
-            return output.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            return output.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
         }
 
         init(pathCoordinates: [CLLocationCoordinate2D],
