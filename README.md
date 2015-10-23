@@ -1,5 +1,7 @@
 # MapboxStatic
 
+[![Build Status](https://www.bitrise.io/app/faa9d29af3e2ce7a.svg?token=_oJK999amHl5HlK3a82PZA&branch=master)](https://www.bitrise.io/app/faa9d29af3e2ce7a)
+
 MapboxStatic is a Swift library for Mapbox's [static maps API](https://www.mapbox.com/developers/api/static/), with support for overlays, asynchronous imagery fetching, and first-class Swift data types. 
 
 Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*. 
@@ -150,6 +152,15 @@ When creating a map, you can also specify PNG or JPEG image format as well as va
 #### Attribution
 
 Be sure to [attribute your map](https://www.mapbox.com/developers/api/static/#attribution) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from. 
+
+### Tests
+
+To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org) to install the dependencies. 
+
+1. `pod install`
+1. `open 'Sample App/Sample App.xcworkspace'`
+1. `Command+U` or `xcodebuild test`
+
 
 ### More info
 
