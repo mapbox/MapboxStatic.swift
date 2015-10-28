@@ -66,6 +66,8 @@ public class MapboxStaticMap {
         case JPEG90 = "jpg90"
         case JPEG80 = "jpg80"
         case JPEG70 = "jpg70"
+
+        static let allValues = [PNG, PNG256, PNG128, PNG64, PNG32, JPEG, JPEG90, JPEG80, JPEG70]
     }
 
     private(set) var requestURL: NSURL

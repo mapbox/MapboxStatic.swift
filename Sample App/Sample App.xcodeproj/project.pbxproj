@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2705955A42A3B9F3B20811B2 /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02BF8F386FFE70BC1F09263 /* Pods_Unit_Tests.framework */; };
+		DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
 		DD685BA91BDB14C1002E2BB2 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* UnitTests.swift */; };
 		DDAD19711BD9B1A50057AC9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */; };
 		DDAD19731BD9B1A50057AC9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19701BD9B1A50057AC9F /* ViewController.swift */; };
 		DDAD19891BD9B6140057AC9F /* MapboxStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* MapboxStatic.swift */; };
+		DDD6FB8A1BE04FB60035A648 /* MapboxStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* MapboxStatic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +30,7 @@
 		4BD4BD47B5FAEF5DCF0AFC30 /* Pods-Unit Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6A2D399CC5D80514D2F8F447 /* Pods-Unit Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B02BF8F386FFE70BC1F09263 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD0C88161BE1A9D400606E9F /* polyline.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = polyline.geojson; path = "../../Unit Tests/fixtures/polyline.geojson"; sourceTree = "<group>"; };
 		DDAD19591BD9B1780057AC9F /* Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		DDAD196F1BD9B1A50057AC9F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
@@ -74,6 +77,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DD0C88151BE1A9CC00606E9F /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				DD0C88161BE1A9D400606E9F /* polyline.geojson */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
 		DDAD19501BD9B1780057AC9F = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +121,7 @@
 			children = (
 				DDAD19831BD9B2F80057AC9F /* UnitTests.swift */,
 				DDAD19841BD9B2F80057AC9F /* Info.plist */,
+				DD0C88151BE1A9CC00606E9F /* Fixtures */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
@@ -213,6 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD685BA91BDB14C1002E2BB2 /* UnitTests.swift in Sources */,
+				DDD6FB8A1BE04FB60035A648 /* MapboxStatic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
