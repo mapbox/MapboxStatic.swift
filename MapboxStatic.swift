@@ -247,9 +247,9 @@ public class MapboxStaticMap {
         init(pathCoordinates: [CLLocationCoordinate2D],
              strokeWidth: Int = 1,
              strokeColor: UIColor = UIColor.colorWithHexString("555"),
-             strokeOpacity: CGFloat = 1.0,
+             strokeOpacity: Double = 1.0,
              fillColor: UIColor = UIColor.colorWithHexString("555"),
-             fillOpacity: CGFloat = 0) {
+             fillOpacity: Double = 0) {
 
             super.init()
 
