@@ -234,11 +234,14 @@ public class MapboxStaticMap {
 
             var output = encodeCoordinate(coordinates[0].latitude) + encodeCoordinate(coordinates[0].longitude)
 
-            for var i = 1; i < coordinates.count; ++i {
+            var i = 1
+            while i < coordinates.count {
                 let a = coordinates[i]
                 let b = coordinates[i - 1]
                 output += encodeCoordinate(a.latitude - b.latitude)
                 output += encodeCoordinate(a.longitude - b.longitude)
+
+                i += 1
             }
 
             return output.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
