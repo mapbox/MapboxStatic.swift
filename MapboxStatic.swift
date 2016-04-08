@@ -20,9 +20,9 @@ private extension UIColor {
         return NSString(format: "%02x%02x%02x", Int(r), Int(g), Int(b)) as String
     }
 
-    private class func colorWithHexString(var hexString: String) -> UIColor {
+    private class func colorWithHexString(hexString: String) -> UIColor {
 
-        hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
+        var hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
 
         if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 3 {
             let r = Array(arrayLiteral: hexString)[0]
@@ -234,7 +234,7 @@ public class MapboxStaticMap {
 
             var output = encodeCoordinate(coordinates[0].latitude) + encodeCoordinate(coordinates[0].longitude)
 
-            for var i = 1; i < coordinates.count; ++i {
+            for i in 1 ..< coordinates.count {
                 let a = coordinates[i]
                 let b = coordinates[i - 1]
                 output += encodeCoordinate(a.latitude - b.latitude)
