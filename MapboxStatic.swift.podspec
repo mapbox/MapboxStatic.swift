@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = "Classic Mapbox Static API wrapper for Objective-C and Swift."
 
   s.description  = <<-DESC
-  MapboxGeocoder.swift makes it easy to connect your iOS, tvOS, or watchOS application to the classic Mapbox Static API. Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
+  MapboxStatic.swift makes it easy to connect your iOS, tvOS, or watchOS application to the classic Mapbox Static API. Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
                    DESC
 
   s.homepage     = "https://www.mapbox.com/api-documentation/#static-classic"
