@@ -8,7 +8,11 @@ Static maps are flattened PNG or JPG images, ideal for use in table views, image
 
 ## Installation 
 
-Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`.
+Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
+
+```podspec
+pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => '0.4.0'
+```
 
 ## Usage
 
