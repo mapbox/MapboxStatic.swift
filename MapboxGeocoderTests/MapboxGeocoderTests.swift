@@ -3,7 +3,7 @@ import OHHTTPStubs
 import CoreLocation
 import Foundation
 
-class UnitTests: XCTestCase {
+class MapboxGeocoderTests: XCTestCase {
 
     let mapID = "justin.o0mbikn2"
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
