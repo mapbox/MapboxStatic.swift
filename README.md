@@ -2,15 +2,19 @@
 
 [![Build Status](https://www.bitrise.io/app/faa9d29af3e2ce7a.svg?token=_oJK999amHl5HlK3a82PZA&branch=master)](https://www.bitrise.io/app/faa9d29af3e2ce7a)
 
-MapboxStatic is a Swift library for Mapbox's [static maps API](https://www.mapbox.com/developers/api/static/), with support for overlays, asynchronous imagery fetching, and first-class Swift data types. 
+MapboxStatic.swift makes it easy to connect your iOS, tvOS, or watchOS application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
 
 Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*. 
 
-Works on iOS, tvOS, **and** watchOS! 
+MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
 
 ## Installation 
 
-Drag the `MapboxStatic.swift` file into your project. If calling from Objective-C code, import `<TargetName>-Swift.h` first. 
+Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
+
+```podspec
+pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => '0.4.0'
+```
 
 ## Usage
 
@@ -21,12 +25,14 @@ You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) fro
 The main map class is `MapboxStaticMap`. To create a basic map, specify the center, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and pixel size: 
 
 ```swift
+import MapboxStatic
+
 let map = MapboxStaticMap(
-    mapID: <your map ID>,
+    mapID: "<#your map ID#>",
     center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoom: 13,
     size: CGSize(width: 200, height: 200),
-    accessToken: <your API token>
+    accessToken: "<#your access token#>"
 )
 ```
 
@@ -149,21 +155,20 @@ let map = MapboxStaticMap(
 
 #### File format & quality
 
-When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/developers/api/static/#format). 
+When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).
 
 #### Attribution
 
-Be sure to [attribute your map](https://www.mapbox.com/developers/api/static/#attribution) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from. 
+Be sure to [attribute your map](https://www.mapbox.com/api-documentation/#static-classic) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from. 
 
 ### Tests
 
 To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org) to install the dependencies. 
 
 1. `pod install`
-1. `open 'Sample App/Sample App.xcworkspace'`
+1. `open MapboxStatic.xcworkspace`
 1. `Command+U` or `xcodebuild test`
-
 
 ### More info
 
-For more info about the Mapbox static maps API, check out the [web service documentation](https://www.mapbox.com/developers/api/static/). 
+For more info about the Mapbox static maps API, check out the [web service documentation](https://www.mapbox.com/api-documentation/#static-classic). 

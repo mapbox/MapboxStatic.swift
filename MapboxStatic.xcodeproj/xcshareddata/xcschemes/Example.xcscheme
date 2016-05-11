@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
-               BuildableName = "Sample App.app"
-               BlueprintName = "Sample App"
-               ReferencedContainer = "container:Sample App.xcodeproj">
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
+               ReferencedContainer = "container:MapboxStatic.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,24 +29,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDAD19771BD9B24F0057AC9F"
-               BuildableName = "Unit Tests.xctest"
-               BlueprintName = "Unit Tests"
-               ReferencedContainer = "container:Sample App.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
-            BuildableName = "Sample App.app"
-            BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -67,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
-            BuildableName = "Sample App.app"
-            BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -86,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
-            BuildableName = "Sample App.app"
-            BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
