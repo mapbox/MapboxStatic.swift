@@ -17,7 +17,7 @@
                BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
                BuildableName = "Sample App.app"
                BlueprintName = "Sample App"
-               ReferencedContainer = "container:Sample App.xcodeproj">
+               ReferencedContainer = "container:MapboxStatic.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "DDAD19771BD9B24F0057AC9F"
                BuildableName = "Unit Tests.xctest"
                BlueprintName = "Unit Tests"
-               ReferencedContainer = "container:Sample App.xcodeproj">
+               ReferencedContainer = "container:MapboxStatic.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -46,7 +46,7 @@
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
             BuildableName = "Sample App.app"
             BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -69,7 +69,7 @@
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
             BuildableName = "Sample App.app"
             BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -88,7 +88,7 @@
             BlueprintIdentifier = "DDAD19581BD9B1780057AC9F"
             BuildableName = "Sample App.app"
             BlueprintName = "Sample App"
-            ReferencedContainer = "container:Sample App.xcodeproj">
+            ReferencedContainer = "container:MapboxStatic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
