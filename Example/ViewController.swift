@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import MapboxStatic
 
 class ViewController: UIViewController {
 

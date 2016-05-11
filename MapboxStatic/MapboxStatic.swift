@@ -1,5 +1,4 @@
 import CoreLocation
-import Foundation
 import UIKit
 
 private extension UIColor {
@@ -67,7 +66,7 @@ public class MapboxStaticMap {
         case JPEG80 = "jpg80"
         case JPEG70 = "jpg70"
 
-        static let allValues = [PNG, PNG256, PNG128, PNG64, PNG32, JPEG, JPEG90, JPEG80, JPEG70]
+        public static let allValues = [PNG, PNG256, PNG128, PNG64, PNG32, JPEG, JPEG90, JPEG80, JPEG70]
     }
 
     private(set) var requestURL: NSURL
@@ -98,7 +97,7 @@ public class MapboxStaticMap {
         return characterSet
     }
 
-    init(mapID: String,
+    public init(mapID: String,
          center: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0),
          zoom: Int = 0,
          size: CGSize,
@@ -155,7 +154,7 @@ public class MapboxStaticMap {
 
     public class Marker: Overlay {
 
-        init(coordinate: CLLocationCoordinate2D,
+        public init(coordinate: CLLocationCoordinate2D,
              size: MarkerSize = .Small,
              label: String = "",
              color: UIColor = UIColor.redColor()) {
@@ -178,7 +177,7 @@ public class MapboxStaticMap {
 
     public class CustomMarker: Overlay {
 
-        init(coordinate: CLLocationCoordinate2D,
+        public init(coordinate: CLLocationCoordinate2D,
              URLString: String) {
 
             super.init()
@@ -192,7 +191,7 @@ public class MapboxStaticMap {
 
     public class GeoJSON: Overlay {
 
-        init(string: String) {
+        public init(string: String) {
 
             super.init()
 
@@ -244,7 +243,7 @@ public class MapboxStaticMap {
             return output.stringByAddingPercentEncodingWithAllowedCharacters(MapboxStaticMap.allowedCharacterSet())!
         }
 
-        init(pathCoordinates: [CLLocationCoordinate2D],
+        public init(pathCoordinates: [CLLocationCoordinate2D],
              strokeWidth: Int = 1,
              strokeColor: UIColor = UIColor.colorWithHexString("555"),
              strokeOpacity: Double = 1.0,

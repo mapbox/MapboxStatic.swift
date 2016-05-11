@@ -2,6 +2,7 @@ import XCTest
 import OHHTTPStubs
 import CoreLocation
 import Foundation
+import MapboxStatic
 
 class MapboxGeocoderTests: XCTestCase {
 
