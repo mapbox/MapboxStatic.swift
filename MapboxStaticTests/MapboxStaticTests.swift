@@ -4,7 +4,7 @@ import CoreLocation
 import Foundation
 import MapboxStatic
 
-class MapboxGeocoderTests: XCTestCase {
+class MapboxStaticTests: XCTestCase {
 
     let mapID = "justin.o0mbikn2"
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
