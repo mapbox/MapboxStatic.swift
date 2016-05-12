@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.name         = "MapboxStatic.swift"
-  s.version      = "0.4.0"
+  s.version      = "0.5.0"
   s.summary      = "Classic Mapbox Static API wrapper for Objective-C and Swift."
 
   s.description  = <<-DESC
@@ -31,8 +31,7 @@ Pod::Spec.new do |s|
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  #s.source       = { :git => "https://github.com/mapbox/MapboxStatic.swift.git", :tag => "v#{s.version.to_s}" }
-  s.source       = { :git => "https://github.com/mapbox/MapboxStatic.swift.git", :tag => "#{s.version.to_s}" }
+  s.source       = { :git => "https://github.com/mapbox/MapboxStatic.swift.git", :tag => "v#{s.version.to_s}" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
