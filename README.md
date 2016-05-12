@@ -170,4 +170,4 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 
 ### More info
 
-For more info about the Mapbox static maps API, check out the [web service documentation](https://www.mapbox.com/api-documentation/#static-classic). 
+This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and OS X. More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
