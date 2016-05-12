@@ -1,15 +1,25 @@
-import UIKit
+#if os(iOS)
+    import UIKit
+    typealias Color = UIColor
+#elseif os(OSX)
+    import Cocoa
+    typealias Color = NSColor
+#endif
 
-internal extension UIColor {
-
+internal extension Color {
     internal func toHexString() -> String {
-
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
 
-        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        let color: Color
+        #if os(iOS)
+            color = self
+        #elseif os(OSX)
+            color = colorUsingColorSpaceName(NSCalibratedRGBColorSpace)!
+        #endif
+        color.getRed(&r, green: &g, blue: &b, alpha: &a)
 
         r *= 255
         g *= 255
@@ -18,8 +28,7 @@ internal extension UIColor {
         return NSString(format: "%02x%02x%02x", Int(r), Int(g), Int(b)) as String
     }
 
-    internal class func colorWithHexString(hexString: String) -> UIColor {
-
+    convenience init(hexString: String) {
         var hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
 
         if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 3 {
@@ -30,22 +39,24 @@ internal extension UIColor {
             hexString = r + r + g + g + b + b
         }
 
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        
         if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 6 {
-            var r: CGFloat = 0
-            var g: CGFloat = 0
-            var b: CGFloat = 0
-
             var hexInt: UInt32 = 0
 
             if NSScanner(string: hexString).scanHexInt(&hexInt) {
                 r = CGFloat((hexInt >> 16) & 0xff) / 255
                 g = CGFloat((hexInt >> 8) & 0xff) / 255
                 b = CGFloat(hexInt & 0xff) / 255
-
-                return UIColor(red: r, green: g, blue: b, alpha: 1)
             }
         }
 
-        return UIColor.blackColor()
+        #if os(iOS)
+            self.init(red: r, green: g, blue: b, alpha: 1)
+        #elseif os(OSX)
+            self.init(calibratedRed: r, green: g, blue: b, alpha: 1)
+        #endif
     }
 }

@@ -1,5 +1,9 @@
 import CoreLocation
-import UIKit
+#if os(iOS)
+    import UIKit
+#elseif os(OSX)
+    import Cocoa
+#endif
 
 let allowedCharacterSet: NSCharacterSet = {
     let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
@@ -14,7 +18,12 @@ public enum MarkerSize: String {
 }
 
 public class Overlay: CustomStringConvertible {
-
+    #if os(iOS)
+    public typealias Color = UIColor
+    #elseif os(OSX)
+    public typealias Color = NSColor
+    #endif
+    
     internal var requestString: String = ""
     
     public var description: String {
@@ -24,11 +33,10 @@ public class Overlay: CustomStringConvertible {
 }
 
 public class Marker: Overlay {
-
     public init(coordinate: CLLocationCoordinate2D,
          size: MarkerSize = .Small,
          label: String = "",
-         color: UIColor = UIColor.redColor()) {
+         color: Color = .redColor()) {
 
         super.init()
 
@@ -116,9 +124,9 @@ public class Path: Overlay {
 
     public init(pathCoordinates: [CLLocationCoordinate2D],
          strokeWidth: Int = 1,
-         strokeColor: UIColor = UIColor.colorWithHexString("555"),
+         strokeColor: Color = Color(hexString: "555"),
          strokeOpacity: Double = 1.0,
-         fillColor: UIColor = UIColor.colorWithHexString("555"),
+         fillColor: Color = Color(hexString: "555"),
          fillOpacity: Double = 0) {
 
         super.init()

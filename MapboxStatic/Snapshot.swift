@@ -1,5 +1,9 @@
 import CoreLocation
-import UIKit
+#if os(iOS)
+    import UIKit
+#elseif os(OSX)
+    import Cocoa
+#endif
 
 public enum SnapshotFormat: String {
     case PNG    = "png"
@@ -27,7 +31,11 @@ public struct SnapshotOptions {
     
     public var format: SnapshotFormat = .PNG
     public var size: CGSize
+    #if os(iOS)
     public var scale: CGFloat = UIScreen.mainScreen().scale
+    #elseif os(OSX)
+    public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+    #endif
     public var showsAttribution: Bool = true
     public var showsLogo: Bool = true
     
@@ -69,9 +77,14 @@ public struct SnapshotOptions {
     }
 }
 
-public typealias SnapshotCompletionHandler = (UIImage?, NSError?) -> Void
-
 public struct Snapshot {
+    #if os(iOS)
+    public typealias Image = UIImage
+    #elseif os(OSX)
+    public typealias Image = NSImage
+    #endif
+    public typealias CompletionHandler = (Image?, NSError?) -> Void
+    
     private var apiEndpoint: String = "https://api.mapbox.com"
     private let accessToken: String
     
@@ -131,22 +144,22 @@ public struct Snapshot {
         ]
     }
     
-    public var image: UIImage? {
+    public var image: Image? {
         if let data = NSData(contentsOfURL: requestURL) {
-            return UIImage(data: data)
+            return Image(data: data)
         } else {
             return nil
         }
     }
     
-    public func image(completionHandler handler: SnapshotCompletionHandler) -> NSURLSessionDataTask {
+    public func image(completionHandler handler: CompletionHandler) -> NSURLSessionDataTask {
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL) { (data, response, error) in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
                     handler(nil, error)
                 }
             } else {
-                let image = UIImage(data: data!)
+                let image = Image(data: data!)
                 dispatch_async(dispatch_get_main_queue()) {
                     handler(image, nil)
                 }

@@ -4,6 +4,12 @@ import CoreLocation
 import Foundation
 import MapboxStatic
 
+#if os(iOS)
+    typealias Color = UIColor
+#elseif os(OSX)
+    typealias Color = NSColor
+#endif
+
 class MapboxStaticTests: XCTestCase {
     let mapID = "justin.o0mbikn2"
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
@@ -38,6 +44,13 @@ class MapboxStaticTests: XCTestCase {
         let autoFitExp = expectationWithDescription("auto-fit should default to enabled")
 
         let options = SnapshotOptions(mapIdentifier: mapID, size: CGSize(width: 200, height: 200))
+        
+        let scale: CGFloat
+        #if os(iOS)
+            scale = UIScreen.mainScreen().scale
+        #elseif os(OSX)
+            scale = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+        #endif
 
         stub(isHost(serviceHost)) { [unowned self] request in
             if let p = request.URL?.pathComponents {
@@ -51,11 +64,11 @@ class MapboxStaticTests: XCTestCase {
                     overlaysExp.fulfill()
                     autoFitExp.fulfill()
                 }
-                if p[4].componentsSeparatedByString(".").first == "200x200" && UIScreen.mainScreen().scale == 1 {
+                if p[4].componentsSeparatedByString(".").first == "200x200" && scale == 1 {
                     retinaExp.fulfill()
                     sizeExp.fulfill()
                 }
-                else if p[4].componentsSeparatedByString(".").first == "200x200@2x" && UIScreen.mainScreen().scale > 1 {
+                else if p[4].componentsSeparatedByString(".").first == "200x200@2x" && scale > 1 {
                     retinaExp.fulfill()
                     sizeExp.fulfill()
                 }
@@ -220,7 +233,7 @@ class MapboxStaticTests: XCTestCase {
         let lon = -122.681944
         let size = MarkerSize.Medium
         let label = "cafe"
-        let color = UIColor.brownColor()
+        let color = Color.brownColor()
         let colorRaw = "996633"
 
         let markerExp = expectationWithDescription("builtin marker argument should format Maki request properly")
@@ -324,10 +337,10 @@ class MapboxStaticTests: XCTestCase {
 
     func testOverlayPath() {
         let strokeWidth = 2
-        let strokeColor = UIColor.blackColor()
+        let strokeColor = Color.blackColor()
         let strokeColorRaw = "000000"
         let strokeOpacity = 0.75
-        let fillColor = UIColor.redColor()
+        let fillColor = Color.redColor()
         let fillColorRaw = "ff0000"
         let fillOpacity = 0.25
         let encodedPolyline = "(upztG%60jxkVn@al@bo@nFWzuAaTcAyZen@)"
@@ -392,7 +405,7 @@ class MapboxStaticTests: XCTestCase {
             coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
             size: .Medium,
             label: "cafe",
-            color: UIColor.brownColor())
+            color: .brownColor())
 
         var options = SnapshotOptions(
             mapIdentifier: mapID,
