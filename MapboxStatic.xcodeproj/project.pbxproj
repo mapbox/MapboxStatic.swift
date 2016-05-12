@@ -10,7 +10,7 @@
 		DA20FB9E1CE3DEBB00B07762 /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA20FBA21CE3DEBB00B07762 /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
 		DA20FBA31CE3DEBB00B07762 /* MapboxStatic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA20FBA81CE3DF6900B07762 /* StaticMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* StaticMap.swift */; };
+		DA20FBA81CE3DF6900B07762 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
 		DA20FBAA1CE401E800B07762 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* UIColor.swift */; };
 		DA20FBAC1CE4026B00B07762 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBAB1CE4026B00B07762 /* Overlay.swift */; };
 		DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
@@ -52,6 +52,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		20757D6C38E229374CC0488B /* Pods_MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D6EE47FD26DFA5AB2812FB2 /* Pods-MapboxStaticTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxStaticTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxStaticTests/Pods-MapboxStaticTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5C146F8A26FA67089F5234 /* Pods-MapboxStaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxStaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxStaticTests/Pods-MapboxStaticTests.release.xcconfig"; sourceTree = "<group>"; };
 		BBD735B8583D022CA2165EFB /* Pods_MapboxStaticTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapboxStaticTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +69,7 @@
 		DDAD19781BD9B24F0057AC9F /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxStaticTests.swift; sourceTree = "<group>"; };
 		DDAD19841BD9B2F80057AC9F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DDAD19871BD9B3970057AC9F /* StaticMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticMap.swift; sourceTree = "<group>"; };
+		DDAD19871BD9B3970057AC9F /* Snapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				BBD735B8583D022CA2165EFB /* Pods_MapboxStaticTests.framework */,
+				20757D6C38E229374CC0488B /* Pods_MapboxStatic.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,7 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */,
-				DDAD19871BD9B3970057AC9F /* StaticMap.swift */,
+				DDAD19871BD9B3970057AC9F /* Snapshot.swift */,
 				DA20FBAB1CE4026B00B07762 /* Overlay.swift */,
 				DA20FBA91CE401E800B07762 /* UIColor.swift */,
 				DA20FB9F1CE3DEBB00B07762 /* Info.plist */,
@@ -233,12 +235,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DDAD197F1BD9B24F0057AC9F /* Build configuration list for PBXNativeTarget "MapboxStaticTests" */;
 			buildPhases = (
-				146EA96871BCFD9BCA7375A8 /* Check Pods Manifest.lock */,
 				DDAD19741BD9B24F0057AC9F /* Sources */,
 				DDAD19751BD9B24F0057AC9F /* Frameworks */,
 				DDAD19761BD9B24F0057AC9F /* Resources */,
-				A0358B11E35DB39B189F03CD /* Embed Pods Frameworks */,
-				75872C0F9B75F37732831543 /* Copy Pods Resources */,
+				70E811F2996100A2FA178EF4 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,37 +317,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		146EA96871BCFD9BCA7375A8 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		75872C0F9B75F37732831543 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MapboxStaticTests/Pods-MapboxStaticTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A0358B11E35DB39B189F03CD /* Embed Pods Frameworks */ = {
+		70E811F2996100A2FA178EF4 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -369,7 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA20FBA81CE3DF6900B07762 /* StaticMap.swift in Sources */,
+				DA20FBA81CE3DF6900B07762 /* Snapshot.swift in Sources */,
 				DA20FBAC1CE4026B00B07762 /* Overlay.swift in Sources */,
 				DA20FBAA1CE401E800B07762 /* UIColor.swift in Sources */,
 			);

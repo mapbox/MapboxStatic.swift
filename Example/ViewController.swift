@@ -3,7 +3,7 @@ import CoreLocation
 import MapboxStatic
 
 class ViewController: UIViewController {
-
+    // You can also specify the access token with the `MGLMapboxAccessToken` key in Info.plist.
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
     var imageView: UIImageView!
 
@@ -17,17 +17,14 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-
-        let map = StaticMap(
-            mapID: "justin.tm2-basemap",
-            center: CLLocationCoordinate2D(latitude: 45, longitude: -122),
-            zoom: 6,
-            size: imageView.bounds.size,
-            accessToken: accessToken,
-            retina: (UIScreen.mainScreen().scale > 1))
-
-        map.imageWithCompletionHandler { [unowned self] image in
-            self.imageView.image = image
+        
+        let options = SnapshotOptions(
+            mapIdentifier: "justin.tm2-basemap",
+            centerCoordinate: CLLocationCoordinate2D(latitude: 45, longitude: -122),
+            zoomLevel: 6,
+            size: imageView.bounds.size)
+        Snapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
+            self?.imageView.image = image
         }
 
     }
