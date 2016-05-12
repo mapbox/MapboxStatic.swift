@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = "Classic Mapbox Static API wrapper for Objective-C and Swift."
 
   s.description  = <<-DESC
-  MapboxStatic.swift makes it easy to connect your iOS, tvOS, or watchOS application to the classic Mapbox Static API. Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
+  MapboxStatic.swift makes it easy to connect your iOS, OS X, tvOS, or watchOS application to the classic Mapbox Static API. Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
                    DESC
 
   s.homepage     = "https://www.mapbox.com/api-documentation/#static-classic"
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
 
   #  When using multiple platforms
   s.ios.deployment_target = "8.0"
+  s.osx.deployment_target = "10.10"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 
