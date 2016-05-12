@@ -99,8 +99,6 @@ public struct Snapshot {
             assert(zoomLevel <= 20, "maximum zoom is 20")
         }
         
-        assert(options.scale == 1 || options.scale == 2, "scale must be 1× or 2×")
-        
         assert(options.size.width  * options.scale <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
         assert(options.size.height * options.scale <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
         
