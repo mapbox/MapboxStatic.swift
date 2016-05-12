@@ -40,7 +40,7 @@ class MapboxStaticTests: XCTestCase {
         let overlaysExp = expectationWithDescription("overlays should default to empty")
         let autoFitExp = expectationWithDescription("auto-fit should default to disabled")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken)
 
@@ -91,7 +91,7 @@ class MapboxStaticTests: XCTestCase {
 
         let centerExp = expectationWithDescription("center should get passed intact")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             center: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             size: CGSize(width: 400, height: 400),
             accessToken: accessToken)
@@ -117,7 +117,7 @@ class MapboxStaticTests: XCTestCase {
 
         let zoomExp = expectationWithDescription("zoom should get passed intact")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             zoom: zoom,
             size: CGSize(width: 300, height: 300),
             accessToken: accessToken)
@@ -147,7 +147,7 @@ class MapboxStaticTests: XCTestCase {
 
         let sizeExp = expectationWithDescription("size should pass intact for non-retina")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: CGFloat(width), height: CGFloat(height)),
             accessToken: accessToken)
 
@@ -169,9 +169,9 @@ class MapboxStaticTests: XCTestCase {
 
     func testFormats() {
         var expectations = [XCTestExpectation]()
-        var maps = [MapboxStaticMap]()
+        var maps = [StaticMap]()
 
-        for format in MapboxStaticMap.ImageFormat.allValues {
+        for format in StaticMap.ImageFormat.allValues {
             let exp = expectationWithDescription("\(format.rawValue) extension should be requested")
             expectations.append(exp)
 
@@ -180,7 +180,7 @@ class MapboxStaticTests: XCTestCase {
                 return OHHTTPStubsResponse()
             }
 
-            maps.append(MapboxStaticMap(mapID: mapID,
+            maps.append(StaticMap(mapID: mapID,
                 size: CGSize(width: 200, height: 200),
                 accessToken: accessToken,
                 format: format))
@@ -196,7 +196,7 @@ class MapboxStaticTests: XCTestCase {
     func testRetina() {
         let retinaExp = expectationWithDescription("retina should request @2x asset")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             retina: true)
@@ -221,20 +221,20 @@ class MapboxStaticTests: XCTestCase {
     func testOverlayBuiltinMarker() {
         let lat = 45.52
         let lon = -122.681944
-        let size = MapboxStaticMap.MarkerSize.Medium
+        let size = MarkerSize.Medium
         let label = "cafe"
         let color = UIColor.brownColor()
         let colorRaw = "996633"
 
         let markerExp = expectationWithDescription("builtin marker argument should format Maki request properly")
 
-        let markerOverlay = MapboxStaticMap.Marker(
+        let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             size: size,
             label: label,
             color: color)
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             overlays: [markerOverlay])
@@ -262,11 +262,11 @@ class MapboxStaticTests: XCTestCase {
 
         let markerExp = expectationWithDescription("custom marker argument should properly encode request")
 
-        let customMarker = MapboxStaticMap.CustomMarker(
+        let customMarker = CustomMarker(
             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             URLString: markerURL.absoluteString)
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             overlays: [customMarker])
@@ -301,9 +301,9 @@ class MapboxStaticTests: XCTestCase {
         }
 
         let geojsonString = try! NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
-        let geojsonOverlay = MapboxStaticMap.GeoJSON(string: geojsonString as String)
+        let geojsonOverlay = GeoJSON(string: geojsonString as String)
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             overlays: [geojsonOverlay])
@@ -336,7 +336,7 @@ class MapboxStaticTests: XCTestCase {
         let fillOpacity = 0.25
         let encodedPolyline = "(upztG%60jxkVn@al@bo@nFWzuAaTcAyZen@)"
 
-        let path = MapboxStaticMap.Path(
+        let path = Path(
             pathCoordinates: [
                 CLLocationCoordinate2D(
                     latitude: 45.52475063103141, longitude: -122.68209457397461
@@ -365,7 +365,7 @@ class MapboxStaticTests: XCTestCase {
 
         let pathExp = expectationWithDescription("raw path argument should properly encode request")
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             overlays: [path])
@@ -392,13 +392,13 @@ class MapboxStaticTests: XCTestCase {
     func testAutoFit() {
         let autoFitExp = expectationWithDescription("auto-fit should pass correct argument")
 
-        let markerOverlay = MapboxStaticMap.Marker(
+        let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
             size: .Medium,
             label: "cafe",
             color: UIColor.brownColor())
 
-        let map = MapboxStaticMap(mapID: mapID,
+        let map = StaticMap(mapID: mapID,
             size: CGSize(width: 200, height: 200),
             accessToken: accessToken,
             overlays: [markerOverlay],
