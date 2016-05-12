@@ -13,7 +13,7 @@ MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/m
 Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => '0.4.0'
+pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :branch => 'master'
 ```
 
 ## Usage
@@ -22,24 +22,25 @@ You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) fro
 
 ### Basics
 
-The main map class is `StaticMap`. To create a basic map, specify the center, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and pixel size: 
+The main static map class is `Snapshot`. To create a basic snapshot, create a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and point size:
 
 ```swift
 import MapboxStatic
 
-let map = StaticMap(
-    mapID: "<#your map ID#>",
-    center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoom: 13,
-    size: CGSize(width: 200, height: 200),
-    accessToken: "<#your access token#>"
-)
+let options = SnapshotOptions(
+    mapIdentifier: "<#your map ID#>",
+    centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
+    zoomLevel: 6,
+    size: CGSize(width: 200, height: 200))
+let snapshot = Snapshot(
+    options: options,
+    accessToken: "<#your access token#>")
 ```
 
-Then, to retrieve an image, you can do it either synchronously (blocking the calling thread): 
+Then, you can either retrieve an image synchronously (blocking the calling thread): 
 
 ```swift
-self.imageView.image = map.image
+imageView.image = snapshot.image
 ```
 
 ![](./screenshots/map.png)
@@ -47,22 +48,22 @@ self.imageView.image = map.image
 Or you can pass a completion handler to update the UI thread after the image is retrieved: 
 
 ```swift
-map.imageWithCompletionHandler { image in
+snapshot.image { (image, error) in
     imageView.image = image
 }
 ```
 
-If you're using your own HTTP library or routines, you can also retrieve a map object's `requestURL` property. 
+If you're using your own HTTP library or routines, you can also retrieve a snapshot’s `requestURL` property. 
 
 ```swift
-let requestURLToFetch = map.requestURL
+let requestURLToFetch = snapshot.requestURL
 ```
 
 ### Overlays
 
 Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki/), custom marker imagery, GeoJSON geometries, and even paths made of bare coordinates. 
 
-You pass overlays as the `overlays: [Overlay]` parameter during map creation. Here are some versions of our map with various overlays added. 
+You add overlays to the `overlays` field in the `SnapshotOptions` object. Here are some versions of our snapshot with various overlays added. 
 
 #### Marker
 
@@ -71,7 +72,7 @@ let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
     label: "cafe",
-    color: UIColor.brownColor()
+    color: .brownColor()
 )
 ```
 
@@ -82,7 +83,7 @@ let markerOverlay = Marker(
 ```swift
 let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    URLString: "https://mapbox.com/guides/img/rocket.png"
+    URL: NSURL(string: "https://mapbox.com/guides/img/rocket.png")!
 )
 ```
 
@@ -94,8 +95,8 @@ let customMarker = CustomMarker(
 let geojsonOverlay: GeoJSON
 
 do {
-    let geojsonURL = NSURL(string: "http://git.io/vCv9U")
-    let geojsonString = try NSString(contentsOfURL: geojsonURL!, encoding: NSUTF8StringEncoding)
+    let geojsonURL = NSURL(string: "http://git.io/vCv9U")!
+    let geojsonString = try NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
     geojsonOverlay = GeoJSON(string: geojsonString as String)
 }
 ```
@@ -127,8 +128,8 @@ let path = Path(
         )
     ],
     strokeWidth: 2,
-    strokeColor: UIColor.blackColor(),
-    fillColor: UIColor.redColor(),
+    strokeColor: .blackColor(),
+    fillColor: .redColor(),
     fillOpacity: 0.25
 )
 ```
@@ -139,16 +140,13 @@ let path = Path(
 
 #### Auto-fitting features
 
-If you're adding overlays to your map, you can use the `autoFitFeatures` flag to automatically calculate the center and zoom that best shows them off. 
+If you’re adding overlays to your map, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off. 
 
 ```swift
-let map = StaticMap(
-    mapID: "<#your map ID#>",
-    size: CGSize(width: 500, height: 300),
-    accessToken: "<#your API token#>",
-    overlays: [path, geojsonOverlay, markerOverlay, customMarker],
-    autoFitFeatures: true
-)
+var options = SnapshotOptions(
+    mapIdentifier: "<#your map ID#>",
+    size: CGSize(width: 500, height: 300))
+options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
 ```
 
 ![](screenshots/autofit.png)

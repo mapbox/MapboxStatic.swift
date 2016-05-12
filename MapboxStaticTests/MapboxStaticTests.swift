@@ -5,11 +5,10 @@ import Foundation
 import MapboxStatic
 
 class MapboxStaticTests: XCTestCase {
-
     let mapID = "justin.o0mbikn2"
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
     let serviceHost = "api.mapbox.com"
-
+    
     override func setUp() {
         super.setUp()
         OHHTTPStubs.removeAllStubs()
@@ -33,16 +32,12 @@ class MapboxStaticTests: XCTestCase {
 
         // implicit args
         let versionExp = expectationWithDescription("API version should be v4")
-        let centerExp = expectationWithDescription("center should default to Null Island")
-        let zoomExp = expectationWithDescription("zoom should default to z0")
         let formatExp = expectationWithDescription("format should default to PNG")
         let retinaExp = expectationWithDescription("retina should default to disabled")
         let overlaysExp = expectationWithDescription("overlays should default to empty")
-        let autoFitExp = expectationWithDescription("auto-fit should default to disabled")
+        let autoFitExp = expectationWithDescription("auto-fit should default to enabled")
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken)
+        let options = SnapshotOptions(mapIdentifier: mapID, size: CGSize(width: 200, height: 200))
 
         stub(isHost(serviceHost)) { [unowned self] request in
             if let p = request.URL?.pathComponents {
@@ -52,14 +47,16 @@ class MapboxStaticTests: XCTestCase {
                 if p[2] == self.mapID {
                     mapIDExp.fulfill()
                 }
-                if p[3].componentsSeparatedByString(",")[0] == "0.0" &&
-                   p[3].componentsSeparatedByString(",")[1] == "0.0" {
-                    centerExp.fulfill()
+                if p[3] == "auto" {
+                    overlaysExp.fulfill()
+                    autoFitExp.fulfill()
                 }
-                if p[3].componentsSeparatedByString(",")[2] == "0" {
-                    zoomExp.fulfill()
+                if p[4].componentsSeparatedByString(".").first == "200x200" && UIScreen.mainScreen().scale == 1 {
+                    retinaExp.fulfill()
+                    sizeExp.fulfill()
                 }
-                if p[4].componentsSeparatedByString(".").first == "200x200" {
+                else if p[4].componentsSeparatedByString(".").first == "200x200@2x" && UIScreen.mainScreen().scale > 1 {
+                    retinaExp.fulfill()
                     sizeExp.fulfill()
                 }
                 if p[4].componentsSeparatedByString(".").last == "png" {
@@ -72,34 +69,31 @@ class MapboxStaticTests: XCTestCase {
                 accessTokenExp.fulfill()
             }
             if query.keys.contains("access_token") && query.count == 1 {
-                retinaExp.fulfill()
-                overlaysExp.fulfill()
-                autoFitExp.fulfill()
             }
 
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
     func testCenter() {
-        let lat = 5.971389
-        let lon = 116.095278
+        let center = CLLocationCoordinate2D(latitude: 5.971389, longitude: 116.095278)
 
         let centerExp = expectationWithDescription("center should get passed intact")
 
-        let map = StaticMap(mapID: mapID,
-            center: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-            size: CGSize(width: 400, height: 400),
-            accessToken: accessToken)
+        let options = SnapshotOptions(
+            mapIdentifier: mapID,
+            centerCoordinate: center,
+            zoomLevel: 0,
+            size: CGSize(width: 200, height: 200))
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents {
                 let n = p[3].componentsSeparatedByString(",")
-                if n[0] == String(lon) && n[1] == String(lat) {
+                if n[0] == String(center.longitude) && n[1] == String(center.latitude) {
                     centerExp.fulfill()
                 }
             }
@@ -107,7 +101,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -117,10 +111,11 @@ class MapboxStaticTests: XCTestCase {
 
         let zoomExp = expectationWithDescription("zoom should get passed intact")
 
-        let map = StaticMap(mapID: mapID,
-            zoom: zoom,
-            size: CGSize(width: 300, height: 300),
-            accessToken: accessToken)
+        let options = SnapshotOptions(
+            mapIdentifier: mapID,
+            centerCoordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            zoomLevel: zoom,
+            size: CGSize(width: 300, height: 300))
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents {
@@ -133,7 +128,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -147,14 +142,15 @@ class MapboxStaticTests: XCTestCase {
 
         let sizeExp = expectationWithDescription("size should pass intact for non-retina")
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: CGFloat(width), height: CGFloat(height)),
-            accessToken: accessToken)
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: CGFloat(width), height: CGFloat(height)))
+        options.scale = 1
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents,
-              let f = p.last,
-              let s = f.componentsSeparatedByString(".").first?.componentsSeparatedByString("x")
+              f = p.last,
+              s = f.componentsSeparatedByString(".").first?.componentsSeparatedByString("x")
               where s[0] == String(width) && s[1] == String(height) {
                     sizeExp.fulfill()
             }
@@ -162,16 +158,16 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
     func testFormats() {
         var expectations = [XCTestExpectation]()
-        var maps = [StaticMap]()
+        var optionses = [SnapshotOptions]()
 
-        for format in StaticMap.ImageFormat.allValues {
+        for format in SnapshotFormat.allValues {
             let exp = expectationWithDescription("\(format.rawValue) extension should be requested")
             expectations.append(exp)
 
@@ -180,14 +176,15 @@ class MapboxStaticTests: XCTestCase {
                 return OHHTTPStubsResponse()
             }
 
-            maps.append(StaticMap(mapID: mapID,
-                size: CGSize(width: 200, height: 200),
-                accessToken: accessToken,
-                format: format))
+            var options = SnapshotOptions(
+                mapIdentifier: mapID,
+                size: CGSize(width: 200, height: 200))
+            options.format = format
+            optionses.append(options)
         }
 
-        for map in maps {
-            map.image
+        for options in optionses {
+            Snapshot(options: options, accessToken: accessToken).image
         }
 
         waitForExpectationsWithTimeout(1, handler: nil)
@@ -196,10 +193,10 @@ class MapboxStaticTests: XCTestCase {
     func testRetina() {
         let retinaExp = expectationWithDescription("retina should request @2x asset")
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            retina: true)
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.scale = 2
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents,
@@ -213,7 +210,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -234,10 +231,10 @@ class MapboxStaticTests: XCTestCase {
             label: label,
             color: color)
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            overlays: [markerOverlay])
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.overlays = [markerOverlay]
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents
@@ -249,34 +246,33 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
     func testOverlayCustomMarker() {
-        let lat = 45.522
-        let lon = -122.69
+        let coordinate = CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69)
         let markerURL = NSURL(string: "https://mapbox.com/guides/img/rocket.png")!
         let encodedMarker = "https:%2F%2Fmapbox.com%2Fguides%2Fimg%2Frocket.png"
 
         let markerExp = expectationWithDescription("custom marker argument should properly encode request")
 
         let customMarker = CustomMarker(
-            coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-            URLString: markerURL.absoluteString)
+            coordinate: coordinate,
+            URL: markerURL)
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            overlays: [customMarker])
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.overlays = [customMarker]
 
         stub(isHost(serviceHost)) { request in
             // We need to examine the URL string here manually since NSURL.pathComponents()
             // decodes the percent escaping, which does us no good.
             if let requestString = request.URL?.absoluteString {
                 let m = requestString.componentsSeparatedByString("/")
-                if m[5] == "url-\(encodedMarker)(\(lon),\(lat))" {
+                if m[5] == "url-\(encodedMarker)(\(coordinate.longitude),\(coordinate.latitude))" {
                     markerExp.fulfill()
                 }
             }
@@ -284,7 +280,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -303,10 +299,10 @@ class MapboxStaticTests: XCTestCase {
         let geojsonString = try! NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
         let geojsonOverlay = GeoJSON(string: geojsonString as String)
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            overlays: [geojsonOverlay])
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.overlays = [geojsonOverlay]
 
         stub(isHost(serviceHost)) { request in
             // We need to examine the URL string here manually since NSURL.pathComponents()
@@ -321,7 +317,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -365,10 +361,10 @@ class MapboxStaticTests: XCTestCase {
 
         let pathExp = expectationWithDescription("raw path argument should properly encode request")
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            overlays: [path])
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.overlays = [path]
 
         stub(isHost(serviceHost)) { request in
             // We need to examine the URL string here manually since NSURL.pathComponents()
@@ -384,7 +380,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
         
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
         
         waitForExpectationsWithTimeout(1, handler: nil)
     }
@@ -398,11 +394,10 @@ class MapboxStaticTests: XCTestCase {
             label: "cafe",
             color: UIColor.brownColor())
 
-        let map = StaticMap(mapID: mapID,
-            size: CGSize(width: 200, height: 200),
-            accessToken: accessToken,
-            overlays: [markerOverlay],
-            autoFitFeatures: true)
+        var options = SnapshotOptions(
+            mapIdentifier: mapID,
+            size: CGSize(width: 200, height: 200))
+        options.overlays = [markerOverlay]
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents
@@ -413,7 +408,7 @@ class MapboxStaticTests: XCTestCase {
             return OHHTTPStubsResponse()
         }
 
-        map.image
+        Snapshot(options: options, accessToken: accessToken).image
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }

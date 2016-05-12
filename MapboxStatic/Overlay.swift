@@ -1,15 +1,25 @@
 import CoreLocation
 import UIKit
 
+let allowedCharacterSet: NSCharacterSet = {
+    let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+    characterSet.removeCharactersInString("/")
+    return characterSet
+}()
+
 public enum MarkerSize: String {
     case Small  = "s"
     case Medium = "m"
     case Large  = "l"
 }
 
-public class Overlay {
+public class Overlay: CustomStringConvertible {
 
     internal var requestString: String = ""
+    
+    public var description: String {
+        return requestString
+    }
 
 }
 
@@ -39,12 +49,12 @@ public class Marker: Overlay {
 public class CustomMarker: Overlay {
 
     public init(coordinate: CLLocationCoordinate2D,
-         URLString: String) {
+         URL: NSURL) {
 
         super.init()
 
         requestString = "url-"
-        requestString += URLString.stringByAddingPercentEncodingWithAllowedCharacters(StaticMap.allowedCharacterSet())!
+        requestString += URL.absoluteString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         requestString += "(\(coordinate.longitude),\(coordinate.latitude))"
     }
 
@@ -57,7 +67,7 @@ public class GeoJSON: Overlay {
         super.init()
 
         requestString = "geojson("
-        requestString += string.stringByAddingPercentEncodingWithAllowedCharacters(StaticMap.allowedCharacterSet())!
+        requestString += string.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         requestString += ")"
 
     }
@@ -101,7 +111,7 @@ public class Path: Overlay {
             output += encodeCoordinate(a.longitude - b.longitude)
         }
 
-        return output.stringByAddingPercentEncodingWithAllowedCharacters(StaticMap.allowedCharacterSet())!
+        return output.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
     }
 
     public init(pathCoordinates: [CLLocationCoordinate2D],
@@ -113,15 +123,7 @@ public class Path: Overlay {
 
         super.init()
 
-        requestString = "path"
-        requestString += "-\(strokeWidth)"
-        requestString += "+" +  strokeColor.toHexString()
-        requestString += "-\(strokeOpacity)"
-        requestString += "+" + fillColor.toHexString()
-        requestString += "-\(fillOpacity)"
-        requestString += "("
-        requestString += polylineEncode(pathCoordinates)
-        requestString += ")"
+        requestString = "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)+\(fillColor.toHexString())-\(fillOpacity)(\(polylineEncode(pathCoordinates)))"
 
     }
 
