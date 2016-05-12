@@ -141,7 +141,7 @@ public struct Snapshot {
         }
     }
     
-    public func image(completionHandler handler: SnapshotCompletionHandler) {
+    public func image(completionHandler handler: SnapshotCompletionHandler) -> NSURLSessionDataTask {
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL) { (data, response, error) in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -155,5 +155,6 @@ public struct Snapshot {
             }
         }
         task.resume()
+        return task
     }
 }
