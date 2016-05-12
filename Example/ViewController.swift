@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        let map = MapboxStaticMap(
+        let map = StaticMap(
             mapID: "justin.tm2-basemap",
             center: CLLocationCoordinate2D(latitude: 45, longitude: -122),
             zoom: 6,

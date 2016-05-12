@@ -22,12 +22,12 @@ You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) fro
 
 ### Basics
 
-The main map class is `MapboxStaticMap`. To create a basic map, specify the center, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and pixel size: 
+The main map class is `StaticMap`. To create a basic map, specify the center, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and pixel size: 
 
 ```swift
 import MapboxStatic
 
-let map = MapboxStaticMap(
+let map = StaticMap(
     mapID: "<#your map ID#>",
     center: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoom: 13,
@@ -67,7 +67,7 @@ You pass overlays as the `overlays: [Overlay]` parameter during map creation. He
 #### Marker
 
 ```swift
-let markerOverlay = MapboxStaticMap.Marker(
+let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
     label: "cafe",
@@ -80,7 +80,7 @@ let markerOverlay = MapboxStaticMap.Marker(
 #### Custom Marker
 
 ```swift
-let customMarker = MapboxStaticMap.CustomMarker(
+let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
     URLString: "https://mapbox.com/guides/img/rocket.png"
 )
@@ -91,12 +91,12 @@ let customMarker = MapboxStaticMap.CustomMarker(
 #### GeoJSON
 
 ```swift
-var geojsonOverlay: MapboxStaticMap.GeoJSON!
+let geojsonOverlay: GeoJSON
 
 do {
     let geojsonURL = NSURL(string: "http://git.io/vCv9U")
     let geojsonString = try NSString(contentsOfURL: geojsonURL!, encoding: NSUTF8StringEncoding)
-    geojsonOverlay = MapboxStaticMap.GeoJSON(string: geojsonString as String)
+    geojsonOverlay = GeoJSON(string: geojsonString as String)
 }
 ```
 
@@ -105,7 +105,7 @@ do {
 #### Path
 
 ```swift
-let path = MapboxStaticMap.Path(
+let path = Path(
     pathCoordinates: [
         CLLocationCoordinate2D(
             latitude: 45.52475063103141, longitude: -122.68209457397461
@@ -142,10 +142,10 @@ let path = MapboxStaticMap.Path(
 If you're adding overlays to your map, you can use the `autoFitFeatures` flag to automatically calculate the center and zoom that best shows them off. 
 
 ```swift
-let map = MapboxStaticMap(
-    mapID: <your map ID>,
+let map = StaticMap(
+    mapID: "<#your map ID#>",
     size: CGSize(width: 500, height: 300),
-    accessToken: <your API token>,
+    accessToken: "<#your API token#>",
     overlays: [path, geojsonOverlay, markerOverlay, customMarker],
     autoFitFeatures: true
 )
