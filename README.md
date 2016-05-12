@@ -4,7 +4,7 @@
 
 MapboxStatic.swift makes it easy to connect your iOS, tvOS, or watchOS application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
 
-Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*. 
+Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*.
 
 MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
 
@@ -30,14 +30,14 @@ import MapboxStatic
 let options = SnapshotOptions(
     mapIdentifier: "<#your map ID#>",
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoomLevel: 6,
+    zoomLevel: 13,
     size: CGSize(width: 200, height: 200))
 let snapshot = Snapshot(
     options: options,
     accessToken: "<#your access token#>")
 ```
 
-Then, you can either retrieve an image synchronously (blocking the calling thread): 
+Then, you can either retrieve an image synchronously (blocking the calling thread):
 
 ```swift
 imageView.image = snapshot.image
@@ -45,7 +45,7 @@ imageView.image = snapshot.image
 
 ![](./screenshots/map.png)
 
-Or you can pass a completion handler to update the UI thread after the image is retrieved: 
+Or you can pass a completion handler to update the UI thread after the image is retrieved:
 
 ```swift
 snapshot.image { (image, error) in
@@ -53,7 +53,7 @@ snapshot.image { (image, error) in
 }
 ```
 
-If you're using your own HTTP library or routines, you can also retrieve a snapshot’s `requestURL` property. 
+If you're using your own HTTP library or routines, you can also retrieve a snapshot’s `requestURL` property.
 
 ```swift
 let requestURLToFetch = snapshot.requestURL
@@ -78,12 +78,12 @@ let markerOverlay = Marker(
 
 ![](./screenshots/marker.png)
 
-#### Custom Marker
+#### Custom marker
 
 ```swift
 let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    URL: NSURL(string: "https://mapbox.com/guides/img/rocket.png")!
+    URL: NSURL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!
 )
 ```
 
@@ -140,7 +140,7 @@ let path = Path(
 
 #### Auto-fitting features
 
-If you’re adding overlays to your map, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off. 
+If you’re adding overlays to your map, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
 
 ```swift
 var options = SnapshotOptions(
@@ -151,13 +151,13 @@ options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
 
 ![](screenshots/autofit.png)
 
-#### File format & quality
+#### File format and quality
 
 When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).
 
 #### Attribution
 
-Be sure to [attribute your map](https://www.mapbox.com/api-documentation/#static-classic) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from. 
+Be sure to [attribute your map](https://www.mapbox.com/api-documentation/#static-classic) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from.
 
 ### Tests
 
