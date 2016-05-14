@@ -19,10 +19,18 @@ public enum SnapshotFormat: String {
     public static let allValues = [PNG, PNG256, PNG128, PNG64, PNG32, JPEG, JPEG90, JPEG80, JPEG70]
 }
 
+/**
+ A structure that determines what a snapshot depicts and how it is formatted.
+ */
 public struct SnapshotOptions {
     // MARK: Configuring the Map Data
     
-    public var mapIdentifier: String
+    /**
+     An array of map identifiers of the form `username.id`, identifying the tile sets to display in the snapshot. This array may not be empty.
+     
+     The order of the map identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
+     */
+    public var mapIdentifiers: [String]
     public var overlays: [Overlay] = []
     public var centerCoordinate: CLLocationCoordinate2D? = nil
     public var zoomLevel: Int?
@@ -39,19 +47,22 @@ public struct SnapshotOptions {
     public var showsAttribution: Bool = true
     public var showsLogo: Bool = true
     
-    public init(mapIdentifier: String, size: CGSize) {
-        self.mapIdentifier = mapIdentifier
+    public init(mapIdentifiers: [String], size: CGSize) {
+        self.mapIdentifiers = mapIdentifiers
         self.size = size
     }
     
-    public init(mapIdentifier: String, centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
-        self.mapIdentifier = mapIdentifier
+    public init(mapIdentifiers: [String], centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
+        self.mapIdentifiers = mapIdentifiers
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
         self.size = size
     }
     
     private var path: String {
+        assert(!mapIdentifiers.isEmpty, "At least one map identifier must be specified.")
+        let tileSetComponent = mapIdentifiers.joinWithSeparator(",")
+        
         let position: String
         if let centerCoordinate = centerCoordinate {
             position = "\(centerCoordinate.longitude),\(centerCoordinate.latitude),\(zoomLevel ?? 0)"
@@ -66,7 +77,7 @@ public struct SnapshotOptions {
             overlaysComponent = "/" + overlays.map { return "\($0)" }.joinWithSeparator(",")
         }
         
-        return "/v4/\(mapIdentifier)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(format.rawValue)"
+        return "/v4/\(tileSetComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(format.rawValue)"
     }
     
     private var params: [NSURLQueryItem] {

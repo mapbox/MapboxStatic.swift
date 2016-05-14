@@ -29,7 +29,7 @@ The main static map class is `Snapshot`. To create a basic snapshot, create a `S
 import MapboxStatic
 
 let options = SnapshotOptions(
-    mapIdentifier: "<#your map ID#>",
+    mapIdentifiers: ["<#your map ID#>"],
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoomLevel: 13,
     size: CGSize(width: 200, height: 200))
@@ -145,7 +145,7 @@ If you’re adding overlays to your map, leave out the center coordinate and zoo
 
 ```swift
 var options = SnapshotOptions(
-    mapIdentifier: "<#your map ID#>",
+    mapIdentifiers: ["<#your map ID#>"],
     size: CGSize(width: 500, height: 300))
 options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
 ```
