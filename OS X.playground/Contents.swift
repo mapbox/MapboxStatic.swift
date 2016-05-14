@@ -16,7 +16,7 @@ import MapboxStatic
  You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
  */
 
-let mapIdentifier = "justin.tm2-basemap"
+let mapIdentifiers = ["justin.tm2-basemap"]
 let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
 
 /*:
@@ -26,7 +26,7 @@ let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-H
  */
 
 var options = SnapshotOptions(
-    mapIdentifier: mapIdentifier,
+    mapIdentifiers: mapIdentifiers,
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoomLevel: 13,
     size: CGSize(width: 300, height: 200))

@@ -11,7 +11,7 @@ import MapboxStatic
 #endif
 
 class MapboxStaticTests: XCTestCase {
-    let mapID = "justin.o0mbikn2"
+    let mapIdentifiers = ["justin.o0mbikn2"]
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
     let serviceHost = "api.mapbox.com"
     
@@ -43,7 +43,7 @@ class MapboxStaticTests: XCTestCase {
         let overlaysExp = expectationWithDescription("overlays should default to empty")
         let autoFitExp = expectationWithDescription("auto-fit should default to enabled")
 
-        let options = SnapshotOptions(mapIdentifier: mapID, size: CGSize(width: 200, height: 200))
+        let options = SnapshotOptions(mapIdentifiers: mapIdentifiers, size: CGSize(width: 200, height: 200))
         
         let scale: CGFloat
         #if os(iOS)
@@ -57,7 +57,7 @@ class MapboxStaticTests: XCTestCase {
                 if p[1] == "v4" {
                     versionExp.fulfill()
                 }
-                if p[2] == self.mapID {
+                if p[2] == self.mapIdentifiers.joinWithSeparator(",") {
                     mapIDExp.fulfill()
                 }
                 if p[3] == "auto" {
@@ -98,7 +98,7 @@ class MapboxStaticTests: XCTestCase {
         let centerExp = expectationWithDescription("center should get passed intact")
 
         let options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             centerCoordinate: center,
             zoomLevel: 0,
             size: CGSize(width: 200, height: 200))
@@ -125,7 +125,7 @@ class MapboxStaticTests: XCTestCase {
         let zoomExp = expectationWithDescription("zoom should get passed intact")
 
         let options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             centerCoordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
             zoomLevel: zoom,
             size: CGSize(width: 300, height: 300))
@@ -156,7 +156,7 @@ class MapboxStaticTests: XCTestCase {
         let sizeExp = expectationWithDescription("size should pass intact for non-retina")
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: CGFloat(width), height: CGFloat(height)))
         options.scale = 1
 
@@ -190,7 +190,7 @@ class MapboxStaticTests: XCTestCase {
             }
 
             var options = SnapshotOptions(
-                mapIdentifier: mapID,
+                mapIdentifiers: mapIdentifiers,
                 size: CGSize(width: 200, height: 200))
             options.format = format
             optionses.append(options)
@@ -207,7 +207,7 @@ class MapboxStaticTests: XCTestCase {
         let retinaExp = expectationWithDescription("retina should request @2x asset")
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.scale = 2
 
@@ -245,7 +245,7 @@ class MapboxStaticTests: XCTestCase {
             color: color)
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [markerOverlay]
 
@@ -276,7 +276,7 @@ class MapboxStaticTests: XCTestCase {
             URL: markerURL)
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [customMarker]
 
@@ -313,7 +313,7 @@ class MapboxStaticTests: XCTestCase {
         let geojsonOverlay = GeoJSON(string: geojsonString as String)
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [geojsonOverlay]
 
@@ -375,7 +375,7 @@ class MapboxStaticTests: XCTestCase {
         let pathExp = expectationWithDescription("raw path argument should properly encode request")
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [path]
 
@@ -408,7 +408,7 @@ class MapboxStaticTests: XCTestCase {
             color: .brownColor())
 
         var options = SnapshotOptions(
-            mapIdentifier: mapID,
+            mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [markerOverlay]
 

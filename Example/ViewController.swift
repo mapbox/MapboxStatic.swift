@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let options = SnapshotOptions(
-            mapIdentifier: "justin.tm2-basemap",
+            mapIdentifiers: ["justin.tm2-basemap"],
             centerCoordinate: CLLocationCoordinate2D(latitude: 45, longitude: -122),
             zoomLevel: 6,
             size: imageView.bounds.size)
