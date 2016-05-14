@@ -26,7 +26,7 @@ public struct SnapshotOptions {
     // MARK: Configuring the Map Data
     
     /**
-     An array of map identifiers of the form `username.id`, identifying the tile sets to display in the snapshot. This array may not be empty.
+     An array of [map identifiers](https://www.mapbox.com/help/define-map-id/) of the form `username.id`, identifying the [tile sets](https://www.mapbox.com/help/define-tileset/) to display in the snapshot. This array may not be empty.
      
      The order of the map identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
      */
