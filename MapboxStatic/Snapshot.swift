@@ -103,10 +103,6 @@ public struct SnapshotOptions {
     public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
     #endif
     
-    public var showsAttribution: Bool = true
-    
-    public var showsLogo: Bool = true
-    
     /**
      Initializes a snapshot options instance that causes a snapshotter object to automatically choose a center coordinate and zoom level that fits any overlays.
      
@@ -167,10 +163,7 @@ public struct SnapshotOptions {
      - returns: The query URL component as an array of name/value pairs.
      */
     private var params: [NSURLQueryItem] {
-        return [
-            NSURLQueryItem(name: "attribution", value: "\(showsAttribution)"),
-            NSURLQueryItem(name: "logo", value: "\(showsLogo)"),
-        ]
+        return []
     }
 }
 
