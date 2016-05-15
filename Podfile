@@ -7,14 +7,21 @@ use_frameworks!
 #  shared_pods
 #end
 
+def shared_test_pods
+  pod 'OHHTTPStubs/Swift', '~> 5.0.0', :configurations => ['Debug']
+end
+
 target 'MapboxStaticTests' do
   platform :ios, '8.0'
-  pod 'OHHTTPStubs/Swift', '~> 4.4.0'
-#  shared_pods
+  shared_test_pods
 end
 
 target 'MapboxStaticMacTests' do
   platform :osx, '10.10'
-  pod 'OHHTTPStubs/Swift', '~> 4.4.0'
-#  shared_pods
+  shared_test_pods
+end
+
+target 'MapboxStaticTVTests' do
+  platform :tvos, '9.0'
+  shared_test_pods
 end
