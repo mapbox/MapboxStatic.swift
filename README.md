@@ -19,11 +19,11 @@ pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.
 
 ## Usage
 
-You will need a [map ID](https://www.mapbox.com/foundations/glossary/#mapid) from a [custom map style](https://www.mapbox.com/foundations/customizing-the-map) on your Mapbox account. You will also need an [access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. 
+You will need a [map ID](https://www.mapbox.com/help/define-map-id/) from a [custom map style](https://www.mapbox.com/help/customizing-the-map/) on your Mapbox account. You will also need an [access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. 
 
 ### Basics
 
-The main static map class is `Snapshot`. To create a basic snapshot, create a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/guides/how-web-maps-work/#tiles-and-zoom-levels), and point size:
+The main static map class is `Snapshot`. To create a basic snapshot, create a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and point size:
 
 ```swift
 import MapboxStatic
@@ -72,7 +72,7 @@ You add overlays to the `overlays` field in the `SnapshotOptions` object. Here a
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
-    label: "cafe",
+    label: .IconName("cafe"),
     color: .brownColor()
 )
 ```
@@ -98,7 +98,7 @@ let geojsonOverlay: GeoJSON
 do {
     let geojsonURL = NSURL(string: "http://git.io/vCv9U")!
     let geojsonString = try NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
-    geojsonOverlay = GeoJSON(string: geojsonString as String)
+    geojsonOverlay = GeoJSON(objectString: geojsonString as String)
 }
 ```
 
@@ -108,7 +108,7 @@ do {
 
 ```swift
 let path = Path(
-    pathCoordinates: [
+    coordinates: [
         CLLocationCoordinate2D(
             latitude: 45.52475063103141, longitude: -122.68209457397461
         ),
