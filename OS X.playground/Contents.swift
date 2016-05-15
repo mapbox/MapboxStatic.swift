@@ -153,5 +153,5 @@ snapshot.image
  
  ### Attribution
  
- Be sure to [attribute your map](https://www.mapbox.com/api-documentation/#static-classic) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
+ Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
  */

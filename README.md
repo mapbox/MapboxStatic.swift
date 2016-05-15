@@ -158,7 +158,7 @@ When creating a map, you can also specify PNG or JPEG image format as well as va
 
 #### Attribution
 
-Be sure to [attribute your map](https://www.mapbox.com/api-documentation/#static-classic) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox's map data comes from.
+Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your application. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
 
 ### Tests
 
@@ -170,4 +170,4 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 
 ### More info
 
-This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and OS X. More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and OS X. (Open the playgrounds inside of MapboxStatic.xcworkspace.) More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
