@@ -1,8 +1,8 @@
 import CoreLocation
-#if os(iOS)
-    import UIKit
-#elseif os(OSX)
+#if os(OSX)
     import Cocoa
+#else
+    import UIKit
 #endif
 
 /**
@@ -83,16 +83,7 @@ public struct SnapshotOptions {
      */
     public var size: CGSize
     
-    #if os(iOS)
-    /**
-     The scale factor of the image.
-     
-     If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
-     
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
-     */
-    public var scale: CGFloat = UIScreen.mainScreen().scale
-    #elseif os(OSX)
+    #if os(OSX)
     /**
      The scale factor of the image.
      
@@ -101,6 +92,15 @@ public struct SnapshotOptions {
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+    #else
+    /**
+     The scale factor of the image.
+     
+     If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
+     
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     */
+    public var scale: CGFloat = UIScreen.mainScreen().scale
     #endif
     
     /**
@@ -175,10 +175,10 @@ public struct SnapshotOptions {
  If you use `Snapshot` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use the [vector Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static).
  */
 public struct Snapshot {
-    #if os(iOS)
-    public typealias Image = UIImage
-    #elseif os(OSX)
+    #if os(OSX)
     public typealias Image = NSImage
+    #else
+    public typealias Image = UIImage
     #endif
     
     /**

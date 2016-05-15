@@ -4,10 +4,10 @@ import CoreLocation
 import Foundation
 import MapboxStatic
 
-#if os(iOS)
-    typealias Color = UIColor
-#elseif os(OSX)
+#if os(OSX)
     typealias Color = NSColor
+#else
+    typealias Color = UIColor
 #endif
 
 class MapboxStaticTests: XCTestCase {
@@ -46,10 +46,10 @@ class MapboxStaticTests: XCTestCase {
         let options = SnapshotOptions(mapIdentifiers: mapIdentifiers, size: CGSize(width: 200, height: 200))
         
         let scale: CGFloat
-        #if os(iOS)
-            scale = UIScreen.mainScreen().scale
-        #elseif os(OSX)
+        #if os(OSX)
             scale = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+        #else
+            scale = UIScreen.mainScreen().scale
         #endif
 
         stub(isHost(serviceHost)) { [unowned self] request in

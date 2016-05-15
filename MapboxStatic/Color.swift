@@ -1,9 +1,9 @@
-#if os(iOS)
-    import UIKit
-    typealias Color = UIColor
-#elseif os(OSX)
+#if os(OSX)
     import Cocoa
     typealias Color = NSColor
+#else
+    import UIKit
+    typealias Color = UIColor
 #endif
 
 internal extension Color {
@@ -14,10 +14,10 @@ internal extension Color {
         var a: CGFloat = 0
 
         let color: Color
-        #if os(iOS)
-            color = self
-        #elseif os(OSX)
+        #if os(OSX)
             color = colorUsingColorSpaceName(NSCalibratedRGBColorSpace)!
+        #else
+            color = self
         #endif
         color.getRed(&r, green: &g, blue: &b, alpha: &a)
 
@@ -53,10 +53,10 @@ internal extension Color {
             }
         }
 
-        #if os(iOS)
-            self.init(red: r, green: g, blue: b, alpha: 1)
-        #elseif os(OSX)
+        #if os(OSX)
             self.init(calibratedRed: r, green: g, blue: b, alpha: 1)
+        #else
+            self.init(red: r, green: g, blue: b, alpha: 1)
         #endif
     }
 }

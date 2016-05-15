@@ -1,8 +1,8 @@
 import CoreLocation
-#if os(iOS)
-    import UIKit
-#elseif os(OSX)
+#if os(OSX)
     import Cocoa
+#else
+    import UIKit
 #endif
 
 let allowedCharacterSet: NSCharacterSet = {
@@ -32,10 +32,10 @@ public protocol Point: Overlay {
  The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
  */
 public struct Marker: Point {
-    #if os(iOS)
-    public typealias Color = UIColor
-    #elseif os(OSX)
+    #if os(OSX)
     public typealias Color = NSColor
+    #else
+    public typealias Color = UIColor
     #endif
     
     /**
@@ -200,10 +200,10 @@ public struct GeoJSON: Overlay {
  A polyline or polygon placed along a path atop the map.
  */
 public struct Path: Overlay {
-    #if os(iOS)
-    public typealias Color = UIColor
-    #elseif os(OSX)
+    #if os(OSX)
     public typealias Color = NSColor
+    #else
+    public typealias Color = UIColor
     #endif
     
     /**
