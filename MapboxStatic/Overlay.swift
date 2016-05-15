@@ -6,8 +6,8 @@ import CoreLocation
 #endif
 
 let allowedCharacterSet: NSCharacterSet = {
-    let characterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-    characterSet.removeCharactersInString("/")
+    let characterSet = NSCharacterSet.URLPathAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+    characterSet.removeCharactersInString("/)")
     return characterSet
 }()
 
@@ -304,11 +304,11 @@ public struct Path: Overlay {
             output += encodeCoordinate(a.longitude - b.longitude)
         }
 
-        return output.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        return output
     }
     
     public var description: String {
-        let encodedPolyline = polylineEncode(coordinates)
+        let encodedPolyline = polylineEncode(coordinates).stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         return "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)+\(fillColor.toHexString())-\(fillOpacity)(\(encodedPolyline))"
     }
 }
