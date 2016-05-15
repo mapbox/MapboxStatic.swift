@@ -2,7 +2,8 @@
 
 [📱&nbsp;![iOS Build Status](https://www.bitrise.io/app/faa9d29af3e2ce7a.svg?token=_oJK999amHl5HlK3a82PZA&branch=master)](https://www.bitrise.io/app/faa9d29af3e2ce7a) &nbsp;&nbsp;&nbsp;
 [🖥💻&nbsp;![OS X Build Status](https://www.bitrise.io/app/5f8ae2a3885d8173.svg?token=h1v7gr7qNFK4dq2mZPwb-w&branch=master)](https://www.bitrise.io/app/5f8ae2a3885d8173) &nbsp;&nbsp;&nbsp;
-[📺&nbsp;![tvOS Build Status](https://www.bitrise.io/app/76cb1d11414a5b80.svg?token=zz77y14EcDGj5ZbKBidJXw)](https://www.bitrise.io/app/76cb1d11414a5b80)
+[📺&nbsp;![tvOS Build Status](https://www.bitrise.io/app/76cb1d11414a5b80.svg?token=zz77y14EcDGj5ZbKBidJXw&branch=master)](https://www.bitrise.io/app/76cb1d11414a5b80) &nbsp;&nbsp;&nbsp;
+[⌚️&nbsp;![watchOS Build Status](https://www.bitrise.io/app/cd7bcec99edcea34.svg?token=ayBsg-HC9sXmqiFlMDYK0A&branch=master)](https://www.bitrise.io/app/cd7bcec99edcea34)
 
 MapboxStatic.swift makes it easy to connect your iOS, OS X, tvOS, or watchOS application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
 
