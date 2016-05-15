@@ -11,8 +11,8 @@ import MapboxStatic
 #endif
 
 class MapboxStaticTests: XCTestCase {
-    let mapIdentifiers = ["justin.o0mbikn2"]
-    let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
+    let mapIdentifiers = ["mapbox.mapbox-streets-v6"]
+    let accessToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
     let serviceHost = "api.mapbox.com"
     
     override func setUp() {
