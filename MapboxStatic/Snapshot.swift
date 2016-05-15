@@ -6,35 +6,35 @@ import CoreLocation
 #endif
 
 /**
- An image format supported by the classic Static API.
- */
-public enum SnapshotFormat: String {
-    /**
-     True-color Portable Network Graphics format.
-     */
-    case PNG = "png"
-    /// 32-color color-indexed Portable Network Graphics format.
-    case PNG32 = "png32"
-    /// 64-color color-indexed Portable Network Graphics format.
-    case PNG64 = "png64"
-    /// 128-color color-indexed Portable Network Graphics format.
-    case PNG128 = "png128"
-    /// 256-color color-indexed Portable Network Graphics format.
-    case PNG256 = "png256"
-    /// JPEG format at default quality.
-    case JPEG = "jpg"
-    /// JPEG format at 70% quality.
-    case JPEG70 = "jpg70"
-    /// JPEG format at 80% quality.
-    case JPEG80 = "jpg80"
-    /// JPEG format at 90% quality.
-    case JPEG90 = "jpg90"
-}
-
-/**
  A structure that determines what a snapshot depicts and how it is formatted.
  */
 public struct SnapshotOptions {
+    /**
+     An image format supported by the classic Static API.
+     */
+    public enum Format: String {
+        /**
+         True-color Portable Network Graphics format.
+         */
+        case PNG = "png"
+        /// 32-color color-indexed Portable Network Graphics format.
+        case PNG32 = "png32"
+        /// 64-color color-indexed Portable Network Graphics format.
+        case PNG64 = "png64"
+        /// 128-color color-indexed Portable Network Graphics format.
+        case PNG128 = "png128"
+        /// 256-color color-indexed Portable Network Graphics format.
+        case PNG256 = "png256"
+        /// JPEG format at default quality.
+        case JPEG = "jpg"
+        /// JPEG format at 70% quality.
+        case JPEG70 = "jpg70"
+        /// JPEG format at 80% quality.
+        case JPEG80 = "jpg80"
+        /// JPEG format at 90% quality.
+        case JPEG90 = "jpg90"
+    }
+    
     // MARK: Configuring the Map Data
     
     /**
@@ -74,9 +74,9 @@ public struct SnapshotOptions {
     /**
      The format of the image to output.
      
-     The default value of this property is `SnapshotFormat.PNG`, causing the image to be output in true-color Portable Network Graphics format.
+     The default value of this property is `SnapshotOptions.Format.PNG`, causing the image to be output in true-color Portable Network Graphics format.
      */
-    public var format: SnapshotFormat = .PNG
+    public var format: Format = .PNG
     
     /**
      The logical size of the image to output, measured in points.

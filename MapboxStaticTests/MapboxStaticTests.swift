@@ -180,7 +180,7 @@ class MapboxStaticTests: XCTestCase {
         var expectations = [XCTestExpectation]()
         var optionses = [SnapshotOptions]()
         
-        let allFormats: [SnapshotFormat] = [
+        let allFormats: [SnapshotOptions.Format] = [
             .PNG, .PNG32, .PNG64, .PNG128, .PNG256,
             .JPEG, .JPEG70, .JPEG80, .JPEG90,
         ]
