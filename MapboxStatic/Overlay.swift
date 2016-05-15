@@ -1,4 +1,3 @@
-import CoreLocation
 #if os(OSX)
     import Cocoa
 #else
@@ -14,13 +13,13 @@ let allowedCharacterSet: NSCharacterSet = {
 /**
  A feature that can be drawn atop the map.
  */
-public protocol Overlay: CustomStringConvertible {
-    var description: String { get }
-}
+@objc(MBOverlay)
+public protocol Overlay: NSObjectProtocol {}
 
 /**
  A feature centered over a specific geographic coordinate.
  */
+@objc(MBPoint)
 public protocol Point: Overlay {
     /// The geographic coordinate to place the point at.
     var coordinate: CLLocationCoordinate2D { get }
@@ -31,23 +30,18 @@ public protocol Point: Overlay {
  
  The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
  */
-public struct Marker: Point {
-    #if os(OSX)
-    public typealias Color = NSColor
-    #else
-    public typealias Color = UIColor
-    #endif
-    
+@objc(MBMarker)
+public class Marker: NSObject, Point {
     /**
      The size of a marker.
      */
-    public enum Size: String {
+    @objc(MBMarkerSize) public enum Size: Int {
         /// Small.
-        case Small  = "s"
+        case Small
         /// Medium.
-        case Medium = "m"
+        case Medium
         /// Large.
-        case Large  = "l"
+        case Large
     }
     
     /// Something simple that can be placed atop a marker.
@@ -75,54 +69,112 @@ public struct Marker: Point {
     }
     
     /// The geographic coordinate to place the marker at.
-    public let coordinate: CLLocationCoordinate2D
+    public var coordinate: CLLocationCoordinate2D
     
     /**
      The size of the marker.
      
      By default, the marker is small.
      */
-    public let size: Size
+    public var size: Size
     
     /**
      A label or Maki icon to place atop the pin.
      
      By default, the marker has no label.
      */
-    public let label: Label?
+    public var label: Label?
     
+    #if os(OSX)
     /**
      The color of the pin part of the marker.
      
      By default, the marker is red.
      */
-    public let color: Color
+    public var color: NSColor = .redColor()
+    #else
+    /**
+     The color of the pin part of the marker.
+     
+     By default, the marker is red.
+     */
+    public var color: UIColor = .redColor()
+    #endif
     
     /**
-     Initializes a marker with the given options.
+     Initializes a red marker with the given options.
      
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.
      - parameter label: A label or Maki icon to place atop the pin.
      */
-    public init(coordinate: CLLocationCoordinate2D,
-                size: Size = .Small,
-                label: Label? = nil,
-                color: Color = .redColor()) {
+    private init(coordinate: CLLocationCoordinate2D,
+                 size: Size = .Small,
+                 label: Label? = nil) {
         self.coordinate = coordinate
         self.size = size
         self.label = label
-        self.color = color
     }
     
-    public var description: String {
+    /**
+     Initializes a red marker labeled with an English letter.
+     
+     - parameter coordinate: The geographic coordinate to place the marker at.
+     - parameter size: The size of the marker.
+     - parameter letter: An English letter from A through Z to place atop the pin.
+     */
+    public convenience init(coordinate: CLLocationCoordinate2D,
+                            size: Size = .Small,
+                            letter: String) {
+        assert(letter.characters.count == 1, "A marker can only fit one letter.")
+        self.init(coordinate: coordinate, size: size, label: .Letter(letter.characters.first!))
+    }
+    
+    /**
+     Initializes a red marker labeled with a one- or two-digit number.
+     
+     - parameter coordinate: The geographic coordinate to place the marker at.
+     - parameter size: The size of the marker.
+     - parameter number: A number from 0 through 99 to place atop the pin.
+     */
+    public convenience init(coordinate: CLLocationCoordinate2D,
+                            size: Size = .Small,
+                            number: Int) {
+        self.init(coordinate: coordinate, size: size, label: .Number(number))
+    }
+    
+    /**
+     Initializes a red marker with a Maki icon.
+     
+     - parameter coordinate: The geographic coordinate to place the marker at.
+     - parameter size: The size of the marker.
+     - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
+     */
+    public convenience init(coordinate: CLLocationCoordinate2D,
+                            size: Size = .Small,
+                            iconName: String) {
+        self.init(coordinate: coordinate, size: size, label: .IconName(iconName))
+    }
+    
+    public override var description: String {
+        let sizeComponent: String
+        switch size {
+        case .Small:
+            sizeComponent = "s"
+        case .Medium:
+            sizeComponent = "m"
+        case .Large:
+            sizeComponent = "l"
+        }
+        
         let labelComponent: String
         if let label = label {
             labelComponent = "-\(label)"
         } else {
             labelComponent = ""
         }
-        return "pin-\(size.rawValue)\(labelComponent)+\(color.toHexString())(\(coordinate.longitude),\(coordinate.latitude))"
+        
+        return "pin-\(sizeComponent)\(labelComponent)+\(color.toHexString())(\(coordinate.longitude),\(coordinate.latitude))"
     }
 }
 
@@ -131,16 +183,17 @@ public struct Marker: Point {
  
  The marker image is always centered on the specified location. When creating an asymmetric marker like a pin, make sure that the tip of the pin is at the center of the image.
  */
-public struct CustomMarker: Overlay {
+@objc(MBCustomMarker)
+public class CustomMarker: NSObject, Overlay {
     /// The geographic coordinate to place the marker at.
-    public let coordinate: CLLocationCoordinate2D
+    public var coordinate: CLLocationCoordinate2D
     
     /**
      The HTTP or HTTPS URL of the image.
      
      The API caches custom marker images according to the `Expires` and `Cache-Control` headers. If you host the image on your own server, make sure that at least one of these headers is set to an proper value to prevent repeated requests for the image.
      */
-    public let URL: NSURL
+    public var URL: NSURL
     
     /**
      Initializes a marker with the given coordinate and image URL.
@@ -153,7 +206,7 @@ public struct CustomMarker: Overlay {
         self.URL = URL
     }
     
-    public var description: String {
+    public override var description: String {
         let escapedURL = URL.absoluteString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         return "url-\(escapedURL)(\(coordinate.longitude),\(coordinate.latitude))"
     }
@@ -164,11 +217,12 @@ public struct CustomMarker: Overlay {
  
  GeoJSON features may be styled according to the [simplestyle specification](https://github.com/mapbox/simplestyle-spec).
  */
-public struct GeoJSON: Overlay {
+@objc(MBGeoJSON)
+public class GeoJSON: NSObject, Overlay {
     /// String representation of the GeoJSON object to display.
-    public let objectString: String
+    public var objectString: String
     
-    public var description: String {
+    public override var description: String {
         let escapedObjectString = objectString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         return "geojson(\(escapedObjectString))"
     }
@@ -177,10 +231,13 @@ public struct GeoJSON: Overlay {
      Initializes a [GeoJSON](https://www.mapbox.com/help/define-geojson/) overlay with the given GeoJSON object.
      
      - parameter object: A valid GeoJSON object.
-     - throws: If the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
+     - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
-    public init(object: [String: AnyObject]) throws {
-        let data = try NSJSONSerialization.dataWithJSONObject(object, options: [])
+    public init?(object: [String: AnyObject]) {
+        // This should be a throwing initializer rather than a failiable initializer, but inheriting from Objective-C triggers a warning: no calls to throwing functions occur within 'try' expression
+        guard let data = try? NSJSONSerialization.dataWithJSONObject(object, options: []) else {
+            return nil
+        }
         objectString = String(data: data, encoding: NSUTF8StringEncoding)!
     }
     
@@ -199,75 +256,118 @@ public struct GeoJSON: Overlay {
 /**
  A polyline or polygon placed along a path atop the map.
  */
-public struct Path: Overlay {
-    #if os(OSX)
-    public typealias Color = NSColor
-    #else
-    public typealias Color = UIColor
-    #endif
-    
+@objc(MBPath)
+public class Path: NSObject, Overlay {
     /**
      An array of geographic coordinates defining the path of the overlay.
      */
-    public let coordinates: [CLLocationCoordinate2D]
+    public var coordinates: [CLLocationCoordinate2D]
     
     /**
      The stroke width of the overlay, measured in points.
      
      By default, the overlay is 1 point wide.
      */
-    public let strokeWidth: Int
+    public var strokeWidth: Int = 1
     
+    #if os(OSX)
     /**
      The stroke color of the overlay.
      
      By default, the overlay is stroked with Davy’s gray (33% white).
      */
-    public let strokeColor: Color
-    
-    /**
-     The stroke opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
-     
-     By default, the overlay’s stroke is completely opaque.
-     */
-    public let strokeOpacity: Double
+    public var strokeColor = NSColor(hexString: "555")
     
     /**
      The fill color of the overlay.
      
      By default, the overlay is filled with Davy’s gray (33% white).
      */
-    public let fillColor: Color
+    public var fillColor = NSColor(hexString: "555")
+    #else
+    /**
+     The stroke color of the overlay.
+     
+     By default, the overlay is stroked with Davy’s gray (33% white).
+     */
+    public var strokeColor = UIColor(hexString: "555")
+    
+    /**
+     The fill color of the overlay.
+     
+     By default, the overlay is filled with Davy’s gray (33% white).
+     */
+    public var fillColor = UIColor(hexString: "555")
+    #endif
+    
+    /**
+     The stroke opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
+     
+     By default, the overlay’s stroke is completely opaque.
+     */
+    public var strokeOpacity: Double = 1
     
     /**
      The fill opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
      
      By default, the overlay’s fill is completely transparent.
      */
-    public let fillOpacity: Double
+    public var fillOpacity: Double = 0
     
     /**
-     Initializes a polyline or polygon overlay with the given options.
+     Initializes a polyline overlay with the given vertices.
+     
+     The polyline is 1 point wide and stroked with Davy’s gray (33% white).
+     
+     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillOpacity` property to a value greater than 0.0.
      
      - parameter coordinates: An array of geographic coordinates defining the path of the overlay.
-     - parameter strokeWidth: The stroke width of the overlay, measured in points.
-     - parameter strokeColor: The stroke color of the overlay.
-     - parameter strokeOpacity: The stroke opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
-     - parameter fillColor: The fill color of the overlay.
-     - parameter fillOpacity: The fill opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
      */
-    public init(coordinates: [CLLocationCoordinate2D],
-                strokeWidth: Int = 1,
-                strokeColor: Color = Color(hexString: "555"),
-                strokeOpacity: Double = 1.0,
-                fillColor: Color = Color(hexString: "555"),
-                fillOpacity: Double = 0) {
+    public init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
-        self.strokeWidth = strokeWidth
-        self.strokeColor = strokeColor
-        self.strokeOpacity = strokeOpacity
-        self.fillColor = fillColor
-        self.fillOpacity = fillOpacity
+    }
+    
+    /**
+     Initializes a polyline overlay with the given vertices, stored in a C array.
+     
+     The polyline is 1 point wide and stroked with Davy’s gray (33% white).
+     
+     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillOpacity` property to a value greater than 0.0.
+     
+     - parameter coordinates: An array of geographic coordinates defining the path of the overlay.
+     
+     - note: This initializer is intended for Objective-C usage. In Swift code, use the `init(coordinates:)` initializer.
+     */
+    public init(coordinates: UnsafePointer<CLLocationCoordinate2D>, count: UInt) {
+        var convertedCoordinates: [CLLocationCoordinate2D] = []
+        for i in 0..<count {
+            convertedCoordinates.append(coordinates.advancedBy(Int(i)).memory)
+        }
+        self.coordinates = convertedCoordinates
+    }
+    
+    /**
+     The number of vertices.
+     
+     - note: This initializer is intended for Objective-C usage. In Swift code, use the `coordinates.count` property.
+     */
+    public var coordinateCount: UInt {
+        return UInt(coordinates.count)
+    }
+    
+    /**
+     Retrieves the vertices.
+     
+     - parameter coordinates: A pointer to a C array of `CLLocationCoordinate2D` instances. On output, this array contains all the vertices of the overlay.
+     
+     - precondition: `coordinates` must be large enough to hold `coordinateCount` instances of `CLLocationCoordinate2D`.
+     
+     - note: This initializer is intended for Objective-C usage. In Swift code, use the `coordinates` property.
+     */
+    public func getCoordinates(coordinates: UnsafeMutablePointer<CLLocationCoordinate2D>) {
+        for i in 0..<self.coordinates.count {
+            coordinates.advancedBy(i).memory = self.coordinates[i]
+        }
     }
     
     // based on https://github.com/mapbox/polyline
@@ -307,7 +407,7 @@ public struct Path: Overlay {
         return output
     }
     
-    public var description: String {
+    public override var description: String {
         let encodedPolyline = polylineEncode(coordinates).stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         return "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)+\(fillColor.toHexString())-\(fillOpacity)(\(encodedPolyline))"
     }

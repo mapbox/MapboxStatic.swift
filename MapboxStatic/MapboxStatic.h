@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 //! Project version number for MapboxStatic.
 FOUNDATION_EXPORT double MapboxStaticVersionNumber;

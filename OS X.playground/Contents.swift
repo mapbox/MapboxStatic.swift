@@ -64,8 +64,8 @@ snapshot.requestURL
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
-    label: .IconName("cafe"),
-    color: .brownColor())
+    iconName: "cafe")
+markerOverlay.color = .brownColor()
 options.overlays = [markerOverlay]
 snapshot = Snapshot(
     options: options,
@@ -122,11 +122,11 @@ let path = Path(
         CLLocationCoordinate2D(
             latitude: 45.52475063103141,
             longitude: -122.68209457397461),
-    ],
-    strokeWidth: 2,
-    strokeColor: .blackColor(),
-    fillColor: .redColor(),
-    fillOpacity: 0.25)
+    ])
+path.strokeWidth = 2
+path.strokeColor = .blackColor()
+path.fillColor = .redColor()
+path.fillOpacity = 0.25
 options.overlays = [path]
 snapshot = Snapshot(
     options: options,

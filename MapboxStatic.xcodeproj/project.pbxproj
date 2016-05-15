@@ -33,6 +33,11 @@
 		DAF15A441CE8FBBC0040E86C /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
 		DAF15A451CE8FBBC0040E86C /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBAB1CE4026B00B07762 /* Overlay.swift */; };
 		DAF15A461CE8FBBC0040E86C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* Color.swift */; };
+		DAF15A4F1CE90A6C0040E86C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A4E1CE90A6C0040E86C /* main.m */; };
+		DAF15A521CE90A6C0040E86C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A511CE90A6C0040E86C /* AppDelegate.m */; };
+		DAF15A551CE90A6C0040E86C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A541CE90A6C0040E86C /* ViewController.m */; };
+		DAF15A631CE90CE70040E86C /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
+		DAF15A641CE90CE70040E86C /* MapboxStatic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
 		DD685BA91BDB14C1002E2BB2 /* MapboxStaticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */; };
 		DDAD19711BD9B1A50057AC9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */; };
@@ -62,6 +67,13 @@
 			remoteGlobalIDString = DA4B4B911CE8F83100296A52;
 			remoteInfo = MapboxStaticTV;
 		};
+		DAF15A651CE90CE70040E86C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDAD19511BD9B1780057AC9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA20FB9A1CE3DEBB00B07762;
+			remoteInfo = MapboxStatic;
+		};
 		DDAD197D1BD9B24F0057AC9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DDAD19511BD9B1780057AC9F /* Project object */;
@@ -79,6 +91,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DA20FBA31CE3DEBB00B07762 /* MapboxStatic.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A671CE90CE70040E86C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAF15A641CE90CE70040E86C /* MapboxStatic.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,8 +128,14 @@
 		DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF15A4B1CE90A6C0040E86C /* MapboxStatic (Objective-C).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapboxStatic (Objective-C).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF15A4E1CE90A6C0040E86C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DAF15A501CE90A6C0040E86C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DAF15A511CE90A6C0040E86C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DAF15A531CE90A6C0040E86C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DAF15A541CE90A6C0040E86C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DD0C88161BE1A9D400606E9F /* polyline.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = polyline.geojson; sourceTree = "<group>"; };
-		DDAD19591BD9B1780057AC9F /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAD19591BD9B1780057AC9F /* MapboxStatic (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapboxStatic (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDAD196F1BD9B1A50057AC9F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDAD19701BD9B1A50057AC9F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +194,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAF15A481CE90A6C0040E86C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAF15A631CE90CE70040E86C /* MapboxStatic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DDAD19561BD9B1780057AC9F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +256,27 @@
 			path = MapboxStatic;
 			sourceTree = "<group>";
 		};
+		DAF15A4C1CE90A6C0040E86C /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+				DAF15A501CE90A6C0040E86C /* AppDelegate.h */,
+				DAF15A511CE90A6C0040E86C /* AppDelegate.m */,
+				DAF15A531CE90A6C0040E86C /* ViewController.h */,
+				DAF15A541CE90A6C0040E86C /* ViewController.m */,
+				DAF15A4E1CE90A6C0040E86C /* main.m */,
+			);
+			name = "Objective-C";
+			sourceTree = "<group>";
+		};
+		DAF15A621CE90AA60040E86C /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */,
+				DDAD19701BD9B1A50057AC9F /* ViewController.swift */,
+			);
+			name = Swift;
+			sourceTree = "<group>";
+		};
 		DD0C88151BE1A9CC00606E9F /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +303,7 @@
 		DDAD195A1BD9B1780057AC9F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DDAD19591BD9B1780057AC9F /* Example.app */,
+				DDAD19591BD9B1780057AC9F /* MapboxStatic (Swift).app */,
 				DDAD19781BD9B24F0057AC9F /* MapboxStaticTests.xctest */,
 				DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */,
 				DA20FBB91CE4757E00B07762 /* MapboxStatic.framework */,
@@ -253,6 +311,7 @@
 				DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */,
 				DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */,
 				DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */,
+				DAF15A4B1CE90A6C0040E86C /* MapboxStatic (Objective-C).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -260,8 +319,8 @@
 		DDAD195B1BD9B1780057AC9F /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */,
-				DDAD19701BD9B1A50057AC9F /* ViewController.swift */,
+				DAF15A621CE90AA60040E86C /* Swift */,
+				DAF15A4C1CE90A6C0040E86C /* Objective-C */,
 				DDAD196F1BD9B1A50057AC9F /* Info.plist */,
 			);
 			path = Example;
@@ -429,9 +488,28 @@
 			productReference = DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		DDAD19581BD9B1780057AC9F /* Example */ = {
+		DAF15A4A1CE90A6C0040E86C /* Example (Objective-C) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DDAD196B1BD9B1780057AC9F /* Build configuration list for PBXNativeTarget "Example" */;
+			buildConfigurationList = DAF15A5F1CE90A6C0040E86C /* Build configuration list for PBXNativeTarget "Example (Objective-C)" */;
+			buildPhases = (
+				DAF15A471CE90A6C0040E86C /* Sources */,
+				DAF15A481CE90A6C0040E86C /* Frameworks */,
+				DAF15A491CE90A6C0040E86C /* Resources */,
+				DAF15A671CE90CE70040E86C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAF15A661CE90CE70040E86C /* PBXTargetDependency */,
+			);
+			name = "Example (Objective-C)";
+			productName = ExampleObjC;
+			productReference = DAF15A4B1CE90A6C0040E86C /* MapboxStatic (Objective-C).app */;
+			productType = "com.apple.product-type.application";
+		};
+		DDAD19581BD9B1780057AC9F /* Example (Swift) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDAD196B1BD9B1780057AC9F /* Build configuration list for PBXNativeTarget "Example (Swift)" */;
 			buildPhases = (
 				DDAD19551BD9B1780057AC9F /* Sources */,
 				DDAD19561BD9B1780057AC9F /* Frameworks */,
@@ -443,9 +521,9 @@
 			dependencies = (
 				DA20FBA11CE3DEBB00B07762 /* PBXTargetDependency */,
 			);
-			name = Example;
+			name = "Example (Swift)";
 			productName = "Sample App";
-			productReference = DDAD19591BD9B1780057AC9F /* Example.app */;
+			productReference = DDAD19591BD9B1780057AC9F /* MapboxStatic (Swift).app */;
 			productType = "com.apple.product-type.application";
 		};
 		DDAD19771BD9B24F0057AC9F /* MapboxStaticTests */ = {
@@ -497,6 +575,9 @@
 					DAF15A3A1CE8FB8D0040E86C = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
+					DAF15A4A1CE90A6C0040E86C = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					DDAD19581BD9B1780057AC9F = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -518,7 +599,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DDAD19581BD9B1780057AC9F /* Example */,
+				DDAD19581BD9B1780057AC9F /* Example (Swift) */,
+				DAF15A4A1CE90A6C0040E86C /* Example (Objective-C) */,
 				DA20FB9A1CE3DEBB00B07762 /* MapboxStatic */,
 				DDAD19771BD9B24F0057AC9F /* MapboxStaticTests */,
 				DA20FBB81CE4757E00B07762 /* MapboxStaticMac */,
@@ -569,6 +651,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DAF15A391CE8FB8D0040E86C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A491CE90A6C0040E86C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -787,6 +876,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAF15A471CE90A6C0040E86C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAF15A551CE90A6C0040E86C /* ViewController.m in Sources */,
+				DAF15A521CE90A6C0040E86C /* AppDelegate.m in Sources */,
+				DAF15A4F1CE90A6C0040E86C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DDAD19551BD9B1780057AC9F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -822,9 +921,14 @@
 			target = DA4B4B911CE8F83100296A52 /* MapboxStaticTV */;
 			targetProxy = DA4B4B9D1CE8F83100296A52 /* PBXContainerItemProxy */;
 		};
+		DAF15A661CE90CE70040E86C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA20FB9A1CE3DEBB00B07762 /* MapboxStatic */;
+			targetProxy = DAF15A651CE90CE70040E86C /* PBXContainerItemProxy */;
+		};
 		DDAD197E1BD9B24F0057AC9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DDAD19581BD9B1780057AC9F /* Example */;
+			target = DDAD19581BD9B1780057AC9F /* Example (Swift) */;
 			targetProxy = DDAD197D1BD9B24F0057AC9F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1072,6 +1176,32 @@
 			};
 			name = Release;
 		};
+		DAF15A601CE90A6C0040E86C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = Example/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.ObjC;
+				PRODUCT_NAME = "MapboxStatic (Objective-C)";
+			};
+			name = Debug;
+		};
+		DAF15A611CE90A6C0040E86C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = Example/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.ObjC;
+				PRODUCT_NAME = "MapboxStatic (Objective-C)";
+			};
+			name = Release;
+		};
 		DDAD19691BD9B1780057AC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1165,8 +1295,8 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
+				PRODUCT_NAME = "MapboxStatic (Swift)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1179,8 +1309,8 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
+				PRODUCT_NAME = "MapboxStatic (Swift)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1267,6 +1397,16 @@
 				DAF15A411CE8FB8D0040E86C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAF15A5F1CE90A6C0040E86C /* Build configuration list for PBXNativeTarget "Example (Objective-C)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAF15A601CE90A6C0040E86C /* Debug */,
+				DAF15A611CE90A6C0040E86C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DDAD19541BD9B1780057AC9F /* Build configuration list for PBXProject "MapboxStatic" */ = {
 			isa = XCConfigurationList;
@@ -1277,7 +1417,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DDAD196B1BD9B1780057AC9F /* Build configuration list for PBXNativeTarget "Example" */ = {
+		DDAD196B1BD9B1780057AC9F /* Build configuration list for PBXNativeTarget "Example (Swift)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDAD196C1BD9B1780057AC9F /* Debug */,

@@ -155,7 +155,7 @@ class MapboxStaticTests: XCTestCase {
 
         let sizeExp = expectationWithDescription("size should pass intact for non-retina")
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: CGFloat(width), height: CGFloat(height)))
         options.scale = 1
@@ -184,23 +184,39 @@ class MapboxStaticTests: XCTestCase {
             .PNG, .PNG32, .PNG64, .PNG128, .PNG256,
             .JPEG, .JPEG70, .JPEG80, .JPEG90,
         ]
-        switch allFormats[0] {
-        case .PNG, .PNG32, .PNG64, .PNG128, .PNG256,
-             .JPEG, .JPEG70, .JPEG80, .JPEG90:
-            break
-        // If you get a “Switch must be exhaustive, consider adding a default clause” error here, allFormats is missing a format.
-        }
         
         for format in allFormats {
             let exp = expectationWithDescription("\(format.rawValue) extension should be requested")
             expectations.append(exp)
 
-            stub(isExtension(format.rawValue)) { request in
+            let pathExtension: String
+            switch format {
+            case .PNG:
+                pathExtension = "png"
+            case .PNG32:
+                pathExtension = "png32"
+            case .PNG64:
+                pathExtension = "png64"
+            case .PNG128:
+                pathExtension = "png128"
+            case .PNG256:
+                pathExtension = "png256"
+            case .JPEG:
+                pathExtension = "jpg"
+            case .JPEG70:
+                pathExtension = "jpg70"
+            case .JPEG80:
+                pathExtension = "jpg80"
+            case .JPEG90:
+                pathExtension = "jpg90"
+            // If you get a “Switch must be exhaustive, consider adding a default clause” error here, allFormats is also missing a format.
+            }
+            stub(isExtension(pathExtension)) { request in
                 exp.fulfill()
                 return OHHTTPStubsResponse()
             }
 
-            var options = SnapshotOptions(
+            let options = SnapshotOptions(
                 mapIdentifiers: mapIdentifiers,
                 size: CGSize(width: 200, height: 200))
             options.format = format
@@ -217,7 +233,7 @@ class MapboxStaticTests: XCTestCase {
     func testRetina() {
         let retinaExp = expectationWithDescription("retina should request @2x asset")
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.scale = 2
@@ -242,7 +258,7 @@ class MapboxStaticTests: XCTestCase {
     func testOverlayBuiltinMarker() {
         let lat = 45.52
         let lon = -122.681944
-        let size = Marker.Size.Medium
+        let size = "m"
         let label = "cafe"
         let color = Color.brownColor()
         let colorRaw = "996633"
@@ -251,18 +267,18 @@ class MapboxStaticTests: XCTestCase {
 
         let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-            size: size,
-            label: .IconName("cafe"),
-            color: color)
+            size: .Medium,
+            iconName: "cafe")
+        markerOverlay.color = color
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [markerOverlay]
 
         stub(isHost(serviceHost)) { request in
             if let p = request.URL?.pathComponents
-              where p[3] == "pin-" + size.rawValue + "-" + label +
+              where p[3] == "pin-" + size + "-" + label +
                             "+" + colorRaw + "(\(lon),\(lat))" {
                 markerExp.fulfill()
             }
@@ -286,7 +302,7 @@ class MapboxStaticTests: XCTestCase {
             coordinate: coordinate,
             URL: markerURL)
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [customMarker]
@@ -323,7 +339,7 @@ class MapboxStaticTests: XCTestCase {
         let geojsonString = try! NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
         let geojsonOverlay = GeoJSON(objectString: geojsonString as String)
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [geojsonOverlay]
@@ -376,16 +392,16 @@ class MapboxStaticTests: XCTestCase {
                 CLLocationCoordinate2D(
                     latitude: 45.52475063103141, longitude: -122.68209457397461
                 )
-            ],
-            strokeWidth: strokeWidth,
-            strokeColor: strokeColor,
-            strokeOpacity: strokeOpacity,
-            fillColor: fillColor,
-            fillOpacity: fillOpacity)
+            ])
+        path.strokeWidth = strokeWidth
+        path.strokeColor = strokeColor
+        path.strokeOpacity = strokeOpacity
+        path.fillColor = fillColor
+        path.fillOpacity = fillOpacity
 
         let pathExp = expectationWithDescription("raw path argument should properly encode request")
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [path]
@@ -415,10 +431,10 @@ class MapboxStaticTests: XCTestCase {
         let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
             size: .Medium,
-            label: .IconName("cafe"),
-            color: .brownColor())
+            iconName: "cafe")
+        markerOverlay.color = .brownColor()
 
-        var options = SnapshotOptions(
+        let options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
             size: CGSize(width: 200, height: 200))
         options.overlays = [markerOverlay]
