@@ -163,8 +163,8 @@ public struct SnapshotOptions {
             assert(zoomLevel <= 20, "maximum zoom is 20")
         }
         
-        assert(size.width  * scale <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
-        assert(size.height * scale <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
+        assert(size.width  * min(scale, 2) <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
+        assert(size.height * min(scale, 2) <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
         
         assert(overlays.count <= 100, "maximum number of overlays is 100")
         
