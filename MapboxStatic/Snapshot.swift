@@ -147,6 +147,16 @@ public struct SnapshotOptions {
             position = "auto"
         }
         
+        if let zoomLevel = zoomLevel {
+            assert(zoomLevel >= 0,  "minimum zoom is 0")
+            assert(zoomLevel <= 20, "maximum zoom is 20")
+        }
+        
+        assert(size.width  * scale <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
+        assert(size.height * scale <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
+        
+        assert(overlays.count <= 100, "maximum number of overlays is 100")
+        
         let overlaysComponent: String
         if overlays.isEmpty {
             overlaysComponent = ""
@@ -219,16 +229,6 @@ public struct Snapshot {
             baseURLComponents.host = host
             apiEndpoint = baseURLComponents.string ?? apiEndpoint
         }
-        
-        if let zoomLevel = options.zoomLevel {
-            assert(zoomLevel >= 0,  "minimum zoom is 0")
-            assert(zoomLevel <= 20, "maximum zoom is 20")
-        }
-        
-        assert(options.size.width  * options.scale <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
-        assert(options.size.height * options.scale <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
-        
-        assert(options.overlays.count <= 100, "maximum number of overlays is 100")
     }
     
     /**
