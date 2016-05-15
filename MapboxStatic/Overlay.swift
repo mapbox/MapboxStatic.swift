@@ -7,7 +7,7 @@ import CoreLocation
 
 let allowedCharacterSet: NSCharacterSet = {
     let characterSet = NSCharacterSet.URLPathAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-    characterSet.removeCharactersInString("/")
+    characterSet.removeCharactersInString("/)")
     return characterSet
 }()
 
@@ -304,7 +304,7 @@ public struct Path: Overlay {
             output += encodeCoordinate(a.longitude - b.longitude)
         }
 
-        return output.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        return output
     }
     
     public var description: String {
