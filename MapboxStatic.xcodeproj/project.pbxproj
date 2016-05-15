@@ -29,6 +29,10 @@
 		DA4B4BAC1CE8F87000296A52 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* Color.swift */; };
 		DA4B4BAD1CE8F87700296A52 /* MapboxStaticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */; };
 		DA4B4BAE1CE8F87C00296A52 /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
+		DAF15A431CE8FBBC0040E86C /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DAF15A441CE8FBBC0040E86C /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
+		DAF15A451CE8FBBC0040E86C /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBAB1CE4026B00B07762 /* Overlay.swift */; };
+		DAF15A461CE8FBBC0040E86C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* Color.swift */; };
 		DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
 		DD685BA91BDB14C1002E2BB2 /* MapboxStaticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */; };
 		DDAD19711BD9B1A50057AC9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */; };
@@ -100,6 +104,7 @@
 		DA20FBC21CE4757E00B07762 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD0C88161BE1A9D400606E9F /* polyline.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = polyline.geojson; sourceTree = "<group>"; };
 		DDAD19591BD9B1780057AC9F /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +155,13 @@
 			files = (
 				DA4B4B9C1CE8F83100296A52 /* MapboxStatic.framework in Frameworks */,
 				7208489FA2685C4DF933101B /* Pods_MapboxStaticTVTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A371CE8FB8D0040E86C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +252,7 @@
 				DA20FBC21CE4757E00B07762 /* MapboxStaticTests.xctest */,
 				DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */,
 				DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */,
+				DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -288,6 +301,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA4B4BA91CE8F87000296A52 /* MapboxStatic.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A381CE8FB8D0040E86C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAF15A431CE8FBBC0040E86C /* MapboxStatic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +411,24 @@
 			productReference = DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DAF15A3A1CE8FB8D0040E86C /* MapboxStaticWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAF15A421CE8FB8D0040E86C /* Build configuration list for PBXNativeTarget "MapboxStaticWatch" */;
+			buildPhases = (
+				DAF15A361CE8FB8D0040E86C /* Sources */,
+				DAF15A371CE8FB8D0040E86C /* Frameworks */,
+				DAF15A381CE8FB8D0040E86C /* Headers */,
+				DAF15A391CE8FB8D0040E86C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapboxStaticWatch;
+			productName = MapboxStaticWatch;
+			productReference = DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		DDAD19581BD9B1780057AC9F /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DDAD196B1BD9B1780057AC9F /* Build configuration list for PBXNativeTarget "Example" */;
@@ -455,6 +494,9 @@
 					DA4B4B9A1CE8F83100296A52 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
+					DAF15A3A1CE8FB8D0040E86C = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					DDAD19581BD9B1780057AC9F = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -483,6 +525,7 @@
 				DA20FBC11CE4757E00B07762 /* MapboxStaticMacTests */,
 				DA4B4B911CE8F83100296A52 /* MapboxStaticTV */,
 				DA4B4B9A1CE8F83100296A52 /* MapboxStaticTVTests */,
+				DAF15A3A1CE8FB8D0040E86C /* MapboxStaticWatch */,
 			);
 		};
 /* End PBXProject section */
@@ -522,6 +565,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA4B4BAE1CE8F87C00296A52 /* polyline.geojson in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A391CE8FB8D0040E86C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +774,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA4B4BAD1CE8F87700296A52 /* MapboxStaticTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAF15A361CE8FB8D0040E86C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAF15A451CE8FBBC0040E86C /* Overlay.swift in Sources */,
+				DAF15A441CE8FBBC0040E86C /* Snapshot.swift in Sources */,
+				DAF15A461CE8FBBC0040E86C /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,6 +1024,54 @@
 			};
 			name = Release;
 		};
+		DAF15A401CE8FB8D0040E86C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
+				PRODUCT_NAME = MapboxStatic;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		DAF15A411CE8FB8D0040E86C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
+				PRODUCT_NAME = MapboxStatic;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 		DDAD19691BD9B1780057AC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1151,6 +1259,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DAF15A421CE8FB8D0040E86C /* Build configuration list for PBXNativeTarget "MapboxStaticWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAF15A401CE8FB8D0040E86C /* Debug */,
+				DAF15A411CE8FB8D0040E86C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		DDAD19541BD9B1780057AC9F /* Build configuration list for PBXProject "MapboxStatic" */ = {
 			isa = XCConfigurationList;
