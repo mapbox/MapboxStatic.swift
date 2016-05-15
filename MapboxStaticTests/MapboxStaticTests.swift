@@ -179,8 +179,19 @@ class MapboxStaticTests: XCTestCase {
     func testFormats() {
         var expectations = [XCTestExpectation]()
         var optionses = [SnapshotOptions]()
-
-        for format in SnapshotFormat.allValues {
+        
+        let allFormats: [SnapshotFormat] = [
+            .PNG, .PNG32, .PNG64, .PNG128, .PNG256,
+            .JPEG, .JPEG70, .JPEG80, .JPEG90,
+        ]
+        switch allFormats[0] {
+        case .PNG, .PNG32, .PNG64, .PNG128, .PNG256,
+             .JPEG, .JPEG70, .JPEG80, .JPEG90:
+            break
+        // If you get a “Switch must be exhaustive, consider adding a default clause” error here, allFormats is missing a format.
+        }
+        
+        for format in allFormats {
             let exp = expectationWithDescription("\(format.rawValue) extension should be requested")
             expectations.append(exp)
 
