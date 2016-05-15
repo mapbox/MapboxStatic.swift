@@ -251,6 +251,11 @@ public struct Snapshot {
         ]
     }
     
+    /**
+     Returns an image based on the options in the `options` property.
+     
+     - attention: This property’s getter retrieves the image synchronously over a network connection, blocking the thread on which it is called. If a connection error or server error occurs, the getter returns `nil`. Consider using the asynchronous `image(completionHandler:)` method instead to avoid blocking the calling thread and to get more details about any error that may occur.
+     */
     public var image: Image? {
         if let data = NSData(contentsOfURL: requestURL) {
             return Image(data: data)
