@@ -64,7 +64,7 @@ snapshot.requestURL
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
-    label: "cafe",
+    label: .IconName("cafe"),
     color: .brownColor())
 options.overlays = [markerOverlay]
 snapshot = Snapshot(

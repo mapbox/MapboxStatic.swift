@@ -64,7 +64,7 @@ snapshot.requestURL
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     size: .Medium,
-    label: "cafe",
+    label: .IconName("cafe"),
     color: .brownColor())
 options.overlays = [markerOverlay]
 snapshot = Snapshot(
@@ -91,7 +91,7 @@ let geojsonOverlay: GeoJSON
 do {
     let geojsonURL = NSURL(string: "http://git.io/vCv9U")!
     let geojsonString = try NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
-    geojsonOverlay = GeoJSON(string: geojsonString as String)
+    geojsonOverlay = GeoJSON(objectString: geojsonString as String)
 }
 options.overlays = [geojsonOverlay]
 snapshot = Snapshot(
@@ -103,7 +103,7 @@ snapshot.image
  ### Path
  */
 let path = Path(
-    pathCoordinates: [
+    coordinates: [
         CLLocationCoordinate2D(
             latitude: 45.52475063103141,
             longitude: -122.68209457397461),

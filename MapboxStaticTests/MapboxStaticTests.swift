@@ -231,7 +231,7 @@ class MapboxStaticTests: XCTestCase {
     func testOverlayBuiltinMarker() {
         let lat = 45.52
         let lon = -122.681944
-        let size = MarkerSize.Medium
+        let size = Marker.Size.Medium
         let label = "cafe"
         let color = Color.brownColor()
         let colorRaw = "996633"
@@ -241,7 +241,7 @@ class MapboxStaticTests: XCTestCase {
         let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             size: size,
-            label: label,
+            label: .IconName("cafe"),
             color: color)
 
         var options = SnapshotOptions(
@@ -310,7 +310,7 @@ class MapboxStaticTests: XCTestCase {
         }
 
         let geojsonString = try! NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
-        let geojsonOverlay = GeoJSON(string: geojsonString as String)
+        let geojsonOverlay = GeoJSON(objectString: geojsonString as String)
 
         var options = SnapshotOptions(
             mapIdentifiers: mapIdentifiers,
@@ -346,7 +346,7 @@ class MapboxStaticTests: XCTestCase {
         let encodedPolyline = "(upztG%60jxkVn@al@bo@nFWzuAaTcAyZen@)"
 
         let path = Path(
-            pathCoordinates: [
+            coordinates: [
                 CLLocationCoordinate2D(
                     latitude: 45.52475063103141, longitude: -122.68209457397461
                 ),
@@ -404,7 +404,7 @@ class MapboxStaticTests: XCTestCase {
         let markerOverlay = Marker(
             coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
             size: .Medium,
-            label: "cafe",
+            label: .IconName("cafe"),
             color: .brownColor())
 
         var options = SnapshotOptions(
