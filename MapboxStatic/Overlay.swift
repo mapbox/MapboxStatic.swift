@@ -125,9 +125,8 @@ public class Marker: NSObject, Point {
      */
     public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .Small,
-                            letter: String) {
-        assert(letter.characters.count == 1, "A marker can only fit one letter.")
-        self.init(coordinate: coordinate, size: size, label: .Letter(letter.characters.first!))
+                            letter: UniChar) {
+        self.init(coordinate: coordinate, size: size, label: .Letter(Character(UnicodeScalar(letter))))
     }
     
     /**
