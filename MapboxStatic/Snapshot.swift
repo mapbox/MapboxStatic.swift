@@ -272,7 +272,7 @@ public class Snapshot: NSObject {
      - parameter options: Options that determine the contents and format of the output image.
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
-    public convenience init(options: SnapshotOptions, accessToken: String? = nil) {
+    public convenience init(options: SnapshotOptions, accessToken: String?) {
         self.init(options: options, accessToken: accessToken, host: nil)
     }
     
