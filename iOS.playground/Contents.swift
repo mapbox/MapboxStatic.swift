@@ -147,6 +147,20 @@ snapshot = Snapshot(
 snapshot.image
 
 /*:
+ ### Standalone markers
+ 
+ Use the `MarkerOptions` class to get a standalone marker image, which can be useful if you’re trying to composite it atop a map yourself.
+ */
+let markerOptions = MarkerOptions(
+    size: .Medium,
+    iconName: "cafe")
+markerOptions.color = .brownColor()
+snapshot = Snapshot(
+    options: markerOptions,
+    accessToken: accessToken)
+snapshot.image
+
+/*:
  ### File format and quality
  
  When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).

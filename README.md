@@ -248,6 +248,34 @@ options.overlays = @[path, geojsonOverlay, markerOverlay, customMarker];
 
 ![](screenshots/autofit.png)
 
+#### Standalone markers
+ 
+Use the `MarkerOptions` class to get a standalone marker image, which can be useful if you’re trying to composite it atop a map yourself.
+
+```swift
+// main.swift
+let options = MarkerOptions(
+    size: .Medium,
+    iconName: "cafe")
+options.color = .brownColor()
+let snapshot = Snapshot(
+    options: options,
+    accessToken: "<#your access token#>")
+```
+
+```objc
+// main.m
+MBMarkerOptions *options = [[MBMarkerOptions alloc] initWithSize:MBMarkerSizeMedium
+                                                        iconName:@"cafe"];
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+    options.color = [UIColor brownColor];
+#elif TARGET_OS_MAC
+    options.color = [NSColor brownColor];
+#endif
+MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options
+                                               accessToken:@"<#your access token#>"];
+```
+
 #### File format and quality
 
 When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).

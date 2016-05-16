@@ -9,11 +9,17 @@
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
 
+@objc(MBSnapshotOptionsProtocol)
+public protocol SnapshotOptionsProtocol: NSObjectProtocol {
+    var path: String { get }
+    var params: [NSURLQueryItem] { get }
+}
+
 /**
  A structure that determines what a snapshot depicts and how it is formatted.
  */
 @objc(MBSnapshotOptions)
-public class SnapshotOptions: NSObject {
+public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      An image format supported by the classic Static API.
      */
@@ -149,7 +155,7 @@ public class SnapshotOptions: NSObject {
      
      - returns: An HTTP URL path.
      */
-    private var path: String {
+    public var path: String {
         assert(!mapIdentifiers.isEmpty, "At least one map identifier must be specified.")
         let tileSetComponent = mapIdentifiers.joinWithSeparator(",")
         
@@ -207,7 +213,107 @@ public class SnapshotOptions: NSObject {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    private var params: [NSURLQueryItem] {
+    public var params: [NSURLQueryItem] {
+        return []
+    }
+}
+
+/**
+ A structure that configures a standalone marker image and how it is formatted.
+ */
+@objc(MBMarkerOptions)
+public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
+    #if os(OSX)
+    /**
+     The scale factor of the image.
+     
+     If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
+     
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     */
+    public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+    #elseif os(watchOS)
+    /**
+     The scale factor of the image.
+     
+     If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
+     
+     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     */
+    public var scale: CGFloat = WKInterfaceDevice.currentDevice().screenScale
+    #else
+    /**
+     The scale factor of the image.
+     
+     If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
+     
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     */
+    public var scale: CGFloat = UIScreen.mainScreen().scale
+    #endif
+    
+    /**
+     Initializes a marker options instance.
+     
+     - parameter size: The size of the marker.
+     - parameter label: A label or Maki icon to place atop the pin.
+     */
+    private override init(size: Size, label: Label?) {
+        super.init(size: size, label: label)
+    }
+    
+    /**
+     Initializes a marker options instance that results in a red marker labeled with an English letter.
+     
+     - parameter size: The size of the marker.
+     - parameter letter: An English letter from A through Z to place atop the pin.
+     */
+    public convenience init(size: Size = .Small, letter: UniChar) {
+        self.init(size: size, label: .Letter(Character(UnicodeScalar(letter))))
+    }
+    
+    /**
+     Initializes a marker options instance that results in a red marker labeled with a one- or two-digit number.
+     
+     - parameter size: The size of the marker.
+     - parameter number: A number from 0 through 99 to place atop the pin.
+     */
+    public convenience init(size: Size = .Small, number: Int) {
+        self.init(size: size, label: .Number(number))
+    }
+    
+    /**
+     Initializes a marker options instance that results in a red marker with a Maki icon.
+     
+     - parameter size: The size of the marker.
+     - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
+     */
+    public convenience init(size: Size = .Small, iconName: String) {
+        self.init(size: size, label: .IconName(iconName))
+    }
+    
+    /**
+     The path of the HTTP request URL corresponding to the options in this instance.
+     
+     - returns: An HTTP URL path.
+     */
+    public var path: String {
+        let labelComponent: String
+        if let label = label {
+            labelComponent = "-\(label)"
+        } else {
+            labelComponent = ""
+        }
+        
+        return "/v4/marker/pin-\(size)\(labelComponent)+\(color.toHexString())\(scale > 1 ? "@2x" : "").png"
+    }
+    
+    /**
+     The query component of the HTTP request URL corresponding to the options in this instance.
+     
+     - returns: The query URL component as an array of name/value pairs.
+     */
+    public var params: [NSURLQueryItem] {
         return []
     }
 }
@@ -236,7 +342,7 @@ public class Snapshot: NSObject {
     public typealias CompletionHandler = (image: Image?, error: NSError?) -> Void
     
     /// Options that determine the contents and format of the output image.
-    public let options: SnapshotOptions
+    public let options: SnapshotOptionsProtocol
     
     /// The API endpoint to request the image from.
     private var apiEndpoint: String
@@ -251,7 +357,7 @@ public class Snapshot: NSObject {
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      - parameter host: An optional hostname to the server API. The classic Mapbox Static API endpoint is used by default.
      */
-    public init(options: SnapshotOptions, accessToken: String?, host: String?) {
+    public init(options: SnapshotOptionsProtocol, accessToken: String?, host: String?) {
         let accessToken = accessToken ?? defaultAccessToken
         assert(accessToken != nil && !accessToken!.isEmpty, "A Mapbox access token is required. Go to <https://www.mapbox.com/studio/account/tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Snapshot(options:accessToken:host:) initializer.")
         
@@ -272,7 +378,7 @@ public class Snapshot: NSObject {
      - parameter options: Options that determine the contents and format of the output image.
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
-    public convenience init(options: SnapshotOptions, accessToken: String?) {
+    public convenience init(options: SnapshotOptionsProtocol, accessToken: String?) {
         self.init(options: options, accessToken: accessToken, host: nil)
     }
     
@@ -283,7 +389,7 @@ public class Snapshot: NSObject {
      
      - parameter options: Options that determine the contents and format of the output image.
      */
-    public convenience init(options: SnapshotOptions) {
+    public convenience init(options: SnapshotOptionsProtocol) {
         self.init(options: options, accessToken: nil)
     }
     
