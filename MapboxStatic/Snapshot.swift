@@ -1,4 +1,3 @@
-import CoreLocation
 #if os(OSX)
     import Cocoa
 #elseif os(watchOS)
@@ -7,34 +6,37 @@ import CoreLocation
     import UIKit
 #endif
 
+/// The Mapbox access token specified in the main application bundle’s Info.plist.
+let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
+
 /**
  A structure that determines what a snapshot depicts and how it is formatted.
  */
-public struct SnapshotOptions {
+@objc(MBSnapshotOptions)
+public class SnapshotOptions: NSObject {
     /**
      An image format supported by the classic Static API.
      */
-    public enum Format: String {
-        /**
-         True-color Portable Network Graphics format.
-         */
-        case PNG = "png"
+    @objc(MBSnapshotFormat)
+    public enum Format: Int {
+        /// True-color Portable Network Graphics format.
+        case PNG
         /// 32-color color-indexed Portable Network Graphics format.
-        case PNG32 = "png32"
+        case PNG32
         /// 64-color color-indexed Portable Network Graphics format.
-        case PNG64 = "png64"
+        case PNG64
         /// 128-color color-indexed Portable Network Graphics format.
-        case PNG128 = "png128"
+        case PNG128
         /// 256-color color-indexed Portable Network Graphics format.
-        case PNG256 = "png256"
+        case PNG256
         /// JPEG format at default quality.
-        case JPEG = "jpg"
+        case JPEG
         /// JPEG format at 70% quality.
-        case JPEG70 = "jpg70"
+        case JPEG70
         /// JPEG format at 80% quality.
-        case JPEG80 = "jpg80"
+        case JPEG80
         /// JPEG format at 90% quality.
-        case JPEG90 = "jpg90"
+        case JPEG90
     }
     
     // MARK: Configuring the Map Data
@@ -175,7 +177,29 @@ public struct SnapshotOptions {
             overlaysComponent = "/" + overlays.map { return "\($0)" }.joinWithSeparator(",")
         }
         
-        return "/v4/\(tileSetComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(format.rawValue)"
+        let formatComponent: String
+        switch format {
+        case .PNG:
+            formatComponent = "png"
+        case .PNG32:
+            formatComponent = "png32"
+        case .PNG64:
+            formatComponent = "png64"
+        case .PNG128:
+            formatComponent = "png128"
+        case .PNG256:
+            formatComponent = "png256"
+        case .JPEG:
+            formatComponent = "jpg"
+        case .JPEG70:
+            formatComponent = "jpg70"
+        case .JPEG80:
+            formatComponent = "jpg80"
+        case .JPEG90:
+            formatComponent = "jpg90"
+        }
+        
+        return "/v4/\(tileSetComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(formatComponent)"
     }
     
     /**
@@ -195,7 +219,8 @@ public struct SnapshotOptions {
  
  If you use `Snapshot` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use the [vector Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static).
  */
-public struct Snapshot {
+@objc(MBSnapshot)
+public class Snapshot: NSObject {
     #if os(OSX)
     public typealias Image = NSImage
     #else
@@ -214,32 +239,52 @@ public struct Snapshot {
     public let options: SnapshotOptions
     
     /// The API endpoint to request the image from.
-    private var apiEndpoint: String = "https://api.mapbox.com"
+    private var apiEndpoint: String
     
     /// The Mapbox access token to associate the request with.
     private let accessToken: String
     
-    /// The Mapbox access token specified in the main application bundle’s Info.plist.
-    private static let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
-    
     /**
-     Initializes a newly created snapshot instance with the given options and an optional access token.
+     Initializes a newly created snapshot instance with the given options and an optional access token and host.
      
      - parameter options: Options that determine the contents and format of the output image.
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      - parameter host: An optional hostname to the server API. The classic Mapbox Static API endpoint is used by default.
      */
-    public init(options: SnapshotOptions, accessToken: String = defaultAccessToken ?? "", host: String? = nil) {
-        assert(!accessToken.isEmpty, "A Mapbox access token is required. Go to <https://www.mapbox.com/studio/account/tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Snapshot(options:accessToken:host:) initializer.")
+    public init(options: SnapshotOptions, accessToken: String?, host: String?) {
+        let accessToken = accessToken ?? defaultAccessToken
+        assert(accessToken != nil && !accessToken!.isEmpty, "A Mapbox access token is required. Go to <https://www.mapbox.com/studio/account/tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Snapshot(options:accessToken:host:) initializer.")
         
         self.options = options
-        self.accessToken = accessToken
-        if let host = host {
-            let baseURLComponents = NSURLComponents()
-            baseURLComponents.scheme = "https"
-            baseURLComponents.host = host
-            apiEndpoint = baseURLComponents.string ?? apiEndpoint
-        }
+        self.accessToken = accessToken!
+        
+        let baseURLComponents = NSURLComponents()
+        baseURLComponents.scheme = "https"
+        baseURLComponents.host = host ?? "api.mapbox.com"
+        self.apiEndpoint = baseURLComponents.string!
+    }
+    
+    /**
+     Initializes a newly created snapshot instance with the given options and an optional access token.
+     
+     The snapshot instance sends requests to the classic Mapbox Static API endpoint.
+     
+     - parameter options: Options that determine the contents and format of the output image.
+     - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
+     */
+    public convenience init(options: SnapshotOptions, accessToken: String? = nil) {
+        self.init(options: options, accessToken: accessToken, host: nil)
+    }
+    
+    /**
+     Initializes a newly created snapshot instance with the given options and the default access token.
+     
+     The snapshot instance sends requests to the classic Mapbox Static API endpoint.
+     
+     - parameter options: Options that determine the contents and format of the output image.
+     */
+    public convenience init(options: SnapshotOptions) {
+        self.init(options: options, accessToken: nil)
     }
     
     /**

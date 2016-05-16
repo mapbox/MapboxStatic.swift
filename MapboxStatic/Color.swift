@@ -31,12 +31,9 @@ internal extension Color {
     convenience init(hexString: String) {
         var hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
 
-        if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 3 {
-            let r = Array(arrayLiteral: hexString)[0]
-            let g = Array(arrayLiteral: hexString)[1]
-            let b = Array(arrayLiteral: hexString)[2]
-
-            hexString = r + r + g + g + b + b
+        if hexString.characters.count == 3 {
+            let digits = Array(hexString.characters)
+            hexString = "\(digits[0])\(digits[0])\(digits[1])\(digits[1])\(digits[2])\(digits[2])"
         }
 
         var r: CGFloat = 0
