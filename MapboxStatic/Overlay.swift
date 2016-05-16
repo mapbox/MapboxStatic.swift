@@ -26,22 +26,32 @@ public protocol Point: Overlay {
 }
 
 /**
- A pin-shaped marker placed at a specific point on the map.
- 
- The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
+ A pin-shaped marker image.
  */
-@objc(MBMarker)
-public class Marker: NSObject, Point {
+@objc(MBMarkerImage)
+public class MarkerImage: NSObject {
     /**
      The size of a marker.
      */
-    @objc(MBMarkerSize) public enum Size: Int {
+    @objc(MBMarkerSize)
+    public enum Size: Int, CustomStringConvertible {
         /// Small.
         case Small
         /// Medium.
         case Medium
         /// Large.
         case Large
+        
+        public var description: String {
+            switch self {
+            case .Small:
+                return "s"
+            case .Medium:
+                return "m"
+            case .Large:
+                return "l"
+            }
+        }
     }
     
     /// Something simple that can be placed atop a marker.
@@ -67,9 +77,6 @@ public class Marker: NSObject, Point {
             }
         }
     }
-    
-    /// The geographic coordinate to place the marker at.
-    public var coordinate: CLLocationCoordinate2D
     
     /**
      The size of the marker.
@@ -102,6 +109,26 @@ public class Marker: NSObject, Point {
     #endif
     
     /**
+     Initializes a red marker image with the given options.
+     
+     - parameter size: The size of the marker.
+     - parameter label: A label or Maki icon to place atop the pin.
+     */
+    internal init(size: Size, label: Label?) {
+        self.size = size
+        self.label = label
+    }
+}
+
+/**
+ A pin-shaped marker placed at a specific point on the map.
+ */
+@objc(MBMarker)
+public class Marker: MarkerImage, Point {
+    /// The geographic coordinate to place the marker at.
+    public var coordinate: CLLocationCoordinate2D
+    
+    /**
      Initializes a red marker with the given options.
      
      - parameter coordinate: The geographic coordinate to place the marker at.
@@ -110,10 +137,9 @@ public class Marker: NSObject, Point {
      */
     private init(coordinate: CLLocationCoordinate2D,
                  size: Size = .Small,
-                 label: Label? = nil) {
+                 label: Label?) {
         self.coordinate = coordinate
-        self.size = size
-        self.label = label
+        super.init(size: size, label: label)
     }
     
     /**
@@ -143,7 +169,9 @@ public class Marker: NSObject, Point {
     }
     
     /**
-     Initializes a red marker with a Maki icon.
+     Initializes a red marker with a [Maki](https://www.mapbox.com/maki-icons/) icon.
+     
+     The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
      
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.
@@ -156,16 +184,6 @@ public class Marker: NSObject, Point {
     }
     
     public override var description: String {
-        let sizeComponent: String
-        switch size {
-        case .Small:
-            sizeComponent = "s"
-        case .Medium:
-            sizeComponent = "m"
-        case .Large:
-            sizeComponent = "l"
-        }
-        
         let labelComponent: String
         if let label = label {
             labelComponent = "-\(label)"
@@ -173,7 +191,7 @@ public class Marker: NSObject, Point {
             labelComponent = ""
         }
         
-        return "pin-\(sizeComponent)\(labelComponent)+\(color.toHexString())(\(coordinate.longitude),\(coordinate.latitude))"
+        return "pin-\(size)\(labelComponent)+\(color.toHexString())(\(coordinate.longitude),\(coordinate.latitude))"
     }
 }
 

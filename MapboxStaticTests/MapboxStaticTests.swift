@@ -452,5 +452,31 @@ class MapboxStaticTests: XCTestCase {
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
-
+    
+    func testStandaloneMarker() {
+        let size = "m"
+        let label = "cafe"
+        let color = Color.brownColor()
+        let colorRaw = "996633"
+        
+        let markerExp = expectationWithDescription("builtin marker argument should format Maki request properly")
+        
+        let options = MarkerOptions(
+            size: .Medium,
+            iconName: "cafe")
+        options.color = color
+        
+        stub(isHost(serviceHost)) { request in
+            let scaleSuffix = options.scale == 1 ? "" : "@2x"
+            if let p = request.URL?.pathComponents where p[3] == "pin-\(size)-\(label)+\(colorRaw)\(scaleSuffix).png" {
+                markerExp.fulfill()
+            }
+            
+            return OHHTTPStubsResponse()
+        }
+        
+        Snapshot(options: options, accessToken: accessToken).image
+        
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
 }
