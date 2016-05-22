@@ -48,9 +48,9 @@ snapshot.image { (image, error) in
 }
 
 /*:
- If you’re using your own HTTP library or routines, you can also retrieve a snapshot’s `requestURL` property.
+ If you’re using your own HTTP library or routines, you can also retrieve a snapshot’s `URL` property.
  */
-snapshot.requestURL
+snapshot.URL
 
 /*:
  ## Overlays
