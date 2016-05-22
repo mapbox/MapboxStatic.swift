@@ -396,7 +396,7 @@ public class Snapshot: NSObject {
     /**
      The HTTP URL used to fetch the snapshot image from the API.
      */
-    public var requestURL: NSURL {
+    public var URL: NSURL {
         let components = NSURLComponents()
         components.queryItems = params
         return NSURL(string: "\(apiEndpoint)\(options.path)?\(components.percentEncodedQuery!)")!
@@ -419,7 +419,7 @@ public class Snapshot: NSObject {
      - attention: This property’s getter retrieves the image synchronously over a network connection, blocking the thread on which it is called. If a connection error or server error occurs, the getter returns `nil`. Consider using the asynchronous `image(completionHandler:)` method instead to avoid blocking the calling thread and to get more details about any error that may occur.
      */
     public var image: Image? {
-        if let data = NSData(contentsOfURL: requestURL) {
+        if let data = NSData(contentsOfURL: URL) {
             return Image(data: data)
         } else {
             return nil
@@ -437,7 +437,7 @@ public class Snapshot: NSObject {
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting image, cancel this task.
      */
     public func image(completionHandler handler: CompletionHandler) -> NSURLSessionDataTask {
-        let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL) { (data, response, error) in
+        let task = NSURLSession.sharedSession().dataTaskWithURL(URL) { (data, response, error) in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
                     handler(image: nil, error: error)

@@ -82,16 +82,16 @@ snapshot.image { (image, error) in
 }];
 ```
 
-If you're using your own HTTP library or routines, you can also retrieve a snapshot’s `requestURL` property.
+If you're using your own HTTP library or routines, you can also retrieve a snapshot’s `URL` property.
 
 ```swift
 // main.swift
-let requestURLToFetch = snapshot.requestURL
+let imageURL = snapshot.URL
 ```
 
 ```objc
 // main.m
-NSURL *requestURLToFetch = snapshot.requestURL;
+NSURL *imageURL = snapshot.URL;
 ```
 
 ### Overlays
