@@ -1110,7 +1110,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -1124,7 +1124,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
