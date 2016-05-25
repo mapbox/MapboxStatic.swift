@@ -13,10 +13,18 @@ MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/m
 
 ## Installation 
 
-Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
+Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. 
+
+Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
 pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => 'v0.6.0'
+```
+
+Or in your [Carthage](https://github.com/Carthage/Carthage) Cartfile:
+
+```sh
+github "Mapbox/MapboxStatic.swift" ~> 0.6.0
 ```
 
 ## Usage
