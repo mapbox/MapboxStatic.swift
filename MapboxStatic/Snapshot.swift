@@ -6,6 +6,11 @@
     import UIKit
 #endif
 
+typealias JSONDictionary = [String: AnyObject]
+
+/// Indicates that an error occurred in MapboxStatic.
+public let MBStaticErrorDomain = "MBStaticErrorDomain"
+
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
 
@@ -439,8 +444,18 @@ public class Snapshot: NSObject {
     public func image(completionHandler handler: CompletionHandler) -> NSURLSessionDataTask {
         let task = NSURLSession.sharedSession().dataTaskWithURL(URL) { (data, response, error) in
             if let error = error {
+                var json: JSONDictionary = [:]
+                if let data = data {
+                    do {
+                        json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
+                    } catch {
+                        assert(false, "Invalid data")
+                    }
+                }
+                
+                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error)
                 dispatch_async(dispatch_get_main_queue()) {
-                    handler(image: nil, error: error)
+                    handler(image: nil, error: apiError)
                 }
             } else {
                 let image = Image(data: data!)
@@ -451,5 +466,37 @@ public class Snapshot: NSObject {
         }
         task.resume()
         return task
+    }
+    
+    /**
+     Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
+     */
+    private static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
+        var userInfo = error?.userInfo ?? [:]
+        if let response = response as? NSHTTPURLResponse {
+            var failureReason: String? = nil
+            var recoverySuggestion: String? = nil
+            switch response.statusCode {
+            case 429:
+                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? NSTimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                    let intervalFormatter = NSDateComponentsFormatter()
+                    intervalFormatter.unitsStyle = .Full
+                    let formattedInterval = intervalFormatter.stringFromTimeInterval(timeInterval)
+                    let formattedCount = NSNumberFormatter.localizedStringFromNumber(maximumCountOfRequests, numberStyle: .DecimalStyle)
+                    failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
+                }
+                if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
+                    let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
+                    let formattedDate = NSDateFormatter.localizedStringFromDate(date, dateStyle: .LongStyle, timeStyle: .FullStyle)
+                    recoverySuggestion = "Wait until \(formattedDate) before retrying."
+                }
+            default:
+                failureReason = json["message"] as? String
+            }
+            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? NSHTTPURLResponse.localizedStringForStatusCode(error?.code ?? -1)
+            userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
+        }
+        userInfo[NSUnderlyingErrorKey] = error
+        return NSError(domain: error?.domain ?? MBStaticErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
     }
 }
