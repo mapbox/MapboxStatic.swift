@@ -14,6 +14,51 @@ public let MBStaticErrorDomain = "MBStaticErrorDomain"
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
 
+/// The user agent string for any HTTP requests performed directly within this library.
+let userAgent: String = {
+    var components: [String] = []
+    
+    if let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
+        let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        components.append("\(appName)/\(version)")
+    }
+    
+    let libraryBundle: NSBundle? = NSBundle(forClass: Snapshot.self)
+    
+    if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
+        components.append("\(libraryName)/\(version)")
+    }
+    
+    let system: String
+    #if os(OSX)
+        system = "OS X"
+    #elseif os(iOS)
+        system = "iOS"
+    #elseif os(watchOS)
+        system = "watchOS"
+    #elseif os(tvOS)
+        system = "tvOS"
+    #elseif os(Linux)
+        system = "Linux"
+    #endif
+    let systemVersion = NSProcessInfo().operatingSystemVersion
+    components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")
+    
+    let chip: String
+    #if arch(x86_64)
+        chip = "x86_64"
+    #elseif arch(arm)
+        chip = "arm"
+    #elseif arch(arm64)
+        chip = "arm64"
+    #elseif arch(i386)
+        chip = "i386"
+    #endif
+    components.append("(\(chip))")
+    
+    return components.joinWithSeparator(" ")
+}()
+
 @objc(MBSnapshotOptionsProtocol)
 public protocol SnapshotOptionsProtocol: NSObjectProtocol {
     var path: String { get }
@@ -442,7 +487,9 @@ public class Snapshot: NSObject {
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting image, cancel this task.
      */
     public func image(completionHandler handler: CompletionHandler) -> NSURLSessionDataTask {
-        let task = NSURLSession.sharedSession().dataTaskWithURL(URL) { (data, response, error) in
+        let request = NSMutableURLRequest(URL: URL)
+        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
             if let error = error {
                 var json: JSONDictionary = [:]
                 if let data = data {
