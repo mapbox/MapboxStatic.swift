@@ -29,6 +29,8 @@
 		DA4B4BAC1CE8F87000296A52 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* Color.swift */; };
 		DA4B4BAD1CE8F87700296A52 /* MapboxStaticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */; };
 		DA4B4BAE1CE8F87C00296A52 /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
+		DAF158881D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
+		DAF158891D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
 		DAF15A431CE8FBBC0040E86C /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAF15A441CE8FBBC0040E86C /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
 		DAF15A451CE8FBBC0040E86C /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBAB1CE4026B00B07762 /* Overlay.swift */; };
@@ -127,6 +129,7 @@
 		DA20FBC21CE4757E00B07762 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B9B1CE8F83100296A52 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		DAF15A3B1CE8FB8D0040E86C /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF15A4B1CE90A6C0040E86C /* MapboxStatic (Objective-C).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapboxStatic (Objective-C).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF15A4E1CE90A6C0040E86C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -322,6 +325,7 @@
 				DAF15A621CE90AA60040E86C /* Swift */,
 				DAF15A4C1CE90A6C0040E86C /* Objective-C */,
 				DDAD196F1BD9B1A50057AC9F /* Info.plist */,
+				DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -661,6 +665,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF158891D03E7AC00829B35 /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +673,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF158881D03E7AC00829B35 /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1290,7 +1296,6 @@
 		DDAD196C1BD9B1780057AC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 2;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -1304,7 +1309,6 @@
 		DDAD196D1BD9B1780057AC9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 2;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
