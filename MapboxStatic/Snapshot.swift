@@ -490,25 +490,27 @@ public class Snapshot: NSObject {
         let request = NSMutableURLRequest(URL: URL)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-            if let error = error {
-                var json: JSONDictionary = [:]
-                if let data = data {
-                    do {
-                        json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
-                    } catch {
-                        assert(false, "Invalid data")
-                    }
+            var json: JSONDictionary = [:]
+            var image: Image?
+            if let data = data {
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDictionary ?? json
+                } catch {
+                    image = Image(data: data)
                 }
-                
+            }
+            
+            let apiMessage = json["message"] as? String
+            guard image != nil && error == nil && apiMessage == nil else {
                 let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error)
                 dispatch_async(dispatch_get_main_queue()) {
                     handler(image: nil, error: apiError)
                 }
-            } else {
-                let image = Image(data: data!)
-                dispatch_async(dispatch_get_main_queue()) {
-                    handler(image: image, error: nil)
-                }
+                return
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                handler(image: image, error: nil)
             }
         }
         task.resume()
