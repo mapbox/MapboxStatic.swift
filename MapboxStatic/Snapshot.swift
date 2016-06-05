@@ -221,8 +221,8 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
             assert(zoomLevel <= 20, "maximum zoom is 20")
         }
         
-        assert(size.width  * min(scale, 2) <= 1_280, "maximum width is 1,280 pixels (640 points @2×)")
-        assert(size.height * min(scale, 2) <= 1_280, "maximum height is 1,280 pixels (640 points @2×)")
+        assert(size.width <= 1_280, "maximum width is 1,280 points")
+        assert(size.height <= 1_280, "maximum height is 1,280 points")
         
         assert(overlays.count <= 100, "maximum number of overlays is 100")
         
