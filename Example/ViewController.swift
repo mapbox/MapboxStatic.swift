@@ -24,6 +24,11 @@ class ViewController: UIViewController {
             zoomLevel: 6,
             size: imageView.bounds.size)
         Snapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
             self?.imageView.image = image
         }
 
