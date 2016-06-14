@@ -1,15 +1,15 @@
 # MapboxStatic
 
 [📱&nbsp;![iOS Build Status](https://www.bitrise.io/app/faa9d29af3e2ce7a.svg?token=_oJK999amHl5HlK3a82PZA&branch=master)](https://www.bitrise.io/app/faa9d29af3e2ce7a) &nbsp;&nbsp;&nbsp;
-[🖥💻&nbsp;![OS X Build Status](https://www.bitrise.io/app/5f8ae2a3885d8173.svg?token=h1v7gr7qNFK4dq2mZPwb-w&branch=master)](https://www.bitrise.io/app/5f8ae2a3885d8173) &nbsp;&nbsp;&nbsp;
+[🖥💻&nbsp;![macOS Build Status](https://www.bitrise.io/app/5f8ae2a3885d8173.svg?token=h1v7gr7qNFK4dq2mZPwb-w&branch=master)](https://www.bitrise.io/app/5f8ae2a3885d8173) &nbsp;&nbsp;&nbsp;
 [📺&nbsp;![tvOS Build Status](https://www.bitrise.io/app/76cb1d11414a5b80.svg?token=zz77y14EcDGj5ZbKBidJXw&branch=master)](https://www.bitrise.io/app/76cb1d11414a5b80) &nbsp;&nbsp;&nbsp;
 [⌚️&nbsp;![watchOS Build Status](https://www.bitrise.io/app/cd7bcec99edcea34.svg?token=ayBsg-HC9sXmqiFlMDYK0A&branch=master)](https://www.bitrise.io/app/cd7bcec99edcea34)
 
-MapboxStatic.swift makes it easy to connect your iOS, OS X, tvOS, or watchOS application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
 
 Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*.
 
-MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
+MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos).
 
 ## Installation 
 
@@ -302,4 +302,4 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 
 ### More info
 
-This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and OS X. (Open the playgrounds inside of MapboxStatic.xcworkspace.) More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. (Open the playgrounds inside of MapboxStatic.xcworkspace.) More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
