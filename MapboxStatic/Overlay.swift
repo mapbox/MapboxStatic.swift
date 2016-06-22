@@ -38,11 +38,11 @@ public class MarkerImage: NSObject {
      */
     @objc(MBMarkerSize)
     public enum Size: Int, CustomStringConvertible {
-        /// small.
+        /// Small.
         case small
-        /// medium.
+        /// Medium.
         case medium
-        /// large.
+        /// Large.
         case large
         
         public var description: String {
