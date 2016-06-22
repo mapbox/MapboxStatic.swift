@@ -50,7 +50,7 @@ snapshot.image { (image, error) in
 /*:
  If you’re using your own HTTP library or routines, you can also retrieve a snapshot’s `URL` property.
  */
-snapshot.URL
+snapshot.url
 
 /*:
  ## Overlays
@@ -63,9 +63,9 @@ snapshot.URL
  */
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    size: .Medium,
+    size: .medium,
     iconName: "cafe")
-markerOverlay.color = .brownColor()
+markerOverlay.color = .brown()
 options.overlays = [markerOverlay]
 snapshot = Snapshot(
     options: options,
@@ -75,9 +75,10 @@ snapshot.image
 /*:
  ### Custom marker
  */
+let url = URL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")
 let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    URL: NSURL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!)
+    url: url!)
 options.overlays = [customMarker]
 snapshot = Snapshot(
     options: options,
@@ -89,9 +90,10 @@ snapshot.image
  */
 let geojsonOverlay: GeoJSON
 do {
-    let geojsonURL = NSURL(string: "http://git.io/vCv9U")!
-    let geojsonString = try NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
+    let geojsonURL = NSURL(string: "http://git.io/vCv9U") as! URL
+    let geojsonString = try! NSString(contentsOf: geojsonURL, usedEncoding: nil)
     geojsonOverlay = GeoJSON(objectString: geojsonString as String)
+    
 }
 options.overlays = [geojsonOverlay]
 snapshot = Snapshot(
@@ -102,8 +104,7 @@ snapshot.image
 /*:
  ### Path
  */
-let path = Path(
-    coordinates: [
+let path = Path(coordinates: [
         CLLocationCoordinate2D(
             latitude: 45.52475063103141,
             longitude: -122.68209457397461),
@@ -124,8 +125,8 @@ let path = Path(
             longitude: -122.68209457397461),
     ])
 path.strokeWidth = 2
-path.strokeColor = .blackColor()
-path.fillColor = .redColor()
+path.strokeColor = .black()
+path.fillColor = .red()
 path.fillOpacity = 0.25
 options.overlays = [path]
 snapshot = Snapshot(
@@ -152,9 +153,9 @@ snapshot.image
  Use the `MarkerOptions` class to get a standalone marker image, which can be useful if you’re trying to composite it atop a map yourself.
  */
 let markerOptions = MarkerOptions(
-    size: .Medium,
+    size: .medium,
     iconName: "cafe")
-markerOptions.color = .brownColor()
+markerOptions.color = .brown()
 snapshot = Snapshot(
     options: markerOptions,
     accessToken: accessToken)
