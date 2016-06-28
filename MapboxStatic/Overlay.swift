@@ -4,10 +4,13 @@
     import UIKit
 #endif
 
-let allowedCharacterSet: NSCharacterSet = {
-    let characterSet = NSCharacterSet.URLPathAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-    characterSet.removeCharactersInString("/)")
-    return characterSet
+let allowedCharacterSet: CharacterSet = {
+    // this causes a runtime exception with Xcode 8 beta 1
+//    var allowedCharacters = CharacterSet.urlPathAllowed
+//    allowedCharacters.remove(charactersIn: "/)")
+//    return allowedCharacters
+    
+    return CharacterSet(charactersIn: "/)").inverted
 }()
 
 /**
@@ -36,19 +39,19 @@ public class MarkerImage: NSObject {
     @objc(MBMarkerSize)
     public enum Size: Int, CustomStringConvertible {
         /// Small.
-        case Small
+        case small
         /// Medium.
-        case Medium
+        case medium
         /// Large.
-        case Large
+        case large
         
         public var description: String {
             switch self {
-            case .Small:
+            case .small:
                 return "s"
-            case .Medium:
+            case .medium:
                 return "m"
-            case .Large:
+            case .large:
                 return "l"
             }
         }
@@ -57,22 +60,22 @@ public class MarkerImage: NSObject {
     /// Something simple that can be placed atop a marker.
     public enum Label: CustomStringConvertible {
         /// A lowercase English letter from A through Z. An uppercase letter is automatically converted to a lowercase letter.
-        case Letter(Character)
+        case letter(Character)
         /// A number from 0 through 99.
-        case Number(Int)
+        case number(Int)
         /// The name of a [Maki](https://www.mapbox.com/maki-icons/) icon.
-        case IconName(String)
+        case iconName(String)
         
         public var description: String {
             switch self {
-            case .Letter(let letter):
-                let lower = "\(letter)".lowercaseString
+            case .letter(let letter):
+                let lower = "\(letter)".lowercased()
                 assert(letter >= "a" && letter <= "z")
                 return lower
-            case .Number(let number):
+            case .number(let number):
                 assert(number >= 0 && number < 100)
                 return "\(number)"
-            case .IconName(let name):
+            case .iconName(let name):
                 return "\(name)"
             }
         }
@@ -98,14 +101,14 @@ public class MarkerImage: NSObject {
      
      By default, the marker is red.
      */
-    public var color: NSColor = .redColor()
+    public var color: NSColor = .red()
     #else
     /**
      The color of the pin part of the marker.
      
      By default, the marker is red.
      */
-    public var color: UIColor = .redColor()
+    public var color: UIColor = .red()
     #endif
     
     /**
@@ -136,7 +139,7 @@ public class Marker: MarkerImage, Point {
      - parameter label: A label or Maki icon to place atop the pin.
      */
     private init(coordinate: CLLocationCoordinate2D,
-                 size: Size = .Small,
+                 size: Size = .small,
                  label: Label?) {
         self.coordinate = coordinate
         super.init(size: size, label: label)
@@ -150,9 +153,9 @@ public class Marker: MarkerImage, Point {
      - parameter letter: An English letter from A through Z to place atop the pin.
      */
     public convenience init(coordinate: CLLocationCoordinate2D,
-                            size: Size = .Small,
+                            size: Size = .small,
                             letter: UniChar) {
-        self.init(coordinate: coordinate, size: size, label: .Letter(Character(UnicodeScalar(letter))))
+        self.init(coordinate: coordinate, size: size, label: .letter(Character(UnicodeScalar(letter))))
     }
     
     /**
@@ -163,9 +166,9 @@ public class Marker: MarkerImage, Point {
      - parameter number: A number from 0 through 99 to place atop the pin.
      */
     public convenience init(coordinate: CLLocationCoordinate2D,
-                            size: Size = .Small,
+                            size: Size = .small,
                             number: Int) {
-        self.init(coordinate: coordinate, size: size, label: .Number(number))
+        self.init(coordinate: coordinate, size: size, label: .number(number))
     }
     
     /**
@@ -178,9 +181,9 @@ public class Marker: MarkerImage, Point {
      - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
      */
     public convenience init(coordinate: CLLocationCoordinate2D,
-                            size: Size = .Small,
+                            size: Size = .small,
                             iconName: String) {
-        self.init(coordinate: coordinate, size: size, label: .IconName(iconName))
+        self.init(coordinate: coordinate, size: size, label: .iconName(iconName))
     }
     
     public override var description: String {
@@ -210,7 +213,7 @@ public class CustomMarker: NSObject, Overlay {
      
      The API caches custom marker images according to the `Expires` and `Cache-Control` headers. If you host the image on your own server, make sure that at least one of these headers is set to an proper value to prevent repeated requests for the image.
      */
-    public var URL: NSURL
+    public var url: URL
     
     /**
      Initializes a marker with the given coordinate and image URL.
@@ -218,14 +221,14 @@ public class CustomMarker: NSObject, Overlay {
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter URL: The HTTP or HTTPS URL of the image.
      */
-    public init(coordinate: CLLocationCoordinate2D, URL: NSURL) {
+    public init(coordinate: CLLocationCoordinate2D, url: URL) {
         self.coordinate = coordinate
-        self.URL = URL
+        self.url = url
     }
     
     public override var description: String {
-        let escapedURL = URL.absoluteString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
-        return "url-\(escapedURL)(\(coordinate.longitude),\(coordinate.latitude))"
+        let escapedURL = url.absoluteString?.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
+        return "url-\(escapedURL!)(\(coordinate.longitude),\(coordinate.latitude))"
     }
 }
 
@@ -239,8 +242,17 @@ public class GeoJSON: NSObject, Overlay {
     /// String representation of the GeoJSON object to display.
     public var objectString: String
     
+    var pm: String? {
+        get {
+            return self.pm
+        }
+        set(newValue) {
+            self.pm = newValue
+        }
+    }
+    
     public override var description: String {
-        let escapedObjectString = objectString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        let escapedObjectString = objectString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!
         return "geojson(\(escapedObjectString))"
     }
     
@@ -252,10 +264,10 @@ public class GeoJSON: NSObject, Overlay {
      */
     public init?(object: [String: AnyObject]) {
         // This should be a throwing initializer rather than a failiable initializer, but inheriting from Objective-C triggers a warning: no calls to throwing functions occur within 'try' expression
-        guard let data = try? NSJSONSerialization.dataWithJSONObject(object, options: []) else {
+        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
         }
-        objectString = String(data: data, encoding: NSUTF8StringEncoding)!
+        objectString = String(data: data, encoding: String.Encoding.utf8)!
     }
     
     /**
@@ -358,7 +370,7 @@ public class Path: NSObject, Overlay {
     public init(coordinates: UnsafePointer<CLLocationCoordinate2D>, count: UInt) {
         var convertedCoordinates: [CLLocationCoordinate2D] = []
         for i in 0..<count {
-            convertedCoordinates.append(coordinates.advancedBy(Int(i)).memory)
+            convertedCoordinates.append(coordinates.advanced(by: Int(i)).pointee)            
         }
         self.coordinates = convertedCoordinates
     }
@@ -381,16 +393,16 @@ public class Path: NSObject, Overlay {
      
      - note: This initializer is intended for Objective-C usage. In Swift code, use the `coordinates` property.
      */
-    public func getCoordinates(coordinates: UnsafeMutablePointer<CLLocationCoordinate2D>) {
+    public func getCoordinates(_ coordinates: UnsafeMutablePointer<CLLocationCoordinate2D>) {
         for i in 0..<self.coordinates.count {
-            coordinates.advancedBy(i).memory = self.coordinates[i]
+            coordinates.advanced(by: i).pointee = self.coordinates[i]
         }
     }
     
     // based on https://github.com/mapbox/polyline
-    private func polylineEncode(coordinates: [CLLocationCoordinate2D]) -> String {
+    private func polylineEncode(_ coordinates: [CLLocationCoordinate2D]) -> String {
 
-        func encodeCoordinate(let coordinate: CLLocationDegrees) -> String {
+        func encodeCoordinate(_ coordinate: CLLocationDegrees) -> String {
 
             var c = Int(round(coordinate * 1e5))
 
@@ -425,7 +437,7 @@ public class Path: NSObject, Overlay {
     }
     
     public override var description: String {
-        let encodedPolyline = polylineEncode(coordinates).stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        let encodedPolyline = polylineEncode(coordinates).addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!
         return "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)+\(fillColor.toHexString())-\(fillOpacity)(\(encodedPolyline))"
     }
 }
