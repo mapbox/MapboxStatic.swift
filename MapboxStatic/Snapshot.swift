@@ -31,7 +31,7 @@ let userAgent: String = {
     
     let system: String
     #if os(OSX)
-        system = "OS X"
+        system = "macOS"
     #elseif os(iOS)
         system = "iOS"
     #elseif os(watchOS)
