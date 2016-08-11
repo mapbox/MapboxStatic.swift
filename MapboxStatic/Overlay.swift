@@ -224,7 +224,11 @@ public class CustomMarker: NSObject, Overlay {
     }
     
     public override var description: String {
-        let escapedURL = URL.absoluteString!.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        #if swift(>=2.3)
+            let escapedURL = URL.absoluteString!.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        #else
+            let escapedURL = URL.absoluteString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
+        #endif
         return "url-\(escapedURL)(\(coordinate.longitude),\(coordinate.latitude))"
     }
 }
