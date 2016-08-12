@@ -300,6 +300,8 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 1. `open MapboxStatic.xcworkspace`
 1. `Command+U` or `xcodebuild test`
 
+The workspace requires CocoaPods 1.1.0.beta.1 or greater if opening inside Xcode 8.
+
 ### More info
 
 This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. (Open the playgrounds inside of MapboxStatic.xcworkspace.) More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
