@@ -225,7 +225,7 @@ open class CustomMarker: NSObject, Overlay {
     
     open override var description: String {
         #if swift(>=3.0)
-            let escapedURL = URL.absoluteString.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)
+            let escapedURL = URL.absoluteString.addingPercentEncoding( withAllowedCharacters: .urlHostAllowed)!
         #else
             let escapedURL = URL.absoluteString.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)!
         #endif
@@ -407,11 +407,11 @@ open class Path: NSObject, Overlay {
             var output = ""
 
             while c >= 0x20 {
-                output += String(describing: UnicodeScalar((0x20 | (c & 0x1f)) + 63))
+                output += String(describing: UnicodeScalar((0x20 | (c & 0x1f)) + 63)!)
                 c = c >> 5
             }
 
-            output += String(describing: UnicodeScalar(c + 63))
+            output += String(describing: UnicodeScalar(c + 63)!)
 
             return output
         }

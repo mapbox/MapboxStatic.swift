@@ -521,10 +521,12 @@ open class Snapshot: NSObject {
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
      */
     fileprivate static func descriptiveError(_ json: JSONDictionary, response: URLResponse?, underlyingError error: Error?) -> NSError {
-        //var userInfo = error?.userInfo ?? [:]
+        var userInfo = [String: String]()
+        var statusCode:Int = -1
         if let response = response as? HTTPURLResponse {
             var failureReason: String? = nil
             var recoverySuggestion: String? = nil
+            statusCode = response.statusCode
             switch response.statusCode {
             case 429:
                 if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? TimeInterval, let maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
@@ -542,11 +544,11 @@ open class Snapshot: NSObject {
             default:
                 failureReason = json["message"] as? String
             }
-//            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? HTTPURLResponse.localizedString(forStatusCode: error?.code ?? -1)
-//            userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
+            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? HTTPURLResponse.localizedString(forStatusCode: statusCode)
+            userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? ""
         }
-        //userInfo[NSUnderlyingErrorKey] = error
-        //return NSError(domain: error?.domain ?? MBStaticErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
-        return NSError(domain:MBStaticErrorDomain, code: -1, userInfo: nil)
+        userInfo[NSUnderlyingErrorKey] = error?.localizedDescription ?? ""
+        
+        return NSError(domain:MBStaticErrorDomain, code: -1, userInfo: userInfo)
     }
 }
