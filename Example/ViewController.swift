@@ -11,11 +11,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         imageView = UIImageView(frame: view.bounds)
-        imageView.backgroundColor = UIColor.blackColor()
+        imageView.backgroundColor = UIColor.black
         view.addSubview(imageView)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         let options = SnapshotOptions(
