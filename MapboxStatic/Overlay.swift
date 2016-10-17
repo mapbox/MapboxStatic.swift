@@ -101,14 +101,14 @@ public class MarkerImage: NSObject {
      
      By default, the marker is red.
      */
-    public var color: NSColor = .red()
+    public var color: NSColor = .red
     #else
     /**
      The color of the pin part of the marker.
      
      By default, the marker is red.
      */
-    public var color: UIColor = .red()
+    public var color: UIColor = .red
     #endif
     
     /**
@@ -155,7 +155,7 @@ public class Marker: MarkerImage, Point {
     public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .small,
                             letter: UniChar) {
-        self.init(coordinate: coordinate, size: size, label: .letter(Character(UnicodeScalar(letter))))
+        self.init(coordinate: coordinate, size: size, label: .letter(Character(UnicodeScalar(letter)!)))
     }
     
     /**
@@ -227,8 +227,8 @@ public class CustomMarker: NSObject, Overlay {
     }
     
     public override var description: String {
-        let escapedURL = url.absoluteString?.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
-        return "url-\(escapedURL!)(\(coordinate.longitude),\(coordinate.latitude))"
+        let escapedURL = url.absoluteString.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
+        return "url-\(escapedURL)(\(coordinate.longitude),\(coordinate.latitude))"
     }
 }
 
@@ -415,11 +415,11 @@ public class Path: NSObject, Overlay {
             var output = ""
 
             while c >= 0x20 {
-                output += String(UnicodeScalar((0x20 | (c & 0x1f)) + 63))
+                output += String(describing: UnicodeScalar((0x20 | (c & 0x1f)) + 63))
                 c = c >> 5
             }
 
-            output += String(UnicodeScalar(c + 63))
+            output += String(describing: UnicodeScalar(c + 63))
 
             return output
         }
