@@ -510,8 +510,8 @@ public class Snapshot: NSObject {
                     DispatchQueue.main.async {
                         handler(nil, apiError)
                     }
+                    return
                 }
-                return
             }
             
             DispatchQueue.main.async {
