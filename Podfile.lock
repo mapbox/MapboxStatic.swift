@@ -1,14 +1,14 @@
 PODS:
-  - OHHTTPStubs/Core (5.2.1)
-  - OHHTTPStubs/Swift (5.2.1):
+  - OHHTTPStubs/Core (5.2.2)
+  - OHHTTPStubs/Swift (5.2.2):
     - OHHTTPStubs/Core
 
 DEPENDENCIES:
   - OHHTTPStubs/Swift (~> 5.0)
 
 SPEC CHECKSUMS:
-  OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
+  OHHTTPStubs: 34d9d0994e64fcf8552dbfade5ce82ada913ee31
 
 PODFILE CHECKSUM: fe73f990cc38a5c9a39ea8dfbe31558c9c18b94a
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0.beta.1
