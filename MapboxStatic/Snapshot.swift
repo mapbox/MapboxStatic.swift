@@ -493,9 +493,13 @@ public class Snapshot: NSObject {
             var json: JSONDictionary = [:]
             var image: Image?
             if let data = data {
-                do {
-                    json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDictionary ?? json
-                } catch {
+                if response?.MIMEType == "application/json" {
+                    do {
+                        json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDictionary ?? json
+                    } catch {
+                        assert(false, "Invalid data")
+                    }
+                } else {
                     image = Image(data: data)
                 }
             }
