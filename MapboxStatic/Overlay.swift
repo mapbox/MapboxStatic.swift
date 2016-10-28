@@ -208,6 +208,8 @@ public class CustomMarker: NSObject, Overlay {
     /**
      The HTTP or HTTPS URL of the image.
      
+     The image must be less than 160,000 points in area (width multiplied by height).
+     
      The API caches custom marker images according to the `Expires` and `Cache-Control` headers. If you host the image on your own server, make sure that at least one of these headers is set to an proper value to prevent repeated requests for the image.
      */
     public var URL: NSURL
