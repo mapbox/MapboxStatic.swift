@@ -124,7 +124,7 @@
 		DA20FBA91CE401E800B07762 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DA20FBAB1CE4026B00B07762 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		DA20FBB21CE4682200B07762 /* iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = iOS.playground; sourceTree = "<group>"; };
-		DA20FBB31CE474CA00B07762 /* OS X.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "OS X.playground"; sourceTree = "<group>"; };
+		DA20FBB31CE474CA00B07762 /* macOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = macOS.playground; sourceTree = "<group>"; };
 		DA20FBB91CE4757E00B07762 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA20FBC21CE4757E00B07762 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,7 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				DA20FBB21CE4682200B07762 /* iOS.playground */,
-				DA20FBB31CE474CA00B07762 /* OS X.playground */,
+				DA20FBB31CE474CA00B07762 /* macOS.playground */,
 				DDAD195B1BD9B1780057AC9F /* Example */,
 				DA20FB9C1CE3DEBB00B07762 /* MapboxStatic */,
 				DDAD19791BD9B24F0057AC9F /* MapboxStaticTests */,
@@ -558,7 +558,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					DA20FB9A1CE3DEBB00B07762 = {
@@ -1046,7 +1046,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D526F1AE52AC93AE1C09017 /* Pods-MapboxStaticMacTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1131,7 +1130,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FFF751D5A7D48495FB8444A2 /* Pods-MapboxStaticTVTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1163,6 +1161,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1188,6 +1187,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1211,7 +1211,6 @@
 		DAF15A601CE90A6C0040E86C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = Example/Info.plist;
@@ -1224,7 +1223,6 @@
 		DAF15A611CE90A6C0040E86C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = Example/Info.plist;
@@ -1329,7 +1327,6 @@
 		DDAD196C1BD9B1780057AC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1343,7 +1340,6 @@
 		DDAD196D1BD9B1780057AC9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1358,7 +1354,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55948DDFD41BC7FD1F8FE960 /* Pods-MapboxStaticTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
