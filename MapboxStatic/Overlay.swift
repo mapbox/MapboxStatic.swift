@@ -60,7 +60,11 @@ public class MarkerImage: NSObject {
         case Letter(Character)
         /// A number from 0 through 99.
         case Number(Int)
-        /// The name of a [Maki](https://www.mapbox.com/maki-icons/) icon.
+        /**
+         The name of a [Maki](https://www.mapbox.com/maki-icons/) v0.5.0 icon.
+         
+         Valid values are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+         */
         case IconName(String)
         
         public var description: String {
