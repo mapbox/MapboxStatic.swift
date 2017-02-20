@@ -6,26 +6,26 @@
     import UIKit
 #endif
 
-typealias JSONDictionary = [String: AnyObject]
+typealias JSONDictionary = [String: Any]
 
 /// Indicates that an error occurred in MapboxStatic.
 public let MBStaticErrorDomain = "MBStaticErrorDomain"
 
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
-let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
+let defaultAccessToken = Bundle.main.object(forInfoDictionaryKey: "MGLMapboxAccessToken") as? String
 
 /// The user agent string for any HTTP requests performed directly within this library.
 let userAgent: String = {
     var components: [String] = []
     
-    if let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    if let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         components.append("\(appName)/\(version)")
     }
     
-    let libraryBundle: NSBundle? = NSBundle(forClass: Snapshot.self)
+    let libraryBundle = Bundle(for: Snapshot.self)
     
-    if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
+    if let libraryName = libraryBundle.infoDictionary?["CFBundleName"] as? String, let version = libraryBundle.infoDictionary?["CFBundleShortVersionString"] as? String {
         components.append("\(libraryName)/\(version)")
     }
     
@@ -41,7 +41,7 @@ let userAgent: String = {
     #elseif os(Linux)
         system = "Linux"
     #endif
-    let systemVersion = NSProcessInfo().operatingSystemVersion
+    let systemVersion = ProcessInfo().operatingSystemVersion
     components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")
     
     let chip: String
@@ -56,43 +56,66 @@ let userAgent: String = {
     #endif
     components.append("(\(chip))")
     
-    return components.joinWithSeparator(" ")
+    return components.joined(separator: " ")
 }()
 
 @objc(MBSnapshotOptionsProtocol)
 public protocol SnapshotOptionsProtocol: NSObjectProtocol {
     var path: String { get }
-    var params: [NSURLQueryItem] { get }
+    var params: [URLQueryItem] { get }
 }
 
 /**
  A structure that determines what a snapshot depicts and how it is formatted.
  */
 @objc(MBSnapshotOptions)
-public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
+open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      An image format supported by the classic Static API.
      */
     @objc(MBSnapshotFormat)
-    public enum Format: Int {
+    public enum Format: Int, CustomStringConvertible {
         /// True-color Portable Network Graphics format.
-        case PNG
+        case png
         /// 32-color color-indexed Portable Network Graphics format.
-        case PNG32
+        case png32
         /// 64-color color-indexed Portable Network Graphics format.
-        case PNG64
+        case png64
         /// 128-color color-indexed Portable Network Graphics format.
-        case PNG128
+        case png128
         /// 256-color color-indexed Portable Network Graphics format.
-        case PNG256
+        case png256
         /// JPEG format at default quality.
-        case JPEG
+        case jpeg
         /// JPEG format at 70% quality.
-        case JPEG70
+        case jpeg70
         /// JPEG format at 80% quality.
-        case JPEG80
+        case jpeg80
         /// JPEG format at 90% quality.
-        case JPEG90
+        case jpeg90
+        
+        public var description: String {
+            switch self {
+            case .png:
+                return "png"
+            case .png32:
+                return "png32"
+            case .png64:
+                return "png64"
+            case .png128:
+                return "png128"
+            case .png256:
+                return "png256"
+            case .jpeg:
+                return "jpg"
+            case .jpeg70:
+                return "jpg70"
+            case .jpeg80:
+                return "jpg80"
+            case .jpeg90:
+                return "jpg90"
+            }
+        }
     }
     
     // MARK: Configuring the Map Data
@@ -102,14 +125,14 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The order of the map identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
      */
-    public var mapIdentifiers: [String]
+    open var mapIdentifiers: [String]
     
     /**
      An array of overlays to draw atop the map.
      
      The order in which the overlays are drawn on the map is undefined.
      */
-    public var overlays: [Overlay] = []
+    open var overlays: [Overlay] = []
     
     /**
      The geographic coordinate at the center of the snapshot.
@@ -118,7 +141,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property is `nil`.
      */
-    public var centerCoordinate: CLLocationCoordinate2D?
+    open var centerCoordinate: CLLocationCoordinate2D?
     
     /**
      The zoom level of the snapshot.
@@ -127,21 +150,21 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      At zoom level 0, the entire world map is 256 points wide and 256 points tall; at zoom level 1, it is 512×512 points; at zoom level 2, it is 1,024×1,024 points; and so on.
      */
-    public var zoomLevel: Int?
+    open var zoomLevel: Int?
     
     // MARK: Configuring the Image Output
     
     /**
      The format of the image to output.
      
-     The default value of this property is `SnapshotOptions.Format.PNG`, causing the image to be output in true-color Portable Network Graphics format.
+     The default value of this property is `SnapshotOptions.Format.png`, causing the image to be output in true-color Portable Network Graphics format.
      */
-    public var format: Format = .PNG
+    open var format: Format = .png
     
     /**
      The logical size of the image to output, measured in points.
      */
-    public var size: CGSize
+    open var size: CGSize
     
     #if os(OSX)
     /**
@@ -151,7 +174,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+    open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
     #elseif os(watchOS)
     /**
      The scale factor of the image.
@@ -160,7 +183,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = WKInterfaceDevice.currentDevice().screenScale
+    open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
     /**
      The scale factor of the image.
@@ -169,7 +192,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = UIScreen.mainScreen().scale
+    open var scale: CGFloat = UIScreen.main.scale
     #endif
     
     /**
@@ -205,9 +228,9 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: An HTTP URL path.
      */
-    public var path: String {
+    open var path: String {
         assert(!mapIdentifiers.isEmpty, "At least one map identifier must be specified.")
-        let tileSetComponent = mapIdentifiers.joinWithSeparator(",")
+        let tileSetComponent = mapIdentifiers.joined(separator: ",")
         
         let position: String
         if let centerCoordinate = centerCoordinate {
@@ -230,32 +253,10 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
         if overlays.isEmpty {
             overlaysComponent = ""
         } else {
-            overlaysComponent = "/" + overlays.map { return "\($0)" }.joinWithSeparator(",")
+            overlaysComponent = "/" + overlays.map { return "\($0)" }.joined(separator: ",")
         }
         
-        let formatComponent: String
-        switch format {
-        case .PNG:
-            formatComponent = "png"
-        case .PNG32:
-            formatComponent = "png32"
-        case .PNG64:
-            formatComponent = "png64"
-        case .PNG128:
-            formatComponent = "png128"
-        case .PNG256:
-            formatComponent = "png256"
-        case .JPEG:
-            formatComponent = "jpg"
-        case .JPEG70:
-            formatComponent = "jpg70"
-        case .JPEG80:
-            formatComponent = "jpg80"
-        case .JPEG90:
-            formatComponent = "jpg90"
-        }
-        
-        return "/v4/\(tileSetComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(formatComponent)"
+        return "/v4/\(tileSetComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "").\(format)"
     }
     
     /**
@@ -263,7 +264,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    public var params: [NSURLQueryItem] {
+    open var params: [URLQueryItem] {
         return []
     }
 }
@@ -272,7 +273,7 @@ public class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
  A structure that configures a standalone marker image and how it is formatted.
  */
 @objc(MBMarkerOptions)
-public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
+open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
     #if os(OSX)
     /**
      The scale factor of the image.
@@ -281,7 +282,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = NSScreen.mainScreen()?.backingScaleFactor ?? 1
+    open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
     #elseif os(watchOS)
     /**
      The scale factor of the image.
@@ -290,7 +291,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = WKInterfaceDevice.currentDevice().screenScale
+    open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
     /**
      The scale factor of the image.
@@ -299,7 +300,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    public var scale: CGFloat = UIScreen.mainScreen().scale
+    open var scale: CGFloat = UIScreen.main.scale
     #endif
     
     /**
@@ -308,7 +309,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      - parameter size: The size of the marker.
      - parameter label: A label or Maki icon to place atop the pin.
      */
-    private override init(size: Size, label: Label?) {
+    fileprivate override init(size: Size, label: Label?) {
         super.init(size: size, label: label)
     }
     
@@ -318,8 +319,8 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      - parameter size: The size of the marker.
      - parameter letter: An English letter from A through Z to place atop the pin.
      */
-    public convenience init(size: Size = .Small, letter: UniChar) {
-        self.init(size: size, label: .Letter(Character(UnicodeScalar(letter))))
+    public convenience init(size: Size = .small, letter: UniChar) {
+        self.init(size: size, label: .letter(Character(UnicodeScalar(letter)!)))
     }
     
     /**
@@ -328,8 +329,8 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      - parameter size: The size of the marker.
      - parameter number: A number from 0 through 99 to place atop the pin.
      */
-    public convenience init(size: Size = .Small, number: Int) {
-        self.init(size: size, label: .Number(number))
+    public convenience init(size: Size = .small, number: Int) {
+        self.init(size: size, label: .number(number))
     }
     
     /**
@@ -338,8 +339,8 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      - parameter size: The size of the marker.
      - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
      */
-    public convenience init(size: Size = .Small, iconName: String) {
-        self.init(size: size, label: .IconName(iconName))
+    public convenience init(size: Size = .small, iconName: String) {
+        self.init(size: size, label: .iconName(iconName))
     }
     
     /**
@@ -347,7 +348,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      - returns: An HTTP URL path.
      */
-    public var path: String {
+    open var path: String {
         let labelComponent: String
         if let label = label {
             labelComponent = "-\(label)"
@@ -363,7 +364,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    public var params: [NSURLQueryItem] {
+    open var params: [URLQueryItem] {
         return []
     }
 }
@@ -376,7 +377,7 @@ public class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
  If you use `Snapshot` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use the [vector Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static).
  */
 @objc(MBSnapshot)
-public class Snapshot: NSObject {
+open class Snapshot: NSObject {
     #if os(OSX)
     public typealias Image = NSImage
     #else
@@ -389,16 +390,16 @@ public class Snapshot: NSObject {
      - parameter image: The image data that was generated, or `nil` if an error occurred.
      - parameter error: The error that occurred, or `nil` if the snapshot was generated successfully.
      */
-    public typealias CompletionHandler = (image: Image?, error: NSError?) -> Void
+    public typealias CompletionHandler = (_ image: Image?, _ error: NSError?) -> Void
     
     /// Options that determine the contents and format of the output image.
-    public let options: SnapshotOptionsProtocol
+    open let options: SnapshotOptionsProtocol
     
     /// The API endpoint to request the image from.
-    private var apiEndpoint: String
+    fileprivate var apiEndpoint: String
     
     /// The Mapbox access token to associate the request with.
-    private let accessToken: String
+    fileprivate let accessToken: String
     
     /**
      Initializes a newly created snapshot instance with the given options and an optional access token and host.
@@ -414,10 +415,10 @@ public class Snapshot: NSObject {
         self.options = options
         self.accessToken = accessToken!
         
-        let baseURLComponents = NSURLComponents()
+        var baseURLComponents = URLComponents()
         baseURLComponents.scheme = "https"
         baseURLComponents.host = host ?? "api.mapbox.com"
-        self.apiEndpoint = baseURLComponents.string!
+        apiEndpoint = baseURLComponents.string!
     }
     
     /**
@@ -446,10 +447,10 @@ public class Snapshot: NSObject {
     /**
      The HTTP URL used to fetch the snapshot image from the API.
      */
-    public var URL: NSURL {
-        let components = NSURLComponents()
+    open var url: URL {
+        var components = URLComponents()
         components.queryItems = params
-        return NSURL(string: "\(apiEndpoint)\(options.path)?\(components.percentEncodedQuery!)")!
+        return URL(string: "\(apiEndpoint)\(options.path)?\(components.percentEncodedQuery!)")!
     }
     
     /**
@@ -457,9 +458,9 @@ public class Snapshot: NSObject {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    private var params: [NSURLQueryItem] {
+    fileprivate var params: [URLQueryItem] {
         return options.params + [
-            NSURLQueryItem(name: "access_token", value: accessToken),
+            URLQueryItem(name: "access_token", value: accessToken),
         ]
     }
     
@@ -468,8 +469,8 @@ public class Snapshot: NSObject {
      
      - attention: This property’s getter retrieves the image synchronously over a network connection, blocking the thread on which it is called. If a connection error or server error occurs, the getter returns `nil`. Consider using the asynchronous `image(completionHandler:)` method instead to avoid blocking the calling thread and to get more details about any error that may occur.
      */
-    public var image: Image? {
-        if let data = NSData(contentsOfURL: URL) {
+    open var image: Image? {
+        if let data = try? Data(contentsOf: url) {
             return Image(data: data)
         } else {
             return nil
@@ -486,16 +487,16 @@ public class Snapshot: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting image. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting image, cancel this task.
      */
-    public func image(completionHandler handler: CompletionHandler) -> NSURLSessionDataTask {
-        let request = NSMutableURLRequest(URL: URL)
+    open func image(completionHandler handler: @escaping CompletionHandler) -> URLSessionDataTask {
+        var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             var json: JSONDictionary = [:]
             var image: Image?
             if let data = data {
-                if response?.MIMEType == "application/json" {
+                if response?.mimeType == "application/json" {
                     do {
-                        json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDictionary ?? json
+                        json = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary ?? json
                     } catch {
                         assert(false, "Invalid data")
                     }
@@ -506,15 +507,15 @@ public class Snapshot: NSObject {
             
             let apiMessage = json["message"] as? String
             guard image != nil && error == nil && apiMessage == nil else {
-                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error)
-                dispatch_async(dispatch_get_main_queue()) {
-                    handler(image: nil, error: apiError)
+                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error as? NSError)
+                DispatchQueue.main.async {
+                    handler(nil, apiError)
                 }
                 return
             }
             
-            dispatch_async(dispatch_get_main_queue()) {
-                handler(image: image, error: nil)
+            DispatchQueue.main.async {
+                handler(image, nil)
             }
         }
         task.resume()
@@ -524,29 +525,29 @@ public class Snapshot: NSObject {
     /**
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
      */
-    private static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
+    fileprivate static func descriptiveError(_ json: JSONDictionary, response: URLResponse?, underlyingError error: NSError?) -> NSError {
         var userInfo = error?.userInfo ?? [:]
-        if let response = response as? NSHTTPURLResponse {
+        if let response = response as? HTTPURLResponse {
             var failureReason: String? = nil
             var recoverySuggestion: String? = nil
             switch response.statusCode {
             case 429:
-                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? NSTimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
-                    let intervalFormatter = NSDateComponentsFormatter()
-                    intervalFormatter.unitsStyle = .Full
-                    let formattedInterval = intervalFormatter.stringFromTimeInterval(timeInterval)
-                    let formattedCount = NSNumberFormatter.localizedStringFromNumber(maximumCountOfRequests, numberStyle: .DecimalStyle)
+                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? TimeInterval, let maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                    let intervalFormatter = DateComponentsFormatter()
+                    intervalFormatter.unitsStyle = .full
+                    let formattedInterval = intervalFormatter.string(from: timeInterval)
+                    let formattedCount = NumberFormatter.localizedString(from: NSNumber(value: maximumCountOfRequests), number: .decimal)
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
                 if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
-                    let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
-                    let formattedDate = NSDateFormatter.localizedStringFromDate(date, dateStyle: .LongStyle, timeStyle: .FullStyle)
+                    let date = Date(timeIntervalSince1970: rolloverTimestamp)
+                    let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .long, timeStyle: .full)
                     recoverySuggestion = "Wait until \(formattedDate) before retrying."
                 }
             default:
                 failureReason = json["message"] as? String
             }
-            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? NSHTTPURLResponse.localizedStringForStatusCode(error?.code ?? -1)
+            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? HTTPURLResponse.localizedString(forStatusCode: error?.code ?? -1)
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
         }
         userInfo[NSUnderlyingErrorKey] = error

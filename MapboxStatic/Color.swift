@@ -15,7 +15,7 @@ internal extension Color {
 
         let color: Color
         #if os(OSX)
-            color = colorUsingColorSpaceName(NSCalibratedRGBColorSpace)!
+            color = usingColorSpaceName(NSCalibratedRGBColorSpace)!
         #else
             color = self
         #endif
@@ -29,7 +29,7 @@ internal extension Color {
     }
 
     convenience init(hexString: String) {
-        var hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
+        var hexString = hexString.replacingOccurrences(of: "#", with: "")
 
         if hexString.characters.count == 3 {
             let digits = Array(hexString.characters)
@@ -40,10 +40,10 @@ internal extension Color {
         var g: CGFloat = 0
         var b: CGFloat = 0
         
-        if hexString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 6 {
+        if hexString.characters.count == 6 {
             var hexInt: UInt32 = 0
 
-            if NSScanner(string: hexString).scanHexInt(&hexInt) {
+            if Scanner(string: hexString).scanHexInt32(&hexInt) {
                 r = CGFloat((hexInt >> 16) & 0xff) / 255
                 g = CGFloat((hexInt >> 8) & 0xff) / 255
                 b = CGFloat(hexInt & 0xff) / 255

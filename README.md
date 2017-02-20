@@ -9,7 +9,7 @@ MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS ap
 
 Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you'd like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*.
 
-MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos).
+MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://mapbox.github.io/mapbox-gl-native/macos/).
 
 ## Installation 
 
@@ -18,14 +18,16 @@ Embed `MapboxStatic.framework` into your application target, then `import Mapbox
 Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => 'v0.6.2'
+pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :branch => 'master'
 ```
 
 Or in your [Carthage](https://github.com/Carthage/Carthage) Cartfile:
 
 ```sh
-github "Mapbox/MapboxStatic.swift" ~> 0.6
+github "Mapbox/MapboxStatic.swift" "master"
 ```
+
+v0.6.2 is the last release of MapboxDirections.swift written in Swift 2.3. The `swift2.3` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 3. The Swift examples below are written in Swift 3; see the `swift2.3` branch’s readme for Swift 2.3 examples.
 
 ## Usage
 
@@ -94,12 +96,12 @@ If you're using your own HTTP library or routines, you can also retrieve a snaps
 
 ```swift
 // main.swift
-let imageURL = snapshot.URL
+let imageURL = snapshot.url
 ```
 
 ```objc
 // main.m
-NSURL *imageURL = snapshot.URL;
+NSURL *imageURL = snapshot.url;
 ```
 
 ### Overlays
@@ -114,10 +116,10 @@ You add overlays to the `overlays` field in the `SnapshotOptions` or `MBSnapshot
 // main.swift
 let markerOverlay = Marker(
     coordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    size: .Medium,
+    size: .medium,
     iconName: "cafe"
 )
-markerOverlay.color = .brownColor()
+markerOverlay.color = .brown
 ```
 
 ```objc
@@ -140,14 +142,14 @@ MBMarker *markerOverlay = [[MBMarker alloc] initWithCoordinate:CLLocationCoordin
 // main.swift
 let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    URL: NSURL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!
+    url: URL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!
 )
 ```
 
 ```objc
 // main.m
 MBCustomMarker *customMarker = [[MBCustomMarker alloc] initWithCoordinate:CLLocationCoordinate2DMake(45.522, -122.69)
-                                                                      URL:[NSURL URLWithString:@"https://www.mapbox.com/help/img/screenshots/rocket.png"]];
+                                                                      url:[NSURL URLWithString:@"https://www.mapbox.com/help/img/screenshots/rocket.png"]];
 ```
 
 ![](./screenshots/custom.png)
@@ -159,9 +161,9 @@ MBCustomMarker *customMarker = [[MBCustomMarker alloc] initWithCoordinate:CLLoca
 let geojsonOverlay: GeoJSON
 
 do {
-    let geojsonURL = NSURL(string: "http://git.io/vCv9U")!
-    let geojsonString = try NSString(contentsOfURL: geojsonURL, encoding: NSUTF8StringEncoding)
-    geojsonOverlay = GeoJSON(objectString: geojsonString as String)
+    let geojsonURL = URL(string: "http://git.io/vCv9U")!
+    let geojsonString = try String(contentsOf: geojsonURL, encoding: .utf8)
+    geojsonOverlay = GeoJSON(objectString: geojsonString)
 }
 ```
 
@@ -203,8 +205,8 @@ let path = Path(
     ]
 )
 path.strokeWidth = 2
-path.strokeColor = .blackColor()
-path.fillColor = .redColor()
+path.strokeColor = .black
+path.fillColor = .red
 path.fillOpacity = 0.25
 ```
 
@@ -263,9 +265,9 @@ Use the `MarkerOptions` class to get a standalone marker image, which can be use
 ```swift
 // main.swift
 let options = MarkerOptions(
-    size: .Medium,
+    size: .medium,
     iconName: "cafe")
-options.color = .brownColor()
+options.color = .brown
 let snapshot = Snapshot(
     options: options,
     accessToken: "<#your access token#>")
@@ -300,7 +302,7 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 1. `open MapboxStatic.xcworkspace`
 1. `Command+U` or `xcodebuild test`
 
-The workspace requires CocoaPods 1.1.0.beta.1 or greater if opening inside Xcode 8.
+The workspace requires CocoaPods 1.2 or greater if opening inside Xcode 8.
 
 ### More info
 
