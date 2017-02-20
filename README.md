@@ -18,13 +18,13 @@ Embed `MapboxStatic.framework` into your application target, then `import Mapbox
 Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => 'v0.6.0'
+pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :tag => 'v0.6.2'
 ```
 
 Or in your [Carthage](https://github.com/Carthage/Carthage) Cartfile:
 
 ```sh
-github "Mapbox/MapboxStatic.swift" ~> 0.6.0
+github "Mapbox/MapboxStatic.swift" ~> 0.6
 ```
 
 ## Usage
