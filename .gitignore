@@ -1,5 +1,3 @@
-MapboxStatic.xcworkspace
-
 .DS_Store
 
 xcuserdata
@@ -8,4 +6,5 @@ xcuserdata
 *.xcuserstate
 *.xcscmblueprint
 
-Pods/
+Carthage/Build
+Carthage/Checkouts
