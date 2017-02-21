@@ -13,21 +13,23 @@ MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/m
 
 ## Installation 
 
-Embed `MapboxStatic.framework` into your application target, then `import MapboxStatic` or `@import MapboxStatic;`. 
-
-Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
-
-```podspec
-pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :branch => 'master'
-```
-
-Or in your [Carthage](https://github.com/Carthage/Carthage) Cartfile:
+Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
 ```sh
 github "Mapbox/MapboxStatic.swift" "master"
 ```
 
+Or in your [CocoaPods](http://cocoapods.org/) Podfile:
+
+```podspec
+pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', :branch => 'master'
+```
+
+Then `import MapboxStatic` or `@import MapboxStatic;`. 
+
 v0.6.2 is the last release of MapboxDirections.swift written in Swift 2.3. The `swift2.3` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 3. The Swift examples below are written in Swift 3; see the `swift2.3` branch’s readme for Swift 2.3 examples.
+
+This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. To run them, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies. Open the playgrounds inside of MapboxStatic.xcworkspace. More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
 
 ## Usage
 
@@ -294,16 +296,10 @@ When creating a map, you can also specify PNG or JPEG image format as well as va
 
 Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your application. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
 
-### Tests
+## Tests
 
-To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org) to install the dependencies. 
+To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies. 
 
-1. `pod install`
-1. `open MapboxStatic.xcworkspace`
-1. `Command+U` or `xcodebuild test`
-
-The workspace requires CocoaPods 1.2 or greater if opening inside Xcode 8.
-
-### More info
-
-This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. (Open the playgrounds inside of MapboxStatic.xcworkspace.) More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+1. `carthage bootstrap`
+1. `open MapboxStatic.xcodeproj`
+1. Go to Product ‣ Test.
