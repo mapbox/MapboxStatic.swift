@@ -22,7 +22,7 @@ github "Mapbox/MapboxStatic.swift" "~> 0.7"
 Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', :git => 'https://github.com/mapbox/MapboxStatic.swift.git', '~> 0.7'
+pod 'MapboxStatic.swift', '~> 0.7'
 ```
 
 Then `import MapboxStatic` or `@import MapboxStatic;`. 
