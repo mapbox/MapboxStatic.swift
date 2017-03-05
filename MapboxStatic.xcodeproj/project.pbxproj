@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA1BA2171E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */; };
+		DA1BA2181E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */; };
+		DA1BA2191E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */; };
+		DA1BA21A1E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */; };
+		DA1BA21C1E6BA918007F9FAC /* MarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */; };
+		DA1BA21D1E6BA918007F9FAC /* MarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */; };
+		DA1BA21E1E6BA918007F9FAC /* MarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */; };
+		DA1BA21F1E6BA918007F9FAC /* MarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */; };
 		DA20FB9E1CE3DEBB00B07762 /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA20FBA21CE3DEBB00B07762 /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
 		DA20FBA81CE3DF6900B07762 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
@@ -82,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotOptions.swift; sourceTree = "<group>"; };
+		DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerOptions.swift; sourceTree = "<group>"; };
 		DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxStatic.h; sourceTree = "<group>"; };
 		DA20FB9F1CE3DEBB00B07762 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,6 +202,8 @@
 			children = (
 				DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */,
 				DDAD19871BD9B3970057AC9F /* Snapshot.swift */,
+				DA1BA2161E6BA8CB007F9FAC /* SnapshotOptions.swift */,
+				DA1BA21B1E6BA918007F9FAC /* MarkerOptions.swift */,
 				DA20FBAB1CE4026B00B07762 /* Overlay.swift */,
 				DA20FBA91CE401E800B07762 /* Color.swift */,
 				DA20FB9F1CE3DEBB00B07762 /* Info.plist */,
@@ -689,6 +701,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1BA21C1E6BA918007F9FAC /* MarkerOptions.swift in Sources */,
+				DA1BA2171E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */,
 				DA20FBA81CE3DF6900B07762 /* Snapshot.swift in Sources */,
 				DA20FBAC1CE4026B00B07762 /* Overlay.swift in Sources */,
 				DA20FBAA1CE401E800B07762 /* Color.swift in Sources */,
@@ -699,6 +713,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1BA21D1E6BA918007F9FAC /* MarkerOptions.swift in Sources */,
+				DA1BA2181E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */,
 				DA20FBD21CE475F300B07762 /* Overlay.swift in Sources */,
 				DA20FBD31CE475F300B07762 /* Color.swift in Sources */,
 				DA20FBD11CE475F300B07762 /* Snapshot.swift in Sources */,
@@ -717,6 +733,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1BA21E1E6BA918007F9FAC /* MarkerOptions.swift in Sources */,
+				DA1BA2191E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */,
 				DA4B4BAB1CE8F87000296A52 /* Overlay.swift in Sources */,
 				DA4B4BAA1CE8F87000296A52 /* Snapshot.swift in Sources */,
 				DA4B4BAC1CE8F87000296A52 /* Color.swift in Sources */,
@@ -735,6 +753,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1BA21F1E6BA918007F9FAC /* MarkerOptions.swift in Sources */,
+				DA1BA21A1E6BA8CB007F9FAC /* SnapshotOptions.swift in Sources */,
 				DAF15A451CE8FBBC0040E86C /* Overlay.swift in Sources */,
 				DAF15A441CE8FBBC0040E86C /* Snapshot.swift in Sources */,
 				DAF15A461CE8FBBC0040E86C /* Color.swift in Sources */,
