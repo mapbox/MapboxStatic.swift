@@ -90,10 +90,10 @@ open class Snapshot: NSObject {
     open let options: SnapshotOptionsProtocol
     
     /// The API endpoint to request the image from.
-    fileprivate var apiEndpoint: String
+    internal var apiEndpoint: URL
     
     /// The Mapbox access token to associate the request with.
-    fileprivate let accessToken: String
+    internal let accessToken: String
     
     /**
      Initializes a newly created snapshot instance with the given options and an optional access token and host.
@@ -112,7 +112,7 @@ open class Snapshot: NSObject {
         var baseURLComponents = URLComponents()
         baseURLComponents.scheme = "https"
         baseURLComponents.host = host ?? "api.mapbox.com"
-        apiEndpoint = baseURLComponents.string!
+        apiEndpoint = baseURLComponents.url!
     }
     
     /**
@@ -144,7 +144,7 @@ open class Snapshot: NSObject {
     open var url: URL {
         var components = URLComponents()
         components.queryItems = params
-        return URL(string: "\(apiEndpoint)\(options.path)?\(components.percentEncodedQuery!)")!
+        return URL(string: "\(options.path)?\(components.percentEncodedQuery!)", relativeTo: apiEndpoint)!
     }
     
     /**
