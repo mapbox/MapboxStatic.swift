@@ -4,11 +4,7 @@ import CoreLocation
 import Foundation
 @testable import MapboxStatic
 
-#if os(OSX)
-    typealias Color = NSColor
-#else
-    typealias Color = UIColor
-#endif
+let BogusToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
 
 class MapboxStaticTests: XCTestCase {
     override func setUp() {
@@ -16,6 +12,16 @@ class MapboxStaticTests: XCTestCase {
         
         // Make sure tests run in all time zones
         NSTimeZone.default = TimeZone(secondsFromGMT: 0)!
+    }
+    
+    func testConfiguration() {
+        let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
+        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0), zoomLevel: 0)
+        let options = SnapshotOptions(styleURL: styleURL, camera: camera, size: CGSize(width: 200, height: 200))
+        let snapshot = Snapshot(options: options, accessToken: BogusToken)
+        
+        XCTAssertEqual(snapshot.accessToken, BogusToken)
+        XCTAssertEqual(snapshot.apiEndpoint.absoluteString, "https://api.mapbox.com")
     }
     
     func testRateLimitErrorParsing() {
