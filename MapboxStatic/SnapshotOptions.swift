@@ -47,7 +47,7 @@ open class SnapshotCamera: NSObject {
      - parameter centerCoordinate: The geographic coordinate on which the shapshot should be centered.
      - parameter zoomLevel: The zoom level of the snapshot.
      */
-    init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) {
+    public init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) {
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
     }
@@ -202,7 +202,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
             overlaysComponent = "/" + overlays.map { return "\($0)" }.joined(separator: ",")
         }
         
-        return "/styles/v1/\(styleIdentifierComponent)\(overlaysComponent)/\(camera)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "")"
+        return "/styles/v1\(styleIdentifierComponent)\(overlaysComponent)/\(camera)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "")"
     }
     
     /**
