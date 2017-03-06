@@ -66,11 +66,9 @@ public protocol SnapshotOptionsProtocol: NSObjectProtocol {
 }
 
 /**
- A `Snapshot` instance represents a static snapshot of a map made by compositing one or more [raster tile sets](https://www.mapbox.com/help/define-tileset/#raster-tilesets) with optional overlays. With a snapshot instance, you can synchronously or asynchronously generate an image based on the options you provide via an HTTP request, or you can get the URL used to make this request. The image is obtained on demand from the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+ A `Snapshot` instance represents a static snapshot of a map with optional overlays. With a snapshot instance, you can synchronously or asynchronously generate an image based on the options you provide via an HTTP request, or you can get the URL used to make this request. The image is obtained on demand from the [Mapbox Static API](https://www.mapbox.com/api-documentation/#static) or the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static-classic), depending on whether you use a `SnapshotOptions` object or a `ClassicSnapshotOptions` object.
  
- The snapshot image can be used in an image view (`UIImage` on iOS and tvOS, `NSImage` on macOS, `WKImage` on watchOS). To add interactivity, use the `MGLMapView` class provided by the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [Mapbox macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos/). See the “[Custom raster style](https://www.mapbox.com/ios-sdk/examples/raster-styles/)” example to display a raster tile set in an `MGLMapView`.
- 
- If you use `Snapshot` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use the [vector Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static).
+ The snapshot image can be used in an image view (`UIImage` on iOS and tvOS, `NSImage` on macOS, `WKImage` on watchOS). To add interactivity, use the `MGLMapView` class provided by the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [Mapbox macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos/). (See the “[Custom raster style](https://www.mapbox.com/ios-sdk/examples/raster-styles/)” example to display a raster tile set in an `MGLMapView`.)
  */
 @objc(MBSnapshot)
 open class Snapshot: NSObject {
@@ -102,7 +100,7 @@ open class Snapshot: NSObject {
      
      - parameter options: Options that determine the contents and format of the output image.
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
-     - parameter host: An optional hostname to the server API. The classic Mapbox Static API endpoint is used by default.
+     - parameter host: An optional hostname to the server API. The official Mapbox API endpoint is used by default.
      */
     public init(options: SnapshotOptionsProtocol, accessToken: String?, host: String?) {
         let accessToken = accessToken ?? defaultAccessToken
@@ -120,7 +118,7 @@ open class Snapshot: NSObject {
     /**
      Initializes a newly created snapshot instance with the given options and an optional access token.
      
-     The snapshot instance sends requests to the classic Mapbox Static API endpoint.
+     The snapshot instance sends requests to the official Mapbox API endpoint.
      
      - parameter options: Options that determine the contents and format of the output image.
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
@@ -132,7 +130,7 @@ open class Snapshot: NSObject {
     /**
      Initializes a newly created snapshot instance with the given options and the default access token.
      
-     The snapshot instance sends requests to the classic Mapbox Static API endpoint.
+     The snapshot instance sends requests to the official Mapbox API endpoint.
      
      - parameter options: Options that determine the contents and format of the output image.
      */

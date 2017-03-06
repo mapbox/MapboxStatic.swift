@@ -7,7 +7,7 @@
 #endif
 
 /**
- A structure that configures a standalone marker image and how it is formatted.
+ A structure that configures a standalone marker image and how it is formatted. A standalone marker image is produced by the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
  */
 @objc(MBMarkerOptions)
 open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
