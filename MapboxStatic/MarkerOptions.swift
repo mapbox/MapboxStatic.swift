@@ -74,7 +74,7 @@ open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      Initializes a marker options instance that results in a red marker with a Maki icon.
      
      - parameter size: The size of the marker.
-     - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
+     - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) v0.5.0 icon to place atop the pin.
      */
     public convenience init(size: Size = .small, iconName: String) {
         self.init(size: size, label: .iconName(iconName))
