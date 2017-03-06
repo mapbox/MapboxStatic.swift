@@ -264,11 +264,8 @@ open class GeoJSON: NSObject, Overlay {
      - parameter object: A valid GeoJSON object.
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
-    public init?(object: [String: AnyObject]) {
-        // This should be a throwing initializer rather than a failiable initializer, but inheriting from Objective-C triggers a warning: no calls to throwing functions occur within 'try' expression
-        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
-            return nil
-        }
+    public init(object: [String: AnyObject]) throws {
+        let data = try JSONSerialization.data(withJSONObject: object, options: [])
         objectString = String(data: data, encoding: .utf8)!
     }
     
