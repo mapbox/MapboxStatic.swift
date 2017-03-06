@@ -47,9 +47,24 @@ open class SnapshotCamera: NSObject {
      - parameter centerCoordinate: The geographic coordinate on which the shapshot should be centered.
      - parameter zoomLevel: The zoom level of the snapshot.
      */
-    public init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) {
+    @nonobjc
+    public required init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) {
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
+    }
+    
+    /**
+     Creates and returns a snapshot camera instance based on the given center coordinate and zoom level.
+     
+     This factory method is intended for use in Objective-C. In Swift, use the `init(lookingAtCenter:zoomLevel:)` initializer instead.
+     
+     - parameter centerCoordinate: The geographic coordinate on which the shapshot should be centered.
+     - parameter zoomLevel: The zoom level of the snapshot.
+     - returns: A snapshot camera based on the given center coordinate and zoom level.
+     */
+    @objc(cameraLookingAtCenterCoordinate:zoomLevel:)
+    public static func camera(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) -> Self {
+        return self.init(lookingAtCenter: centerCoordinate, zoomLevel: zoomLevel)
     }
     
     open override var description: String {
