@@ -264,7 +264,7 @@ open class GeoJSON: NSObject, Overlay {
      - parameter object: A valid GeoJSON object.
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
-    public init(object: [String: AnyObject]) throws {
+    public init(object: [String: Any]) throws {
         let data = try JSONSerialization.data(withJSONObject: object, options: [])
         objectString = String(data: data, encoding: .utf8)!
     }
