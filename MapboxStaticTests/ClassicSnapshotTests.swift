@@ -67,8 +67,7 @@ class ClassicSnapshotTests: XCTestCase {
         options.scale = 1
         
         stub(condition: isHost("api.mapbox.com")
-            && pathStartsWith("/v4/mapbox.mapbox-streets-v6/0.0,0.0,6/300x300")
-            && isExtension("png")
+            && isPath("/v4/mapbox.mapbox-streets-v6/0.0,0.0,6/300x300.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "zoom", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
