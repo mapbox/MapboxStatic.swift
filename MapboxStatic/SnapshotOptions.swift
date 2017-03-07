@@ -71,6 +71,8 @@ open class SnapshotCamera: NSObject {
         var components = [centerCoordinate.longitude, centerCoordinate.latitude, Double(zoomLevel)]
         if let heading = heading {
             components.append(heading)
+        } else if let _ = pitch {
+            components.append(0)
         }
         if let pitch = pitch {
             components.append(Double(pitch))
