@@ -13,19 +13,18 @@ class SnapshotTests: XCTestCase {
     let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
     
     func testBasicMap() {
-        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0), zoomLevel: 0)
-        let options = SnapshotOptions(styleURL: styleURL, camera: camera, size: CGSize(width: 200, height: 200))
+        let options = SnapshotOptions(styleURL: styleURL, size: CGSize(width: 200, height: 200))
         options.scale = 1
         
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0/200x200")
+            && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "basic-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0/200x200@2x")
+            && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200@2x")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "basic-gl@2x", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
@@ -73,6 +72,38 @@ class SnapshotTests: XCTestCase {
         XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
     }
     
+    func testRotate() {
+        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0), zoomLevel: 0)
+        camera.heading = 45
+        let options = SnapshotOptions(styleURL: styleURL, camera: camera, size: CGSize(width: 300, height: 300))
+        options.scale = 1
+        
+        stub(condition: isHost("api.mapbox.com")
+            && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0,45.0/300x300")
+            && containsQueryParams(["access_token": BogusToken])) { request in
+                let path = Bundle(for: type(of: self)).path(forResource: "rotate", ofType: "png")!
+                return fixture(filePath: path, headers: ["Content-Type": "image/png"])
+        }
+        
+        XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
+    }
+    
+    func testTilt() {
+        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0), zoomLevel: 0)
+        camera.pitch = 60
+        let options = SnapshotOptions(styleURL: styleURL, camera: camera, size: CGSize(width: 300, height: 300))
+        options.scale = 1
+        
+        stub(condition: isHost("api.mapbox.com")
+            && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0,0.0,60.0/300x300")
+            && containsQueryParams(["access_token": BogusToken])) { request in
+                let path = Bundle(for: type(of: self)).path(forResource: "tilt", ofType: "png")!
+                return fixture(filePath: path, headers: ["Content-Type": "image/png"])
+        }
+        
+        XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
+    }
+    
     func testSize() {
         let min: UInt32 = 1
         let max: UInt32 = 1280
@@ -80,15 +111,13 @@ class SnapshotTests: XCTestCase {
         let width = arc4random_uniform(max - min) + min
         let height = arc4random_uniform(max - min) + min
         
-        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0), zoomLevel: 0)
         let options = SnapshotOptions(
             styleURL: styleURL,
-            camera: camera,
             size: CGSize(width: CGFloat(width), height: CGFloat(height)))
         options.scale = 1
         
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0/\(width)x\(height)")
+            && isPath("/styles/v1/mapbox/streets-v9/static/auto/\(width)x\(height)")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "basic-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
@@ -96,5 +125,35 @@ class SnapshotTests: XCTestCase {
         
         XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
         // Can’t test the image size here because the fixture is fixed-size but the tests chooses the size at random.
+    }
+    
+    func testHidingLogo() {
+        let options = SnapshotOptions(styleURL: styleURL, size: CGSize(width: 200, height: 200))
+        options.showsLogo = false
+        options.scale = 1
+        
+        stub(condition: isHost("api.mapbox.com")
+            && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
+            && containsQueryParams(["access_token": BogusToken, "logo": "false"])) { request in
+                let path = Bundle(for: type(of: self)).path(forResource: "no-logo", ofType: "png")!
+                return fixture(filePath: path, headers: ["Content-Type": "image/png"])
+        }
+        
+        XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
+    }
+    
+    func testHidingAttribution() {
+        let options = SnapshotOptions(styleURL: styleURL, size: CGSize(width: 200, height: 200))
+        options.showsAttribution = false
+        options.scale = 1
+        
+        stub(condition: isHost("api.mapbox.com")
+            && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
+            && containsQueryParams(["access_token": BogusToken, "attribution": "false"])) { request in
+                let path = Bundle(for: type(of: self)).path(forResource: "no-attribution", ofType: "png")!
+                return fixture(filePath: path, headers: ["Content-Type": "image/png"])
+        }
+        
+        XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
     }
 }
