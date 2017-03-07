@@ -175,7 +175,7 @@ snapshot.image
 /*:
  ### Auto-fitting features
  
- Leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
+ If you’re adding overlays to a snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
  */
 options = SnapshotOptions(
     styleURL: styleURL,
