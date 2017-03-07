@@ -39,7 +39,7 @@ To generate a snapshot from a style, you’ll need its [style URL](https://www.m
 
 To generate a snapshot from a tile set, you’ll need a [map ID](https://www.mapbox.com/help/define-map-id/). You can either choose a [Mapbox-maintained tile set](https://www.mapbox.com/api-documentation/#maps) or upload your own to [Mapbox Studio](https://www.mapbox.com/studio/tilesets/).
 
-You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
+You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) with the `styles:tiles` scope enabled in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
 
 ### Basics
 
