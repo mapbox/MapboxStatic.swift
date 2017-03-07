@@ -312,20 +312,22 @@ MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options
 
 #### Auto-fitting features
 
-If you’re adding overlays to a classic snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
+If you’re adding overlays to a snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
 
 ```swift
 // main.swift
-let options = ClassicSnapshotOptions(
-    mapIdentifiers: ["<#your map ID#>"],
+
+let options = SnapshotOptions(
+    styleURL: URL(string: "<#your mapbox: style URL#>")!,
     size: CGSize(width: 500, height: 300))
 options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
 ```
 
 ```objc
 // main.m
-MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithMapIdentifiers:@[@"<#your map ID#>"]
-                                                                                 size:CGSizeMake(500, 300)];
+NSURL *styleURL = [NSURL URLWithString:@"<#your mapbox: style URL#>"];
+MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithStyleURL:styleURL
+                                                                           size:CGSizeMake(500, 300)];
 options.overlays = @[path, geojsonOverlay, markerOverlay, customMarker];
 ```
 

@@ -63,7 +63,7 @@ snapshot.url
  To create a basic classic snapshot, create a `ClassicSnapshotOptions` object instead of a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and size in points:
  */
 
-var classicOptions = ClassicSnapshotOptions(
+let classicOptions = ClassicSnapshotOptions(
     mapIdentifiers: mapIdentifiers,
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoomLevel: 13,
@@ -175,14 +175,14 @@ snapshot.image
 /*:
  ### Auto-fitting features
  
- If you’re adding overlays to a classic snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
+ Leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
  */
-classicOptions = ClassicSnapshotOptions(
-    mapIdentifiers: mapIdentifiers,
+options = SnapshotOptions(
+    styleURL: styleURL,
     size: CGSize(width: 500, height: 300))
-classicOptions.overlays = [path, geoJSONOverlay, markerOverlay, customMarker]
+options.overlays = [path, geoJSONOverlay, markerOverlay, customMarker]
 snapshot = Snapshot(
-    options: classicOptions,
+    options: options,
     accessToken: accessToken)
 snapshot.image
 

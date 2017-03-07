@@ -117,8 +117,12 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     
     /**
      The viewpoint from which the snapshot is taken.
+     
+     If the value of this property is `nil`, a center coordinate and zoom level are automatically chosen to fit any overlays specified in the `overlays` property, and no heading or pitch is applied. If the `overlays` property is also empty, the behavior is undefined.
+     
+     The default value of this property is `nil`.
      */
-    open var camera: SnapshotCamera
+    open var camera: SnapshotCamera?
     
     // MARK: Configuring the Image Output
     
@@ -175,11 +179,23 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     open var showsAttribution = true
     
     /**
+     Initializes a snapshot options instance that causes a snapshotter object to automatically choose a center coordinate and zoom level that fits any overlays.
+     
+     After initializing a snapshot options instance with this initializer, set the `overlays` property to specify the overlays to fit the snapshot to.
+     
+     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles).
+     - parameter size: The logical size of the image to output, measured in points.
+     */
+    public init(styleURL: URL, size: CGSize) {
+        self.styleURL = styleURL
+        self.size = size
+    }
+    
+    /**
      Initializes a snapshot options instance that results in a snapshot centered at the given geographical coordinate and showing the given zoom level.
      
      - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles).
-     - parameter centerCoordinate: The geographic coordinate at the center of the snapshot.
-     - parameter zoomLevel: The zoom level of the snapshot.
+     - parameter camera: The viewpoint from which the snapshot is taken.
      - parameter size: The logical size of the image to output, measured in points.
      */
     public init(styleURL: URL, camera: SnapshotCamera, size: CGSize) {
@@ -198,11 +214,17 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
         assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/#styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
-        assert(-90...90 ~= camera.centerCoordinate.latitude, "Center latitude must be between −90° and 90°.")
-        assert(-180...180 ~= camera.centerCoordinate.latitude, "Center longitude must be between −180° and 180°.")
-        assert(0...20 ~= camera.zoomLevel, "Zoom level must be between 0 and 20.")
-        if let pitch = camera.pitch {
-            assert(0...60 ~= pitch, "Pitch must be between 0° and 60°.")
+        let position: String
+        if let camera = camera {
+            assert(-90...90 ~= camera.centerCoordinate.latitude, "Center latitude must be between −90° and 90°.")
+            assert(-180...180 ~= camera.centerCoordinate.latitude, "Center longitude must be between −180° and 180°.")
+            assert(0...20 ~= camera.zoomLevel, "Zoom level must be between 0 and 20.")
+            if let pitch = camera.pitch {
+                assert(0...60 ~= pitch, "Pitch must be between 0° and 60°.")
+            }
+            position = String(describing: camera)
+        } else {
+            position = "auto"
         }
         
         assert(1...1_280 ~= size.width, "Width must be between 1 and 1,280 points.")
@@ -217,7 +239,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
             overlaysComponent = "/" + overlays.map { return "\($0)" }.joined(separator: ",")
         }
         
-        return "/styles/v1\(styleIdentifierComponent)\(overlaysComponent)/\(camera)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "")"
+        return "/styles/v1\(styleIdentifierComponent)\(overlaysComponent)/\(position)/\(Int(round(size.width)))x\(Int(round(size.height)))\(scale > 1 ? "@2x" : "")"
     }
     
     /**
