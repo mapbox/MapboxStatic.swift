@@ -140,7 +140,7 @@ class ClassicOverlayTests: XCTestCase {
         options.overlays = [path]
         options.scale = 1
         
-        let encodedPolyline = "upztG`jxkVn@al@bo@nFWzuAaTcAyZen@"
+        let encodedPolyline = "upztG`jxkVn@al@bo@pFWzuAaTcAyZgn@"
         
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/path-2+000000-0.75+ff0000-0.25(\(encodedPolyline))/auto/200x200.png")
