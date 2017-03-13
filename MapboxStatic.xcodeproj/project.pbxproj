@@ -130,6 +130,9 @@
 		DAE8CCC41E6E992E009B5CB0 /* zoom-gl.png in Resources */ = {isa = PBXBuildFile; fileRef = DAE8CCC31E6E992E009B5CB0 /* zoom-gl.png */; };
 		DAE8CCC51E6E992E009B5CB0 /* zoom-gl.png in Resources */ = {isa = PBXBuildFile; fileRef = DAE8CCC31E6E992E009B5CB0 /* zoom-gl.png */; };
 		DAE8CCC61E6E992E009B5CB0 /* zoom-gl.png in Resources */ = {isa = PBXBuildFile; fileRef = DAE8CCC31E6E992E009B5CB0 /* zoom-gl.png */; };
+		DAA4014D1E7652EE00998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D51E5EE5E6006F138F /* Polyline.framework */; };
+		DAA4014E1E7652F600998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D71E5EE601006F138F /* Polyline.framework */; };
+		DAA4014F1E7652FB00998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D91E5EE60A006F138F /* Polyline.framework */; };
 		DAF158881D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
 		DAF158891D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
 		DAF15A431CE8FBBC0040E86C /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -276,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA9CC68D1E5C551000A14964 /* OHHTTPStubs.framework in Frameworks */,
+				DAA4014E1E7652F600998ACE /* Polyline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA9CC68F1E5C551500A14964 /* OHHTTPStubs.framework in Frameworks */,
+				DAA4014F1E7652FB00998ACE /* Polyline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA9CC68B1E5C550000A14964 /* OHHTTPStubs.framework in Frameworks */,
+				DAA4014D1E7652EE00998ACE /* Polyline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -901,6 +907,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Polyline.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
@@ -916,6 +923,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Polyline.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
@@ -931,6 +939,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Polyline.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
