@@ -96,7 +96,6 @@
 		DA0584DA1E5EE60A006F138F /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D91E5EE60A006F138F /* Polyline.framework */; };
 		DA0584DC1E5EE60F006F138F /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584DB1E5EE60F006F138F /* Polyline.framework */; };
 		DA20FB9E1CE3DEBB00B07762 /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA20FBA21CE3DEBB00B07762 /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
 		DA20FBA81CE3DF6900B07762 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19871BD9B3970057AC9F /* Snapshot.swift */; };
 		DA20FBAA1CE401E800B07762 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBA91CE401E800B07762 /* Color.swift */; };
 		DA20FBAC1CE4026B00B07762 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FBAB1CE4026B00B07762 /* Overlay.swift */; };
@@ -133,6 +132,10 @@
 		DAA4014D1E7652EE00998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D51E5EE5E6006F138F /* Polyline.framework */; };
 		DAA4014E1E7652F600998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D71E5EE601006F138F /* Polyline.framework */; };
 		DAA4014F1E7652FB00998ACE /* Polyline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0584D91E5EE60A006F138F /* Polyline.framework */; };
+		DAA401531E7656B900998ACE /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
+		DAA401541E7656B900998ACE /* MapboxStatic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DAA401561E7656F000998ACE /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
+		DAA401571E7656F000998ACE /* MapboxStatic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAF158881D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
 		DAF158891D03E7AC00829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158871D03E7AC00829B35 /* Launch Screen.storyboard */; };
 		DAF15A431CE8FBBC0040E86C /* MapboxStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = DA20FB9D1CE3DEBB00B07762 /* MapboxStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -142,7 +145,6 @@
 		DAF15A4F1CE90A6C0040E86C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A4E1CE90A6C0040E86C /* main.m */; };
 		DAF15A521CE90A6C0040E86C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A511CE90A6C0040E86C /* AppDelegate.m */; };
 		DAF15A551CE90A6C0040E86C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF15A541CE90A6C0040E86C /* ViewController.m */; };
-		DAF15A631CE90CE70040E86C /* MapboxStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA20FB9B1CE3DEBB00B07762 /* MapboxStatic.framework */; };
 		DD0C88181BE1A9E100606E9F /* polyline.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DD0C88161BE1A9D400606E9F /* polyline.geojson */; };
 		DD685BA91BDB14C1002E2BB2 /* MapboxStaticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD19831BD9B2F80057AC9F /* MapboxStaticTests.swift */; };
 		DDAD19711BD9B1A50057AC9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD196E1BD9B1A50057AC9F /* AppDelegate.swift */; };
@@ -186,6 +188,31 @@
 			remoteInfo = "Sample App";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DAA401551E7656B900998ACE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAA401541E7656B900998ACE /* MapboxStatic.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA401581E7656F000998ACE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAA401571E7656F000998ACE /* MapboxStatic.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DA031C611E6F4824007CA06A /* rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate.png; sourceTree = "<group>"; };
@@ -312,7 +339,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF15A631CE90CE70040E86C /* MapboxStatic.framework in Frameworks */,
+				DAA401561E7656F000998ACE /* MapboxStatic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA20FBA21CE3DEBB00B07762 /* MapboxStatic.framework in Frameworks */,
+				DAA401531E7656B900998ACE /* MapboxStatic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +656,7 @@
 				DAF15A471CE90A6C0040E86C /* Sources */,
 				DAF15A481CE90A6C0040E86C /* Frameworks */,
 				DAF15A491CE90A6C0040E86C /* Resources */,
+				DAA401581E7656F000998ACE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -647,6 +675,7 @@
 				DDAD19551BD9B1780057AC9F /* Sources */,
 				DDAD19561BD9B1780057AC9F /* Frameworks */,
 				DDAD19571BD9B1780057AC9F /* Resources */,
+				DAA401551E7656B900998ACE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1509,6 +1538,7 @@
 		DDAD196C1BD9B1780057AC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CURRENT_PROJECT_VERSION = 7;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1522,6 +1552,7 @@
 		DDAD196D1BD9B1780057AC9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CURRENT_PROJECT_VERSION = 7;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
