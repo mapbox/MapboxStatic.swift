@@ -51,7 +51,7 @@ import MapboxStatic
 
 let camera = SnapshotCamera(
     lookingAtCenter: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoomLevel: 13)
+    zoomLevel: 12)
 let options = SnapshotOptions(
     styleURL: URL(string: "<#your mapbox: style URL#>")!,
     camera: camera,
@@ -67,7 +67,7 @@ let snapshot = Snapshot(
 
 NSURL *styleURL = [NSURL URLWithString:@"<#your mapbox: style URL#>"];
 MBSnapshotCamera *camera = [MBSnapshotCamera cameraLookingAtCenterCoordinate:CLLocationCoordinate2DMake(45.52, -122.681944)
-                                                                   zoomLevel:6];
+                                                                   zoomLevel:12];
 MBSnapshotOptions *options = [[MBSnapshotOptions alloc] initWithStyleURL:styleURL
                                                                   camera:camera
                                                                     size:CGSizeMake(200, 200)];
@@ -87,7 +87,7 @@ imageView.image = snapshot.image
 imageView.image = snapshot.image;
 ```
 
-![](./screenshots/map.png)
+<img src="./screenshots/map.png" width="200" alt="">
 
 Or you can pass a completion handler to update the UI thread after the image is retrieved:
 
@@ -172,7 +172,7 @@ MBMarker *markerOverlay = [[MBMarker alloc] initWithCoordinate:CLLocationCoordin
 #endif
 ```
 
-![](./screenshots/marker.png)
+<img src="./screenshots/marker.png" width="200" alt="">
 
 #### Custom marker
 
@@ -191,7 +191,7 @@ MBCustomMarker *customMarker = [[MBCustomMarker alloc] initWithCoordinate:CLLoca
                                                                       url:url];
 ```
 
-![](./screenshots/custom.png)
+<img src="./screenshots/custom.png" width="200" alt="">
 
 #### GeoJSON
 
@@ -215,7 +215,7 @@ NSString *geoJSONString = [[NSString alloc] initWithContentsOfURL:geoJSONURL
 MBGeoJSON *geoJSONOverlay = [[MBGeoJSON alloc] initWithObjectString:geoJSONString];
 ```
 
-![](./screenshots/geojson.png)
+<img src="./screenshots/geojson.png" width="200" alt="">
 
 #### Path
 
@@ -272,7 +272,7 @@ path.strokeWidth = 2;
 path.fillOpacity = 0.25;
 ```
 
-![](./screenshots/path.png)
+<img src="./screenshots/path.png" width="200" alt="">
 
 ### Other options
 
@@ -310,6 +310,8 @@ MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options
                                                accessToken:@"<#your access token#>"];
 ```
 
+<img src="./screenshots/rotate.png" width="200" alt="">
+
 #### Auto-fitting features
 
 If you’re adding overlays to a snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
@@ -331,7 +333,7 @@ MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithStyleURL:
 options.overlays = @[path, geojsonOverlay, markerOverlay, customMarker];
 ```
 
-![](screenshots/autofit.png)
+<img src="./screenshots/autofit.png" width="200" alt="">
 
 #### Standalone markers
  
