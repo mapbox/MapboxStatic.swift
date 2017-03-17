@@ -333,7 +333,7 @@ MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithStyleURL:
 options.overlays = @[path, geojsonOverlay, markerOverlay, customMarker];
 ```
 
-<img src="./screenshots/autofit.png" width="200" alt="">
+<img src="./screenshots/autofit.png" width="500" alt="">
 
 #### Standalone markers
  
