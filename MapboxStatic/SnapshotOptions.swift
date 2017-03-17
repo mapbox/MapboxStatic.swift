@@ -12,11 +12,33 @@
 @objc(MBSnapshotCamera)
 open class SnapshotCamera: NSObject {
     /**
+     Vertical field of view, measured in degrees, for determining the altitude of the viewpoint.
+     */
+    static let angularFieldOfView: CLLocationDegrees = 30
+    
+    /**
+     Radius of the Earth, measured in meters.
+     */
+    static let radiusOfEarth: CLLocationDistance = 6_378_137
+    
+    /**
+     Size of a tile.
+     */
+    static let tileSize = CGSize(width: 512, height: 512)
+    
+    /**
      The geographic coordinate at the center of the snapshot.
      
      If the value of this property is `nil`, the `zoomLevel` property is ignored and a center coordinate and zoom level are automatically chosen to fit any overlays specified in the `overlays` property. If the `overlays` property is also empty, the behavior is undefined.
      */
     open var centerCoordinate: CLLocationCoordinate2D
+    
+    /**
+     The distance (in meters) from the center coordinate at ground level to the viewpoint.
+     
+     If `zoomLevel` is specified, this property is ignored.
+     */
+    open var altitude: CLLocationDistance?
     
     /**
      The zoom level of the snapshot.
@@ -27,30 +49,50 @@ open class SnapshotCamera: NSObject {
      
      The zoom level may not be less than 0 or greater than 20. Fractional zoom levels are rounded to two decimal places.
      */
-    open var zoomLevel: CGFloat
+    open var zoomLevel: CGFloat?
     
     /**
      The heading measured in degrees clockwise from true north.
      */
-    open var heading: CLLocationDirection?
+    open var heading: CLLocationDirection
     
     /**
      The pitch toward the horizon measured in degrees, with 0 degrees resulting in a two-dimensional map.
      
      The pitch may not be less than 0 or greater than 60.
      */
-    open var pitch: CGFloat?
+    open var pitch: CGFloat
+    
+    /**
+     Initializes a snapshot camera instance based on the given center coordinate, distance, pitch, and heading.
+     
+     - parameter centerCoordinate: The geographic coordinate on which the shapshot should be centered.
+     - parameter distance: The straight-line distance from the viewpoint to the `centerCoordinate`.
+     - parameter pitch: The viewing angle of the camera, measured in degrees. A value of `0` results in a camera pointed straight down at the map. Angles greater than `0` result in a camera angled toward the horizon.
+     - parameter heading: The camera’s heading, measured in degrees clockwise from true north. A value of `0` means that the top edge of the map view corresponds to true north. The value `90` means the top of the map is pointing due east. The value `180` means the top of the map points due south, and so on.
+     */
+    @nonobjc
+    public required init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, fromDistance distance: CLLocationDistance, pitch: CGFloat = 0, heading: CLLocationDirection = 0) {
+        self.centerCoordinate = centerCoordinate
+        self.altitude = distance
+        self.pitch = pitch
+        self.heading = heading
+    }
     
     /**
      Initializes a snapshot camera instance based on the given center coordinate and zoom level.
      
      - parameter centerCoordinate: The geographic coordinate on which the shapshot should be centered.
      - parameter zoomLevel: The zoom level of the snapshot.
+     - parameter pitch: The viewing angle of the camera, measured in degrees. A value of `0` results in a camera pointed straight down at the map. Angles greater than `0` result in a camera angled toward the horizon.
+     - parameter heading: The camera’s heading, measured in degrees clockwise from true north. A value of `0` means that the top edge of the map view corresponds to true north. The value `90` means the top of the map is pointing due east. The value `180` means the top of the map points due south, and so on.
      */
     @nonobjc
-    public required init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat) {
+    public required init(lookingAtCenter centerCoordinate: CLLocationCoordinate2D, zoomLevel: CGFloat, pitch: CGFloat = 0, heading: CLLocationDirection = 0) {
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
+        self.pitch = pitch
+        self.heading = heading
     }
     
     /**
@@ -67,17 +109,57 @@ open class SnapshotCamera: NSObject {
         return self.init(lookingAtCenter: centerCoordinate, zoomLevel: zoomLevel)
     }
     
-    open override var description: String {
-        var components = [centerCoordinate.longitude, centerCoordinate.latitude, Double(zoomLevel)]
-        if let heading = heading {
+    func string(size: CGSize) -> String {
+        assert(-90...90 ~= centerCoordinate.latitude, "Center latitude must be between −90° and 90°.")
+        assert(-180...180 ~= centerCoordinate.latitude, "Center longitude must be between −180° and 180°.")
+        
+        var components = [centerCoordinate.longitude, centerCoordinate.latitude]
+        
+        var zoomLevel: CGFloat = 0
+        if let level = self.zoomLevel {
+            zoomLevel = level
+        } else if let altitude = altitude {
+            zoomLevel = SnapshotCamera.zoomLevelForAltitude(altitude, pitch: pitch, latitude: centerCoordinate.latitude, size: size)
+        }
+        assert(0...20 ~= zoomLevel, "Zoom level must be between 0 and 20.")
+        components.append(Double(zoomLevel))
+        
+        if heading > 0 {
             components.append(heading)
-        } else if let _ = pitch {
+        } else if pitch > 0 {
             components.append(0)
         }
-        if let pitch = pitch {
+        
+        assert(0...60 ~= pitch, "Pitch must be between 0° and 60°.")
+        if pitch > 0 {
             components.append(Double(pitch))
         }
+        
         return components.map { "\($0)" }.joined(separator: ",")
+    }
+    
+    /**
+     Converts a camera altitude to a map zoom level.
+     
+     - parameter altitude: The altitude to convert, measured in meters.
+     - parameter pitch: The camera pitch, measured in degrees.
+     - parameter latitude: The latitude of the point at the center of the viewport.
+     - parameter size: The size of the viewport.
+     - returns: A zero-based zoom level.
+     */
+    static func zoomLevelForAltitude(_ altitude: CLLocationDistance, pitch: CGFloat, latitude: CLLocationDegrees, size: CGSize) -> CGFloat {
+        let eyeAltitude: CLLocationDistance = altitude / sin(.pi / 2 - radians(degrees: Double(pitch))) * sin(.pi / 2)
+        let metersTall: CLLocationDistance = eyeAltitude * 2 * tan(radians(degrees: angularFieldOfView) / 2)
+        let metersPerPixel: CLLocationDistance = metersTall / Double(size.height)
+        let mapPixelWidthAtZoom = cos(radians(degrees: latitude)) * .pi * 2 * radiusOfEarth / metersPerPixel
+        return CGFloat(log2(mapPixelWidthAtZoom / Double(tileSize.width)))
+    }
+    
+    /**
+     Returns radians, converted from degrees.
+     */
+    static func radians(degrees: Double) -> Double {
+        return degrees * .pi / 180.0
     }
 }
 
@@ -216,18 +298,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
         assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/#styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
-        let position: String
-        if let camera = camera {
-            assert(-90...90 ~= camera.centerCoordinate.latitude, "Center latitude must be between −90° and 90°.")
-            assert(-180...180 ~= camera.centerCoordinate.latitude, "Center longitude must be between −180° and 180°.")
-            assert(0...20 ~= camera.zoomLevel, "Zoom level must be between 0 and 20.")
-            if let pitch = camera.pitch {
-                assert(0...60 ~= pitch, "Pitch must be between 0° and 60°.")
-            }
-            position = String(describing: camera)
-        } else {
-            position = "auto"
-        }
+        let position = camera?.string(size: size) ?? "auto"
         
         assert(1...1_280 ~= size.width, "Width must be between 1 and 1,280 points.")
         assert(1...1_280 ~= size.height, "Height must be between 1 and 1,280 points.")

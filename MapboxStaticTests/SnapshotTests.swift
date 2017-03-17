@@ -12,6 +12,15 @@ class SnapshotTests: XCTestCase {
     
     let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
     
+    func testConvertingAltitudes() {
+        let tallSize = CGSize(width: 600, height: 1200)
+        let midSize = CGSize(width: 600, height: 800)
+        let shortSize = CGSize(width: 600, height: 400)
+        
+        XCTAssertLessThan(SnapshotCamera.zoomLevelForAltitude(1800, pitch: 0, latitude: 0, size: midSize), SnapshotCamera.zoomLevelForAltitude(1800, pitch: 0, latitude: 0, size: tallSize))
+        XCTAssertGreaterThan(SnapshotCamera.zoomLevelForAltitude(1800, pitch: 0, latitude: 0, size: midSize), SnapshotCamera.zoomLevelForAltitude(1800, pitch: 0, latitude: 0, size: shortSize))
+    }
+    
     func testBasicMap() {
         let options = SnapshotOptions(styleURL: styleURL, size: CGSize(width: 200, height: 200))
         options.scale = 1
