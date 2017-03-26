@@ -22,7 +22,7 @@ import MapboxStatic
 
 let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
 let mapIdentifiers = ["mapbox.satellite"]
-let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
+let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
 
 /*:
  ## Basics

@@ -4,7 +4,7 @@ import MapboxStatic
 
 class ViewController: UIViewController {
     // You can also specify the access token with the `MGLMapboxAccessToken` key in Info.plist.
-    let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
+    let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
     var imageView: UIImageView!
     
     override func viewDidLoad() {
