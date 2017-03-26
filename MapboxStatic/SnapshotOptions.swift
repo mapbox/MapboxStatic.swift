@@ -250,6 +250,8 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      A Boolean determining whether the resulting image includes the Mapbox logo.
      
      When shown, the Mapbox logo is located in the lower-left corner of the image. By default, this property is set to `true`.
+     
+     - note: The Mapbox terms of service [requires](https://www.mapbox.com/help/attribution/) the [Mapbox logo](https://www.mapbox.com/about/press/brand-guidelines/) to accompany the snapshot. In general, you should not set this property to `false`. Contact your Mapbox sales representative for information about waiving this requirement. This requirement is distinct from the requirement that governs the `showsAttribution` property.
      */
     open var showsLogo = true
     
@@ -258,7 +260,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      When shown, the attribution is located in the bottom-right corner of the image. By default, this property is set to `true`.
      
-     - note: The Mapbox terms of service, which governs the use of Mapbox-hosted vector tiles and styles, [requires](https://www.mapbox.com/help/attribution/) these copyright notices to accompany any map that features Mapbox-designed styles, OpenStreetMap data, or other Mapbox data such as satellite or terrain data. If these requirements applies to the shapshot and you set this property to `false`, you must provide [proper attribution](https://www.mapbox.com/help/attribution/#static--print) near the snapshot.
+     - note: The Mapbox terms of service, which governs the use of Mapbox-hosted vector tiles and styles, [requires](https://www.mapbox.com/help/attribution/) these copyright notices to accompany any map that features Mapbox-designed styles, OpenStreetMap data, or other Mapbox data such as satellite or terrain data. If this requirement applies to the shapshot and you set this property to `false`, you must provide [proper attribution](https://www.mapbox.com/help/attribution/#static--print) near the snapshot. This requirement is distinct from the requirement that governs the `showsLogo` property.
      */
     open var showsAttribution = true
     
