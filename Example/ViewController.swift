@@ -4,7 +4,7 @@ import MapboxStatic
 
 class ViewController: UIViewController {
     // You can also specify the access token with the `MGLMapboxAccessToken` key in Info.plist.
-    let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
+    let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
     var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -18,10 +18,10 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        let camera = SnapshotCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 45, longitude: -122), zoomLevel: 6)
         let options = SnapshotOptions(
-            mapIdentifiers: ["justin.tm2-basemap"],
-            centerCoordinate: CLLocationCoordinate2D(latitude: 45, longitude: -122),
-            zoomLevel: 6,
+            styleURL: URL(string: "mapbox://styles/mapbox/streets-v9")!,
+            camera: camera,
             size: imageView.bounds.size)
         _ = Snapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
             if let error = error {

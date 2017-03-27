@@ -35,11 +35,19 @@ open class MarkerImage: NSObject {
      */
     @objc(MBMarkerSize)
     public enum Size: Int, CustomStringConvertible {
-        /// Small.
+        /**
+         A small marker.
+         
+         A small marker in a snapshot is the same size as a medium-sized marker in a classic snapshot.
+         */
         case small
-        /// Medium.
+        /**
+         A medium-sized marker.
+         
+         A medium-sized marker in a snapshot is the same size as a large marker in a classic snapshot.
+         */
         case medium
-        /// Large.
+        /// A large marker.
         case large
         
         public var description: String {
@@ -61,9 +69,9 @@ open class MarkerImage: NSObject {
         /// A number from 0 through 99.
         case number(Int)
         /**
-         The name of a [Maki](https://www.mapbox.com/maki-icons/) v0.5.0 icon.
+         The name of a [Maki](https://www.mapbox.com/maki-icons/) icon.
          
-         Valid values are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+         The Static API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The classic Static API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
          */
         case iconName(String)
         
@@ -177,6 +185,8 @@ open class Marker: MarkerImage, Point {
      
      The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
      
+     The Static API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The classic Static API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+     
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.
      - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
@@ -211,8 +221,6 @@ open class CustomMarker: NSObject, Overlay {
     
     /**
      The HTTP or HTTPS URL of the image.
-     
-     The image must be less than 160,000 points in area (width multiplied by height).
      
      The API caches custom marker images according to the `Expires` and `Cache-Control` headers. If you host the image on your own server, make sure that at least one of these headers is set to an proper value to prevent repeated requests for the image.
      */
@@ -256,11 +264,8 @@ open class GeoJSON: NSObject, Overlay {
      - parameter object: A valid GeoJSON object.
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
-    public init?(object: [String: AnyObject]) {
-        // This should be a throwing initializer rather than a failiable initializer, but inheriting from Objective-C triggers a warning: no calls to throwing functions occur within 'try' expression
-        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
-            return nil
-        }
+    public init(object: [String: Any]) throws {
+        let data = try JSONSerialization.data(withJSONObject: object, options: [])
         objectString = String(data: data, encoding: .utf8)!
     }
     

@@ -4,7 +4,7 @@
 @import MapboxStatic;
 
 // You can also specify the access token with the `MGLMapboxAccessToken` key in Info.plist.
-static NSString * const AccessToken = @"pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A";
+static NSString * const AccessToken = @"pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A";
 
 @interface ViewController ()
 
@@ -25,10 +25,12 @@ static NSString * const AccessToken = @"pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEif
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    MBSnapshotOptions *options = [[MBSnapshotOptions alloc] initWithMapIdentifiers:@[@"justin.tm2-basemap"]
-                                                                  centerCoordinate:CLLocationCoordinate2DMake(45, -122)
-                                                                         zoomLevel:6
-                                                                              size:self.imageView.bounds.size];
+    NSURL *styleURL = [NSURL URLWithString:@"mapbox://styles/mapbox/streets-v9"];
+    MBSnapshotCamera *camera = [MBSnapshotCamera cameraLookingAtCenterCoordinate:CLLocationCoordinate2DMake(45, -122)
+                                                                       zoomLevel:6];
+    MBSnapshotOptions *options = [[MBSnapshotOptions alloc] initWithStyleURL:styleURL
+                                                                      camera:camera
+                                                                        size:self.imageView.bounds.size];
     CLLocationCoordinate2D coords[] = {
         CLLocationCoordinate2DMake(45, -122),
         CLLocationCoordinate2DMake(45, -124),

@@ -5,30 +5,37 @@ import MapboxStatic
 /*:
  # MapboxStatic.swift
  
- MapboxStatic.swift makes it easy to connect your macOS Cocoa application to the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a static map image with overlays, asynchronous imagery fetching, and first-class Swift data types.
+ MapboxStatic.swift makes it easy to connect your macOS Cocoa application to the [Mapbox Static API](https://www.mapbox.com/api-documentation/#static) or the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
  
- Static maps are flattened PNG or JPG images, ideal for use in table views, image views, and anyplace else you’d like a quick, custom map without the overhead of an interactive view. They are created in one HTTP request, so overlays are all added *server-side*.
+ A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image view, sharing service, printed document, or anyplace else you’d like a quick, custom map without the overhead of an interactive view. A static map is created in a single HTTP request. Overlays are added server-side.
  
  ## Usage
  
- You will need a [map ID](https://www.mapbox.com/help/define-map-id/) from a [custom map style](https://www.mapbox.com/help/customizing-the-map/) on your Mapbox account. You will also need an [access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API.
+ You can either generate a _snapshot_ from a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/), or you can generate a _classic snapshot_ from a raw [tile set](https://www.mapbox.com/help/define-tileset/). Using a style gives you more visual options like rotation, while using a tile set gives you a choice of image formats. If you’re working with vector data, you’ll want to use a style; if you’re working with a single raster imagery source, you may want to use a tile set.
  
- You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
+ To generate a snapshot from a style, you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style in the Mapbox macOS SDK.
+ 
+ To generate a snapshot from a tileset, you’ll need a [map ID](https://www.mapbox.com/help/define-map-id/). You can either choose a [Mapbox-maintained tileset](https://www.mapbox.com/api-documentation/#maps) or upload your own to [Mapbox Studio](https://www.mapbox.com/studio/tilesets/).
+ 
+ You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) with the `styles:tiles` scope enabled in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
  */
 
-let mapIdentifiers = ["justin.tm2-basemap"]
-let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
+let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
+let mapIdentifiers = ["mapbox.satellite"]
+let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
 
 /*:
  ## Basics
  
- The main static map class is `Snapshot`. To create a basic snapshot, create a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and point size:
+ The main static map class is `Snapshot`. To create a basic snapshot, create a `SnapshotOptions` object, specifying snapshot camera (viewpoint) and point size:
  */
 
+var camera = SnapshotCamera(
+    lookingAtCenter: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
+    zoomLevel: 13)
 var options = SnapshotOptions(
-    mapIdentifiers: mapIdentifiers,
-    centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoomLevel: 13,
+    styleURL: styleURL,
+    camera: camera,
     size: CGSize(width: 300, height: 200))
 var snapshot = Snapshot(
     options: options,
@@ -53,9 +60,23 @@ snapshot.image { (image, error) in
 snapshot.url
 
 /*:
+ To create a basic classic snapshot, create a `ClassicSnapshotOptions` object instead of a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and size in points:
+ */
+
+let classicOptions = ClassicSnapshotOptions(
+    mapIdentifiers: mapIdentifiers,
+    centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
+    zoomLevel: 13,
+    size: CGSize(width: 300, height: 200))
+snapshot = Snapshot(
+    options: classicOptions,
+    accessToken: accessToken)
+snapshot.image
+
+/*:
  ## Overlays
  
- Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki/), custom marker imagery, GeoJSON geometries, and even paths made of bare coordinates.
+ Overlays are where things get interesting! You can add [Maki markers](https://www.mapbox.com/maki-icons/), custom marker imagery, GeoJSON geometries, and even paths made of bare coordinates.
  
  You add overlays to the `overlays` field in the `SnapshotOptions` object. Here are some versions of our snapshot with various overlays added.
  
@@ -87,13 +108,13 @@ snapshot.image
 /*:
  ### GeoJSON
  */
-let geojsonOverlay: GeoJSON
+let geoJSONOverlay: GeoJSON
 do {
-    let geojsonURL = URL(string: "http://git.io/vCv9U")!
-    let geojsonString = try String(contentsOf: geojsonURL, encoding: .utf8)
-    geojsonOverlay = GeoJSON(objectString: geojsonString)
+    let geoJSONURL = URL(string: "http://git.io/vCv9U")!
+    let geoJSONString = try String(contentsOf: geoJSONURL, encoding: .utf8)
+    geoJSONOverlay = GeoJSON(objectString: geoJSONString)
 }
-options.overlays = [geojsonOverlay]
+options.overlays = [geoJSONOverlay]
 snapshot = Snapshot(
     options: options,
     accessToken: accessToken)
@@ -136,11 +157,30 @@ snapshot.image
 /*:
  ## Other options
  
+ ### Rotation and tilt
+ 
+ To rotate and tilt a snapshot, set its camera’s heading and pitch:
+ */
+camera.heading = 45
+camera.pitch = 60
+options = SnapshotOptions(
+    styleURL: styleURL,
+    camera: camera,
+    size: CGSize(width: 300, height: 200))
+snapshot = Snapshot(
+    options: options,
+    accessToken: accessToken)
+snapshot.image
+
+/*:
  ### Auto-fitting features
  
- If you’re adding overlays to your map, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
+ If you’re adding overlays to a snapshot, leave out the center coordinate and zoom level to automatically calculate the center and zoom level that best shows them off.
  */
-options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
+options = SnapshotOptions(
+    styleURL: styleURL,
+    size: CGSize(width: 500, height: 300))
+options.overlays = [path, geoJSONOverlay, markerOverlay, customMarker]
 snapshot = Snapshot(
     options: options,
     accessToken: accessToken)
@@ -163,9 +203,9 @@ snapshot.image
 /*:
  ### File format and quality
  
- When creating a map, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).
+ When creating a classic snapshot, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).
  
  ### Attribution
  
- Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your app. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
+ Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your application. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.
  */
