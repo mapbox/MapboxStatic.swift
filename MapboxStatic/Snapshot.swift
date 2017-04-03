@@ -201,7 +201,7 @@ open class Snapshot: NSObject {
             
             let apiMessage = json["message"] as? String
             guard image != nil && error == nil && apiMessage == nil else {
-                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error as? NSError)
+                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error as NSError?)
                 DispatchQueue.main.async {
                     handler(nil, apiError)
                 }
