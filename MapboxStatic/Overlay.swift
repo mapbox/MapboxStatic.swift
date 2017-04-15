@@ -437,6 +437,11 @@ open class Path: NSObject, Overlay {
     
     open override var description: String {
         let encodedPolyline = polylineEncode(coordinates).addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
-        return "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)+\(fillColor.toHexString())-\(fillOpacity)(\(encodedPolyline))"
+        var description = "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)"
+        if fillOpacity > 0 {
+            description += "+\(fillColor.toHexString())-\(fillOpacity)"
+        }
+        description += "(\(encodedPolyline))"
+        return description
     }
 }
