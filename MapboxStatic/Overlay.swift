@@ -329,20 +329,6 @@ open class Path: NSObject, Overlay {
     #endif
     
     /**
-     The stroke opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
-     
-     By default, the overlay’s stroke is completely opaque.
-     */
-    open var strokeOpacity: Double = 1
-    
-    /**
-     The fill opacity of the overlay, expressed as a percentage such that 0.0 is completely transparent and 1.0 is completely opaque.
-     
-     By default, the overlay’s fill is completely transparent.
-     */
-    open var fillOpacity: Double = 0
-    
-    /**
      Initializes a polyline overlay with the given vertices.
      
      The polyline is 1 point wide and stroked with Davy’s gray (33% white).
@@ -437,9 +423,9 @@ open class Path: NSObject, Overlay {
     
     open override var description: String {
         let encodedPolyline = polylineEncode(coordinates).addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
-        var description = "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeOpacity)"
-        if fillOpacity > 0 {
-            description += "+\(fillColor.toHexString())-\(fillOpacity)"
+        var description = "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeColor.alphaComponent)"
+        if fillColor.alphaComponent > 0 {
+            description += "+\(fillColor.toHexString())-\(fillColor.alphaComponent)"
         }
         description += "(\(encodedPolyline))"
         return description
