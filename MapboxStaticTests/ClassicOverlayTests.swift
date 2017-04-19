@@ -131,10 +131,8 @@ class ClassicOverlayTests: XCTestCase {
                 )
             ])
         path.strokeWidth = 2
-        path.strokeColor = .black
-        path.strokeOpacity = 0.75
-        path.fillColor = .red
-        path.fillOpacity = 0.25
+        path.strokeColor = Color.black.withAlphaComponent(0.75)
+        path.fillColor = Color.red.withAlphaComponent(0.25)
         
         let options = ClassicSnapshotOptions(
             mapIdentifiers: ["mapbox.streets"],

@@ -27,6 +27,19 @@ internal extension Color {
 
         return NSString(format: "%02x%02x%02x", Int(r), Int(g), Int(b)) as String
     }
+    
+    #if !os(macOS)
+    internal var alphaComponent: CGFloat {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        return a
+    }
+    #endif
 
     convenience init(hexString: String) {
         var hexString = hexString.replacingOccurrences(of: "#", with: "")
