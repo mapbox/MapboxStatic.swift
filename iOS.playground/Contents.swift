@@ -146,8 +146,7 @@ let path = Path(
     ])
 path.strokeWidth = 2
 path.strokeColor = .black
-path.fillColor = .red
-path.fillOpacity = 0.25
+path.fillColor = UIColor.red.withAlphaComponent(0.25)
 options.overlays = [path]
 snapshot = Snapshot(
     options: options,
