@@ -333,7 +333,7 @@ open class Path: NSObject, Overlay {
      
      The polyline is 1 point wide and stroked with Davy’s gray (33% white).
      
-     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillOpacity` property to a value greater than 0.0.
+     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillColor` property to a color whose alpha component is greater than 0.0.
      
      - parameter coordinates: An array of geographic coordinates defining the path of the overlay.
      */
@@ -346,7 +346,7 @@ open class Path: NSObject, Overlay {
      
      The polyline is 1 point wide and stroked with Davy’s gray (33% white).
      
-     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillOpacity` property to a value greater than 0.0.
+     To turn the overlay into a polygon, close the path by ensuring that the first and last coordinates are the same. To fill the polygon, set the `fillColor` property to a color whose alpha component is greater than 0.0.
      
      - parameter coordinates: An array of geographic coordinates defining the path of the overlay.
      
