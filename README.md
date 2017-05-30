@@ -247,8 +247,11 @@ let path = Path(
 )
 path.strokeWidth = 2
 path.strokeColor = .black
-path.fillColor = .red
-path.fillOpacity = 0.25
+#if os(macOS)
+    path.fillColor = NSColor.red.withAlphaComponent(0.25)
+#else
+    path.fillColor = UIColor.red.withAlphaComponent(0.25)
+#endif
 ```
 
 ```objc
@@ -266,12 +269,11 @@ MBPath *path = [[MBPath alloc] initWithCoordinates:coordinates
 path.strokeWidth = 2;
 #if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
     path.strokeColor = [UIColor blackColor];
-    path.fillColor = [UIColor redColor];
+    path.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.25];
 #elif TARGET_OS_MAC
     path.strokeColor = [NSColor blackColor];
-    path.fillColor = [NSColor redColor];
+    path.fillColor = [[NSColor redColor] colorWithAlphaComponent:0.25];
 #endif
-path.fillOpacity = 0.25;
 ```
 
 <img src="./screenshots/path.png" width="200" alt="">
