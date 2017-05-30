@@ -18,13 +18,13 @@ MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/m
 Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
 ```sh
-github "mapbox/MapboxStatic.swift" ~> 0.8
+github "mapbox/MapboxStatic.swift" ~> 0.9
 ```
 
 Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', '~> 0.8'
+pod 'MapboxStatic.swift', '~> 0.9'
 ```
 
 Then `import MapboxStatic` or `@import MapboxStatic;`. 
