@@ -7,7 +7,7 @@
 #endif
 
 internal extension Color {
-    internal func toHexString() -> String {
+    @nonobjc func toHexString() -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
