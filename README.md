@@ -43,6 +43,8 @@ To generate a snapshot from a tile set, you’ll need a [map ID](https://www.map
 
 You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) with the `styles:tiles` scope enabled in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
 
+The examples below are each provided in Swift (denoted with `main.swift`) and Objective-C (`main.m`). For further details, see the [MapboxStatic.swift API reference](http://cocoadocs.org/docsets/MapboxStatic.swift/).
+
 ### Basics
 
 The main static map class is `Snapshot` in Swift or `MBSnapshot` in Objective-C. To create a basic snapshot, create a `SnapshotOptions` object, specifying snapshot camera (viewpoint) and point size:
