@@ -29,8 +29,14 @@ class ClassicOverlayTests: XCTestCase {
         options.overlays = [markerOverlay]
         options.scale = 1
         
+        let hexColor: String
+        #if os(macOS)
+            hexColor = "865226"
+        #else
+            hexColor = "996633"
+        #endif
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/v4/mapbox.streets/pin-m-cafe+996633(-122.681944,45.52)/auto/200x200.png")
+            && isPath("/v4/mapbox.streets/pin-m-cafe+\(hexColor)(-122.681944,45.52)/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "marker", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
@@ -96,7 +102,7 @@ class ClassicOverlayTests: XCTestCase {
         options.overlays = [geoJSONOverlay]
         options.scale = 1
         
-        let geoJSONString = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"stroke-width\":3,\"stroke-opacity\":1,\"stroke\":\"#00f\"},\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.6978445053101,45.51863175803531],[-122.6909136772156,45.52165369248977],[-122.68630027771,45.51891742047702],[-122.6850986480713,45.51631633525551],[-122.6823306083679,45.51950377568216]]}}]}"
+        let geoJSONString = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"stroke-width\":3,\"stroke-opacity\":1,\"stroke\":\"#00f\"},\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.69784450531006,45.518631758035312],[-122.69091367721559,45.521653692489771],[-122.68630027770996,45.518917420477024],[-122.68509864807127,45.51631633525551],[-122.68233060836793,45.519503775682161]]}}]}"
         
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/geojson(\(geoJSONString))/auto/200x200.png")
@@ -140,10 +146,15 @@ class ClassicOverlayTests: XCTestCase {
         options.overlays = [path]
         options.scale = 1
         
+        let hexColor: String
+        #if os(macOS)
+            hexColor = "fb0006"
+        #else
+            hexColor = "ff0000"
+        #endif
         let encodedPolyline = "upztG`jxkVn@al@bo@pFWzuAaTcAyZgn@"
-        
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/v4/mapbox.streets/path-2+000000-0.75+ff0000-0.25(\(encodedPolyline))/auto/200x200.png")
+            && isPath("/v4/mapbox.streets/path-2+000000-0.75+\(hexColor)-0.25(\(encodedPolyline))/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "path", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
