@@ -42,4 +42,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.module_name = "MapboxStatic"
 
+  s.dependency "Polyline", "~> 4.2"
+
 end

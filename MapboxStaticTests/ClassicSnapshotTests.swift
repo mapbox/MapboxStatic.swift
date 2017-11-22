@@ -166,8 +166,14 @@ class ClassicSnapshotTests: XCTestCase {
         options.color = .brown
         options.scale = 1
         
+        let hexColor: String
+        #if os(macOS)
+            hexColor = "865226"
+        #else
+            hexColor = "996633"
+        #endif
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/v4/marker/pin-m-cafe+996633.png")
+            && isPath("/v4/marker/pin-m-cafe+\(hexColor).png")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "cafe", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
