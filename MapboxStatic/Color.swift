@@ -44,8 +44,8 @@ internal extension Color {
     convenience init(hexString: String) {
         var hexString = hexString.replacingOccurrences(of: "#", with: "")
 
-        if hexString.characters.count == 3 {
-            let digits = Array(hexString.characters)
+        if hexString.count == 3 {
+            let digits = Array(hexString)
             hexString = "\(digits[0])\(digits[0])\(digits[1])\(digits[1])\(digits[2])\(digits[2])"
         }
 
@@ -53,7 +53,7 @@ internal extension Color {
         var g: CGFloat = 0
         var b: CGFloat = 0
         
-        if hexString.characters.count == 6 {
+        if hexString.count == 6 {
             var hexInt: UInt32 = 0
 
             if Scanner(string: hexString).scanHexInt32(&hexInt) {
