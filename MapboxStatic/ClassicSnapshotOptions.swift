@@ -68,14 +68,14 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The order of the map identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
      */
-    open var mapIdentifiers: [String]
+    @objc open var mapIdentifiers: [String]
     
     /**
      An array of overlays to draw atop the map.
      
      The order in which the overlays are drawn on the map is undefined.
      */
-    open var overlays: [Overlay] = []
+    @objc open var overlays: [Overlay] = []
     
     /**
      The geographic coordinate at the center of the snapshot.
@@ -102,12 +102,12 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property is `SnapshotOptions.Format.png`, causing the image to be output in true-color Portable Network Graphics format.
      */
-    open var format: Format = .png
+    @objc open var format: Format = .png
     
     /**
      The logical size of the image to output, measured in points.
      */
-    open var size: CGSize
+    @objc open var size: CGSize
     
     #if os(OSX)
     /**
@@ -117,7 +117,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
+    @objc open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
     #elseif os(watchOS)
     /**
      The scale factor of the image.
@@ -126,7 +126,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = WKInterfaceDevice.current().screenScale
+    @objc open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
     /**
      The scale factor of the image.
@@ -135,7 +135,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = UIScreen.main.scale
+    @objc open var scale: CGFloat = UIScreen.main.scale
     #endif
     
     /**
@@ -146,7 +146,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - parameter mapIdentifiers: An array of [map identifiers](https://www.mapbox.com/help/define-map-id/) of the form `username.id`, identifying the [tile sets](https://www.mapbox.com/help/define-tileset/) to display in the snapshot. This array may not be empty.
      - parameter size: The logical size of the image to output, measured in points.
      */
-    public init(mapIdentifiers: [String], size: CGSize) {
+    @objc public init(mapIdentifiers: [String], size: CGSize) {
         self.mapIdentifiers = mapIdentifiers
         self.size = size
     }
@@ -159,7 +159,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - parameter zoomLevel: The zoom level of the snapshot.
      - parameter size: The logical size of the image to output, measured in points.
      */
-    public init(mapIdentifiers: [String], centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
+    @objc public init(mapIdentifiers: [String], centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
         self.mapIdentifiers = mapIdentifiers
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
@@ -171,7 +171,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: An HTTP URL path.
      */
-    open var path: String {
+    @objc open var path: String {
         assert(!mapIdentifiers.isEmpty, "At least one map identifier must be specified.")
         let tileSetComponent = mapIdentifiers.joined(separator: ",")
         
@@ -207,7 +207,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    open var params: [URLQueryItem] {
+    @objc open var params: [URLQueryItem] {
         return []
     }
 }

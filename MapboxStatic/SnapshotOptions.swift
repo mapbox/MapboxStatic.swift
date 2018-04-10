@@ -31,7 +31,7 @@ open class SnapshotCamera: NSObject {
      
      If the value of this property is `nil`, the `zoomLevel` property is ignored and a center coordinate and zoom level are automatically chosen to fit any overlays specified in the `overlays` property. If the `overlays` property is also empty, the behavior is undefined.
      */
-    open var centerCoordinate: CLLocationCoordinate2D
+    @objc open var centerCoordinate: CLLocationCoordinate2D
     
     /**
      The distance (in meters) from the center coordinate at ground level to the viewpoint.
@@ -54,14 +54,14 @@ open class SnapshotCamera: NSObject {
     /**
      The heading measured in degrees clockwise from true north.
      */
-    open var heading: CLLocationDirection
+    @objc open var heading: CLLocationDirection
     
     /**
      The pitch toward the horizon measured in degrees, with 0 degrees resulting in a two-dimensional map.
      
      The pitch may not be less than 0 or greater than 60.
      */
-    open var pitch: CGFloat
+    @objc open var pitch: CGFloat
     
     /**
      Initializes a snapshot camera instance based on the given center coordinate, distance, pitch, and heading.
@@ -179,14 +179,14 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles).
      */
-    open var styleURL: URL
+    @objc open var styleURL: URL
     
     /**
      An array of overlays to draw atop the map.
      
      The order in which the overlays are drawn on the map is undefined.
      */
-    open var overlays: [Overlay] = []
+    @objc open var overlays: [Overlay] = []
     
     /**
      The identifier of the [style layer](https://www.mapbox.com/help/define-layer/) below which any overlays should be inserted.
@@ -197,7 +197,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      Layer identifiers are not guaranteed to exist across styles or different versions of the same style. To find out the layer identifiers in a particular style, view the style in [Mapbox Studio](https://www.mapbox.com/studio/).
      */
-    open var identifierOfLayerAboveOverlays: String?
+    @objc open var identifierOfLayerAboveOverlays: String?
     
     /**
      The viewpoint from which the snapshot is taken.
@@ -206,7 +206,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property is `nil`.
      */
-    open var camera: SnapshotCamera?
+    @objc open var camera: SnapshotCamera?
     
     // MARK: Configuring the Image Output
     
@@ -215,7 +215,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The width may not be less than 1 point or greater than 1,280 points. Likewise, the height may not be less than 1 point or greater than 1,280 points.
      */
-    open var size: CGSize
+    @objc open var size: CGSize
     
     #if os(OSX)
     /**
@@ -225,7 +225,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
+    @objc open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
     #elseif os(watchOS)
     /**
      The scale factor of the image.
@@ -234,7 +234,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = WKInterfaceDevice.current().screenScale
+    @objc open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
     /**
      The scale factor of the image.
@@ -243,7 +243,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = UIScreen.main.scale
+    @objc open var scale: CGFloat = UIScreen.main.scale
     #endif
     
     /**
@@ -253,7 +253,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - note: The Mapbox terms of service [requires](https://www.mapbox.com/help/attribution/) the [Mapbox logo](https://www.mapbox.com/about/press/brand-guidelines/) to accompany the snapshot. In general, you should not set this property to `false`. Contact your Mapbox sales representative for information about waiving this requirement. This requirement is distinct from the requirement that governs the `showsAttribution` property.
      */
-    open var showsLogo = true
+    @objc open var showsLogo = true
     
     /**
      A Boolean determining whether the resulting image includes legally required copyright notices.
@@ -262,7 +262,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - note: The Mapbox terms of service, which governs the use of Mapbox-hosted vector tiles and styles, [requires](https://www.mapbox.com/help/attribution/) these copyright notices to accompany any map that features Mapbox-designed styles, OpenStreetMap data, or other Mapbox data such as satellite or terrain data. If this requirement applies to the shapshot and you set this property to `false`, you must provide [proper attribution](https://www.mapbox.com/help/attribution/#static--print) near the snapshot. This requirement is distinct from the requirement that governs the `showsLogo` property.
      */
-    open var showsAttribution = true
+    @objc open var showsAttribution = true
     
     /**
      Initializes a snapshot options instance that causes a snapshotter object to automatically choose a center coordinate and zoom level that fits any overlays.
@@ -272,7 +272,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles).
      - parameter size: The logical size of the image to output, measured in points.
      */
-    public init(styleURL: URL, size: CGSize) {
+    @objc public init(styleURL: URL, size: CGSize) {
         self.styleURL = styleURL
         self.size = size
     }
@@ -284,7 +284,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - parameter camera: The viewpoint from which the snapshot is taken.
      - parameter size: The logical size of the image to output, measured in points.
      */
-    public init(styleURL: URL, camera: SnapshotCamera, size: CGSize) {
+    @objc public init(styleURL: URL, camera: SnapshotCamera, size: CGSize) {
         self.styleURL = styleURL
         self.camera = camera
         self.size = size
@@ -295,7 +295,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: An HTTP URL path.
      */
-    open var path: String {
+    @objc open var path: String {
         assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/#styles for valid style URLs.")
         assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/#styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
@@ -322,7 +322,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      - returns: The query URL component as an array of name/value pairs.
      */
-    open var params: [URLQueryItem] {
+    @objc open var params: [URLQueryItem] {
         var params: [URLQueryItem] = []
         if let identifierOfLayerAboveOverlays = identifierOfLayerAboveOverlays {
             params.append(URLQueryItem(name: "before_layer", value: identifierOfLayerAboveOverlays))

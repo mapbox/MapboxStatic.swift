@@ -96,7 +96,7 @@ open class MarkerImage: NSObject {
      
      By default, the marker is small.
      */
-    open var size: Size
+    @objc open var size: Size
     
     /**
      A label or Maki icon to place atop the pin.
@@ -111,14 +111,14 @@ open class MarkerImage: NSObject {
      
      By default, the marker is red.
      */
-    open var color: NSColor = .red
+    @objc open var color: NSColor = .red
     #else
     /**
      The color of the pin part of the marker.
      
      By default, the marker is red.
      */
-    open var color: UIColor = .red
+    @objc open var color: UIColor = .red
     #endif
     
     /**
@@ -139,7 +139,7 @@ open class MarkerImage: NSObject {
 @objc(MBMarker)
 open class Marker: MarkerImage, Point {
     /// The geographic coordinate to place the marker at.
-    open var coordinate: CLLocationCoordinate2D
+    @objc open var coordinate: CLLocationCoordinate2D
     
     /**
      Initializes a red marker with the given options.
@@ -162,7 +162,7 @@ open class Marker: MarkerImage, Point {
      - parameter size: The size of the marker.
      - parameter letter: An English letter from A through Z to place atop the pin.
      */
-    public convenience init(coordinate: CLLocationCoordinate2D,
+    @objc public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .small,
                             letter: UniChar) {
         self.init(coordinate: coordinate, size: size, label: .letter(Character(UnicodeScalar(letter)!)))
@@ -175,7 +175,7 @@ open class Marker: MarkerImage, Point {
      - parameter size: The size of the marker.
      - parameter number: A number from 0 through 99 to place atop the pin.
      */
-    public convenience init(coordinate: CLLocationCoordinate2D,
+    @objc public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .small,
                             number: Int) {
         self.init(coordinate: coordinate, size: size, label: .number(number))
@@ -192,13 +192,13 @@ open class Marker: MarkerImage, Point {
      - parameter size: The size of the marker.
      - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
      */
-    public convenience init(coordinate: CLLocationCoordinate2D,
+    @objc public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .small,
                             iconName: String) {
         self.init(coordinate: coordinate, size: size, label: .iconName(iconName))
     }
     
-    open override var description: String {
+    @objc open override var description: String {
         let labelComponent: String
         if let label = label {
             labelComponent = "-\(label)"
@@ -225,7 +225,7 @@ open class CustomMarker: NSObject, Overlay {
      
      The API caches custom marker images according to the `Expires` and `Cache-Control` headers. If you host the image on your own server, make sure that at least one of these headers is set to an proper value to prevent repeated requests for the image.
      */
-    open var url: URL
+    @objc open var url: URL
     
     /**
      Initializes a marker with the given coordinate and image URL.
@@ -233,12 +233,12 @@ open class CustomMarker: NSObject, Overlay {
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter url: The HTTP or HTTPS URL of the image.
      */
-    public init(coordinate: CLLocationCoordinate2D, url: URL) {
+    @objc public init(coordinate: CLLocationCoordinate2D, url: URL) {
         self.coordinate = coordinate
         self.url = url
     }
     
-    open override var description: String {
+    @objc open override var description: String {
         let escapedURL = url.absoluteString.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
         return "url-\(escapedURL)(\(coordinate.longitude),\(coordinate.latitude))"
     }
@@ -252,9 +252,9 @@ open class CustomMarker: NSObject, Overlay {
 @objc(MBGeoJSON)
 open class GeoJSON: NSObject, Overlay {
     /// String representation of the GeoJSON object to display.
-    open var objectString: String
+    @objc open var objectString: String
     
-    open override var description: String {
+    @objc open override var description: String {
         let escapedObjectString = objectString.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
         return "geojson(\(escapedObjectString))"
     }
@@ -265,7 +265,7 @@ open class GeoJSON: NSObject, Overlay {
      - parameter object: A valid GeoJSON object.
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
-    public init(object: [String: Any]) throws {
+    @objc public init(object: [String: Any]) throws {
         let data = try JSONSerialization.data(withJSONObject: object, options: [])
         objectString = String(data: data, encoding: .utf8)!
     }
@@ -277,7 +277,7 @@ open class GeoJSON: NSObject, Overlay {
      
      - parameter objectString: The string representation of a valid GeoJSON object.
      */
-    public init(objectString: String) {
+    @objc public init(objectString: String) {
         self.objectString = objectString
     }
 }
@@ -290,14 +290,14 @@ open class Path: NSObject, Overlay {
     /**
      An array of geographic coordinates defining the path of the overlay.
      */
-    open var coordinates: [CLLocationCoordinate2D]
+    @objc open var coordinates: [CLLocationCoordinate2D]
     
     /**
      The stroke width of the overlay, measured in points.
      
      By default, the overlay is 1 point wide.
      */
-    open var strokeWidth: Int = 1
+    @objc open var strokeWidth: Int = 1
     
     #if os(OSX)
     /**
@@ -305,28 +305,28 @@ open class Path: NSObject, Overlay {
      
      By default, the overlay is stroked with Davy’s gray (33% white).
      */
-    open var strokeColor = NSColor(hexString: "555")
+    @objc open var strokeColor = NSColor(hexString: "555")
     
     /**
      The fill color of the overlay.
      
      By default, the overlay is filled with Davy’s gray (33% white).
      */
-    open var fillColor = NSColor(hexString: "555")
+    @objc open var fillColor = NSColor(hexString: "555")
     #else
     /**
      The stroke color of the overlay.
      
      By default, the overlay is stroked with Davy’s gray (33% white).
      */
-    open var strokeColor = UIColor(hexString: "555")
+    @objc open var strokeColor = UIColor(hexString: "555")
     
     /**
      The fill color of the overlay.
      
      By default, the overlay is filled with Davy’s gray (33% white).
      */
-    open var fillColor = UIColor(hexString: "555")
+    @objc open var fillColor = UIColor(hexString: "555")
     #endif
     
     /**
@@ -338,7 +338,7 @@ open class Path: NSObject, Overlay {
      
      - parameter coordinates: An array of geographic coordinates defining the path of the overlay.
      */
-    public init(coordinates: [CLLocationCoordinate2D]) {
+    @objc public init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
     }
     
@@ -353,7 +353,7 @@ open class Path: NSObject, Overlay {
      
      - note: This initializer is intended for Objective-C usage. In Swift code, use the `init(coordinates:)` initializer.
      */
-    public init(coordinates: UnsafePointer<CLLocationCoordinate2D>, count: UInt) {
+    @objc public init(coordinates: UnsafePointer<CLLocationCoordinate2D>, count: UInt) {
         var convertedCoordinates: [CLLocationCoordinate2D] = []
         for i in 0..<count {
             convertedCoordinates.append(coordinates.advanced(by: Int(i)).pointee)
@@ -366,7 +366,7 @@ open class Path: NSObject, Overlay {
      
      - note: This initializer is intended for Objective-C usage. In Swift code, use the `coordinates.count` property.
      */
-    open var coordinateCount: UInt {
+    @objc open var coordinateCount: UInt {
         return UInt(coordinates.count)
     }
     
@@ -379,13 +379,13 @@ open class Path: NSObject, Overlay {
      
      - note: This initializer is intended for Objective-C usage. In Swift code, use the `coordinates` property.
      */
-    open func getCoordinates(_ coordinates: UnsafeMutablePointer<CLLocationCoordinate2D>) {
+    @objc open func getCoordinates(_ coordinates: UnsafeMutablePointer<CLLocationCoordinate2D>) {
         for i in 0..<self.coordinates.count {
             coordinates.advanced(by: i).pointee = self.coordinates[i]
         }
     }
     
-    open override var description: String {
+    @objc open override var description: String {
         let encodedPolyline = encodeCoordinates(coordinates).addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)!
         var description = "path-\(strokeWidth)+\(strokeColor.toHexString())-\(strokeColor.alphaComponent)"
         if fillColor.alphaComponent > 0 {
