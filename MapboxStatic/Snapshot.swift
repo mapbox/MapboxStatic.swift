@@ -87,7 +87,7 @@ open class Snapshot: NSObject {
     public typealias CompletionHandler = (_ image: Image?, _ error: NSError?) -> Void
     
     /// Options that determine the contents and format of the output image.
-    @objc open let options: SnapshotOptionsProtocol
+    @objc public let options: SnapshotOptionsProtocol
     
     /// The API endpoint to request the image from.
     internal var apiEndpoint: URL
