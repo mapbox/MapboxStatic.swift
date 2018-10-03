@@ -251,8 +251,8 @@
 		DA20FB9F1CE3DEBB00B07762 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA20FBA91CE401E800B07762 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DA20FBAB1CE4026B00B07762 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
-		DA20FBB21CE4682200B07762 /* iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = iOS.playground; sourceTree = "<group>"; };
-		DA20FBB31CE474CA00B07762 /* macOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = macOS.playground; sourceTree = "<group>"; };
+		DA20FBB21CE4682200B07762 /* iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = iOS.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		DA20FBB31CE474CA00B07762 /* macOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = macOS.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DA20FBB91CE4757E00B07762 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA20FBC21CE4757E00B07762 /* MapboxStaticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxStaticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4B4B921CE8F83100296A52 /* MapboxStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -713,12 +713,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					DA20FB9A1CE3DEBB00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 					};
 					DA20FBB81CE4757E00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -745,11 +745,11 @@
 					};
 					DDAD19581BD9B1780057AC9F = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 					};
 					DDAD19771BD9B24F0057AC9F = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -1136,8 +1136,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1163,8 +1162,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1462,12 +1460,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1517,12 +1517,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1562,8 +1564,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
 				PRODUCT_NAME = "MapboxStatic (Swift)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1577,8 +1578,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
 				PRODUCT_NAME = "MapboxStatic (Swift)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1597,8 +1597,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1615,8 +1614,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
