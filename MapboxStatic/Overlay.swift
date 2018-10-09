@@ -266,7 +266,7 @@ open class GeoJSON: NSObject, Overlay {
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
      */
     @objc public init(object: [String: Any]) throws {
-        let data = try JSONSerialization.data(withJSONObject: object, options: [])
+        let data = try JSONSerialization.data(withJSONObject: object, options: .sortedIfAvailable)
         objectString = String(data: data, encoding: .utf8)!
     }
     
@@ -393,5 +393,31 @@ open class Path: NSObject, Overlay {
         }
         description += "(\(encodedPolyline))"
         return description
+    }
+}
+
+extension JSONSerialization.WritingOptions {
+    
+    static var sortedIfAvailable: JSONSerialization.WritingOptions {
+        
+        #if os(OSX)
+        if #available(OSX 10.13, *) {
+            return [.sortedKeys]
+        }
+        #elseif os(iOS)
+        if #available(iOS 11.0, *) {
+            return [.sortedKeys]
+        }
+        #elseif os(tvOS)
+        if #available(tvOS 11.0, *) {
+            return [.sortedKeys]
+        }
+        #elseif os(watchOS)
+        if #available(watchOS 4.0, *) {
+            return [.sortedKeys]
+        }
+        #endif
+        
+        return []
     }
 }

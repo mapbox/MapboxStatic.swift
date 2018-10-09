@@ -105,7 +105,7 @@ class ClassicOverlayTests: XCTestCase {
         let geoJSONString = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"stroke-width\":3,\"stroke-opacity\":1,\"stroke\":\"#00f\"},\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.69784450531006,45.518631758035312],[-122.69091367721559,45.521653692489771],[-122.68630027770996,45.518917420477024],[-122.68509864807127,45.51631633525551],[-122.68233060836793,45.519503775682161]]}}]}"
         
         stub(condition: isHost("api.mapbox.com")
-            && isPath("/v4/mapbox.streets/geojson(\(geoJSONString))/auto/200x200.png")
+            && isPath("/v4/mapbox.streets/geojson(\(geoJSONString.sortedJSON))/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
                 let path = Bundle(for: type(of: self)).path(forResource: "geojson", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
@@ -161,5 +161,15 @@ class ClassicOverlayTests: XCTestCase {
         }
         
         XCTAssertNotNil(Snapshot(options: options, accessToken: BogusToken).image)
+    }
+}
+
+extension String {
+    
+    var sortedJSON: String {
+        let json = try! JSONSerialization.jsonObject(with: self.data(using: .utf8)!, options: [])
+        let data = try! JSONSerialization.data(withJSONObject: json, options: .sortedIfAvailable)
+        
+        return String(data: data, encoding: .utf8)!
     }
 }
