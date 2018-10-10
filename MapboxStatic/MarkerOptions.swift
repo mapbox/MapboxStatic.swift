@@ -19,7 +19,7 @@ open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
-    open var scale: CGFloat = NSScreen.main()?.backingScaleFactor ?? 1
+    open var scale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1
     #elseif os(watchOS)
     /**
      The scale factor of the image.
