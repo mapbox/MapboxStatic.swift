@@ -400,6 +400,7 @@ extension JSONSerialization.WritingOptions {
     
     static var sortedIfAvailable: JSONSerialization.WritingOptions {
         
+        #if DEBUG
         #if os(OSX)
         if #available(OSX 10.13, *) {
             return [.sortedKeys]
@@ -416,6 +417,7 @@ extension JSONSerialization.WritingOptions {
         if #available(watchOS 4.0, *) {
             return [.sortedKeys]
         }
+        #endif
         #endif
         
         return []
