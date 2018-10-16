@@ -1132,6 +1132,7 @@
 				INFOPLIST_FILE = MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1188,6 +1189,7 @@
 				INFOPLIST_FILE = MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = macosx;
@@ -1282,6 +1284,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/MapboxStatic/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = appletvos;
@@ -1377,6 +1380,7 @@
 				INFOPLIST_FILE = MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = watchos;
