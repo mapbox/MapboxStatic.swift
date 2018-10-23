@@ -1,0 +1,101 @@
+version: 2
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - xcode-10
+      - xcode-9
+
+step-library:
+  - &restore-cache
+      restore_cache:
+        keys:
+          - carthage-cache-mbstatic-v1-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cartfile.resolved" }}
+          - carthage-cache-mbstatic-v1- # used if checksum fails
+
+  - &save-cache
+      save_cache:
+        key: carthage-cache-mbstatic-v1-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cartfile.resolved" }}
+        paths:
+          - Carthage
+
+  - &prepare
+      run:
+        name: Prepare
+        command: |
+          git submodule sync
+          if (brew outdated | grep carthage > /dev/null); then brew upgrade carthage; fi
+          echo "foo" > ~/.mapbox
+
+  - &install-dependencies
+      run:
+        name: Install Dependencies
+        command: |
+          carthage bootstrap --platform ios --cache-builds --no-use-binaries
+          carthage bootstrap --platform tvos --cache-builds --no-use-binaries
+          carthage bootstrap --platform macos --cache-builds --no-use-binaries
+          carthage bootstrap --platform watchos --cache-builds --no-use-binaries
+
+  - &build-test-MapboxStatic-ios
+      run:
+        name: Build and Test MapboxStatic
+        command: |
+          xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination "platform=iOS Simulator,name=iPhone 6 Plus,OS=${IOS_VERSION}" clean build test
+
+  - &build-MapboxStatic-watchos
+    run:
+      name: Build MapboxStatic for watchOS
+      command: |
+        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic watchOS' -destination "platform=watchOS Simulator,name=Apple Watch Series 3 - 42mm,OS=${WATCHOS_VERSION}" clean build
+
+  - &build-test-MapboxStatic-tvos
+    run:
+      name: Build and Test MapboxStatic for tvOS
+      command: |
+        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination "platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=${TVOS_VERSION}" clean build test
+
+  - &build-test-MapboxStatic-macos
+    run:
+      name: Build and Test MapboxStatic for macOS
+      command: |
+        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic Mac' clean build test | xcpretty
+
+jobs:
+  xcode-10:
+    macos:
+      xcode: "10.0.0"
+    environment:
+      IOS_VERSION: "12.0"
+      WATCHOS_VERSION: "5.0"
+      TVOS_VERSION: "12.0"
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - *prepare
+      - *restore-cache
+      - *install-dependencies
+      - *build-test-MapboxStatic-ios
+      - *build-MapboxStatic-watchos
+      - *build-test-MapboxStatic-tvos
+      - *build-test-MapboxStatic-macos
+      - *save-cache
+
+  xcode-9:
+    macos:
+      xcode: "9.4.1"
+    environment:
+      IOS_VERSION: "11.4"
+      WATCHOS_VERSION: "4.2"
+      TVOS_VERSION: "11.4"
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - *prepare
+      - *restore-cache
+      - *install-dependencies
+      - *build-test-MapboxStatic-ios
+      - *build-MapboxStatic-watchos
+      - *build-test-MapboxStatic-tvos
+      - *build-test-MapboxStatic-macos
+      - *save-cache
