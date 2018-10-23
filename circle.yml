@@ -37,35 +37,23 @@ step-library:
           carthage bootstrap --platform macos --cache-builds --no-use-binaries
           carthage bootstrap --platform watchos --cache-builds --no-use-binaries
 
-  - &build-test-MapboxStatic-ios-11
+  - &build-test-MapboxStatic-ios
       run:
-        name: Build and Test MapboxStatic for iOS 11
+        name: Build and Test MapboxStatic
         command: |
-          xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination 'platform=iOS Simulator,OS=11.4,name=iPhone 6 Plus' clean build test
+          xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination "platform=iOS Simulator,name=iPhone 6 Plus,OS=${IOS_VERSION}" clean build test
 
-  - &build-test-MapboxStatic-ios-12
-      run:
-        name: Build and Test MapboxStatic for iOS 12
-        command: |
-          xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination 'platform=iOS Simulator,OS=12.0,name=iPhone 6 Plus' clean build test
-
-  - &build-MapboxStatic-watchos-4
+  - &build-MapboxStatic-watchos
     run:
-      name: Build MapboxStatic for watchOS 4
+      name: Build MapboxStatic for watchOS
       command: |
-        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic watchOS' -destination 'platform=watchOS Simulator,name=Apple Watch Series 3 - 42mm,OS=4.2' clean build
+        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic watchOS' -destination "platform=watchOS Simulator,name=Apple Watch Series 3 - 42mm,OS=${WATCHOS_VERSION}" clean build
 
-  - &build-MapboxStatic-watchos-5
+  - &build-test-MapboxStatic-tvos
     run:
-      name: Build MapboxStatic for watchOS 5
+      name: Build and Test MapboxStatic for tvOS
       command: |
-        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic watchOS' -destination 'platform=watchOS Simulator,name=Apple Watch Series 3 - 42mm,OS=5.0' clean build
-
-  - &build-test-MapboxStatic-tvos-12
-    run:
-      name: Build and Test MapboxStatic for tvOS 12
-      command: |
-        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=12.0' clean build test
+        xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination "platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=${TVOS_VERSION}" clean build test
 
   - &build-test-MapboxStatic-macos
     run:
@@ -78,15 +66,18 @@ jobs:
     macos:
       xcode: "10.0.0"
     environment:
+      IOS_VERSION: "12.0"
+      WATCHOS_VERSION: "5.0"
+      TVOS_VERSION: "12.0"
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - checkout
       - *prepare
       - *restore-cache
       - *install-dependencies
-      - *build-test-MapboxStatic-ios-12
-      - *build-MapboxStatic-watchos-5
-      - *build-test-MapboxStatic-tvos-12
+      - *build-test-MapboxStatic-ios
+      - *build-MapboxStatic-watchos
+      - *build-test-MapboxStatic-tvos
       - *build-test-MapboxStatic-macos
       - *save-cache
 
@@ -94,13 +85,17 @@ jobs:
     macos:
       xcode: "9.4.1"
     environment:
+      IOS_VERSION: "11.4"
+      WATCHOS_VERSION: "4.2"
+      TVOS_VERSION: "11.4"
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - checkout
       - *prepare
       - *restore-cache
       - *install-dependencies
-      - *build-test-MapboxStatic-ios-11
-      - *build-MapboxStatic-watchos-4
+      - *build-test-MapboxStatic-ios
+      - *build-MapboxStatic-watchos
+      - *build-test-MapboxStatic-tvos
       - *build-test-MapboxStatic-macos
       - *save-cache
