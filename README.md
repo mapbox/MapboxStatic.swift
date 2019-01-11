@@ -7,13 +7,13 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) &nbsp;&nbsp;&nbsp;
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxStatic.swift.svg)](http://cocoadocs.org/docsets/MapboxStatic.swift/)
 
-MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Static API](https://www.mapbox.com/api-documentation/#static) or the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/#static-classic). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Static API](https://www.mapbox.com/api-documentation/maps/#static) or the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/legacy/static-classic). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
 
 A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image view, user notification, sharing service, printed document, or anyplace else you’d like a quick, custom map without the overhead of an interactive view. A static map is created in a single HTTP request. Overlays are added server-side.
 
 MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/), and the [Mapbox Maps SDK for macOS SDK](https://mapbox.github.io/mapbox-gl-native/macos/). If you’re already using the maps SDK for iOS or macOS for other purposes, consider using an [`MGLMapSnapshotter`](https://www.mapbox.com/ios-sdk/api/3.7.0-alpha.1/Classes/MGLMapSnapshotter.html) object instead of MapboxStatic.swift to produce static images that take advantage of caching and offline packs.
 
-## Installation 
+## Installation
 
 Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
@@ -27,7 +27,7 @@ Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 pod 'MapboxStatic.swift', '~> 0.10'
 ```
 
-Then `import MapboxStatic` or `@import MapboxStatic;`. 
+Then `import MapboxStatic` or `@import MapboxStatic;`.
 
 v0.6.2 is the last release of MapboxStatic.swift written in Swift 2.3. The `swift2.3` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 3. The Swift examples below are written in Swift 3; see the `swift2.3` branch’s readme for Swift 2.3 examples.
 
@@ -37,9 +37,9 @@ This repository includes an example iOS application written in Swift, as well as
 
 You can generate a snapshot from either a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/) or a raw [tile set](https://www.mapbox.com/help/define-tileset/). Using a style gives you more visual options like rotation, while using a tile set gives you a choice of image formats. If you’re working with vector data, you’ll want to use a style; if you’re working with a single raster imagery source, you may want to use a tile set.
 
-To generate a snapshot from a style, you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://www.mapbox.com/api-documentation/#styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style within the Mapbox Maps SDK for iOS or macOS.
+To generate a snapshot from a style, you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://www.mapbox.com/api-documentation/maps/#styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style within the Mapbox Maps SDK for iOS or macOS.
 
-To generate a snapshot from a tile set, you’ll need a [map ID](https://www.mapbox.com/help/define-map-id/). You can either choose a [Mapbox-maintained tile set](https://www.mapbox.com/api-documentation/#maps) or upload your own to [Mapbox Studio](https://www.mapbox.com/studio/tilesets/).
+To generate a snapshot from a tile set, you’ll need a [map ID](https://www.mapbox.com/help/define-map-id/). You can either choose a [Mapbox-maintained tile set](https://www.mapbox.com/api-documentation/maps/#maps) or upload your own to [Mapbox Studio](https://www.mapbox.com/studio/tilesets/).
 
 You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) with the `styles:tiles` scope enabled in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
 
@@ -371,7 +371,7 @@ MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options
 
 #### File format and quality
 
-When creating a classic snapshot, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/#retrieve-a-static-map-image).
+When creating a classic snapshot, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://www.mapbox.com/api-documentation/legacy/static-classic/#retrieve-a-static-map-image).
 
 #### Attribution
 
@@ -379,7 +379,7 @@ Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) proper
 
 ## Tests
 
-To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies. 
+To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies.
 
 1. `carthage bootstrap`
 1. `open MapboxStatic.xcodeproj`
