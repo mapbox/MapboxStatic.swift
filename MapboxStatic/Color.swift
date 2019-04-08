@@ -6,7 +6,7 @@
     typealias Color = UIColor
 #endif
 
-internal extension Color {
+extension Color {
     @nonobjc func toHexString() -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
