@@ -7,7 +7,7 @@
 #endif
 
 /**
- A structure that configures a standalone marker image and how it is formatted. A standalone marker image is produced by the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+ A structure that configures a standalone marker image and how it is formatted. A standalone marker image is produced by the Mapbox [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).
  */
 @objc(MBMarkerOptions)
 open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
@@ -17,7 +17,7 @@ open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     open var scale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1
     #elseif os(watchOS)
@@ -26,7 +26,7 @@ open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
@@ -35,7 +35,7 @@ open class MarkerOptions: MarkerImage, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     open var scale: CGFloat = UIScreen.main.scale
     #endif

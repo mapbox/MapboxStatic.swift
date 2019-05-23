@@ -7,14 +7,14 @@
 #endif
 
 /**
- A structure that determines what a snapshot depicts and how it is formatted. A classic snapshot is made by compositing one or more [tile sets](https://www.mapbox.com/help/define-tileset/) with optional overlays using the [classic Mapbox Static API](https://www.mapbox.com/api-documentation/?language=Swift#static-classic).
+ A structure that determines what a snapshot depicts and how it is formatted. A classic snapshot is made by compositing one or more [tile sets](https://www.mapbox.com/help/define-tileset/) with optional overlays using the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).
  
  Typically, you use a `ClassicSnapshotOptions` object to generate a snapshot of a [raster tile set](https://www.mapbox.com/help/define-tileset/#raster-tilesets). If you use `ClassicSnapshotOptions` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use a `SnapshotOptions` object.
  */
 @objc(MBClassicSnapshotOptions)
 open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
-     An image format supported by the classic Static API.
+     An image format supported by the Legacy Static Images API.
      */
     @objc(MBSnapshotFormat)
     public enum Format: Int, CustomStringConvertible {
@@ -115,7 +115,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1
     #elseif os(watchOS)
@@ -124,7 +124,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
@@ -133,7 +133,7 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the classic Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Legacy Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = UIScreen.main.scale
     #endif

@@ -4,13 +4,13 @@ Pod::Spec.new do |s|
 
   s.name         = "MapboxStatic.swift"
   s.version      = "0.10.0"
-  s.summary      = "Mapbox Static API wrapper for Swift and Objective-C."
+  s.summary      = "Mapbox Static Images API wrapper for Swift and Objective-C."
 
   s.description  = <<-DESC
-  MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the Mapbox Static API or the classic Mapbox Static API. Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+  MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the Mapbox Static Images API or the Legacy Static Images API. Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
                    DESC
 
-  s.homepage     = "https://www.mapbox.com/api-documentation/?language=Swift#static"
+  s.homepage     = "https://docs.mapbox.com/api/maps/#static-images"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
