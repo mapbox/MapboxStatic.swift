@@ -164,11 +164,11 @@ open class SnapshotCamera: NSObject {
 }
 
 /**
- A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://www.mapbox.com/help/define-style/) with optional overlays using the [Mapbox Static API](https://www.mapbox.com/api-documentation/maps/#static). You can use a [Mapbox-designed style](https://www.mapbox.com/api-documentation/maps/#styles) or design your own custom style using [Mapbox Studio](https://www.mapbox.com/studio/). You can only snapshot a style hosted by Mapbox.
+ A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://www.mapbox.com/help/define-style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design your own custom style using [Mapbox Studio](https://www.mapbox.com/studio/). You can only snapshot a style hosted by Mapbox.
  
  To generate a static, styled image of a tile set, especially a raster tile set, use a `Classic SnapshotOptions` object.
  
- The Static API always outputs images in true-color Portable Network Graphics (PNG) format. For other image formats, use a `ClassicSnapshotOptions` object.
+ The Static Images API always outputs images in true-color Portable Network Graphics (PNG) format. For other image formats, use a `ClassicSnapshotOptions` object.
  */
 @objc(MBSnapshotOptions)
 open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
@@ -177,7 +177,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot.
      
-     Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/maps/#styles).
+     Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
      */
     @objc open var styleURL: URL
     
@@ -223,7 +223,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1
     #elseif os(watchOS)
@@ -232,7 +232,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the screen. Images with a scale factor of 1.0 or 2.0 are ever returned by the Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = WKInterfaceDevice.current().screenScale
     #else
@@ -241,7 +241,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      If you multiply the logical size of the image (stored in the `size` property) by the value in this property, you get the dimensions of the image in pixels.
      
-     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
+     The default value of this property matches the natural scale factor associated with the main screen. However, only images with a scale factor of 1.0 or 2.0 are ever returned by the Static Images API, so a scale factor of 1.0 of less results in a 1× (standard-resolution) image, while a scale factor greater than 1.0 results in a 2× (high-resolution or Retina) image.
      */
     @objc open var scale: CGFloat = UIScreen.main.scale
     #endif
@@ -269,7 +269,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      After initializing a snapshot options instance with this initializer, set the `overlays` property to specify the overlays to fit the snapshot to.
      
-     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/maps/#styles).
+     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
      - parameter size: The logical size of the image to output, measured in points.
      */
     @objc public init(styleURL: URL, size: CGSize) {
@@ -280,7 +280,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      Initializes a snapshot options instance that results in a snapshot centered at the given geographical coordinate and showing the given zoom level.
      
-     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://www.mapbox.com/api-documentation/maps/#styles).
+     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
      - parameter camera: The viewpoint from which the snapshot is taken.
      - parameter size: The logical size of the image to output, measured in points.
      */
@@ -296,8 +296,8 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - returns: An HTTP URL path.
      */
     @objc open var path: String {
-        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/maps/#styles for valid style URLs.")
-        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://www.mapbox.com/api-documentation/maps/#styles for valid style URLs.")
+        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://www.mapbox.com/help/define-style-url/ or https://docs.mapbox.com/api/maps/#styles for valid style URLs.")
+        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://docs.mapbox.com/api/maps/#styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
         let position = camera?.string(size: size) ?? "auto"

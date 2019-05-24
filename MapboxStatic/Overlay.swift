@@ -72,7 +72,7 @@ open class MarkerImage: NSObject {
         /**
          The name of a [Maki](https://www.mapbox.com/maki-icons/) icon.
          
-         The Static API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The classic Static API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+         The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
          */
         case iconName(String)
         
@@ -186,7 +186,7 @@ open class Marker: MarkerImage, Point {
      
      The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
      
-     The Static API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The classic Static API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+     The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
      
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.
