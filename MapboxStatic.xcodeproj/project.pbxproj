@@ -375,7 +375,8 @@
 				DA20FBA91CE401E800B07762 /* Color.swift */,
 				DA20FB9F1CE3DEBB00B07762 /* Info.plist */,
 			);
-			path = MapboxStatic;
+			name = MapboxStatic;
+			path = Sources/MapboxStatic;
 			sourceTree = "<group>";
 		};
 		DA9CC6891E5C550000A14964 /* Frameworks */ = {
@@ -498,7 +499,8 @@
 				DDAD19841BD9B2F80057AC9F /* Info.plist */,
 				DD0C88151BE1A9CC00606E9F /* Fixtures */,
 			);
-			path = MapboxStaticTests;
+			name = MapboxStaticTests;
+			path = Tests/MapboxStaticTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -722,11 +724,11 @@
 					};
 					DA20FBB81CE4757E00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1020;
 					};
 					DA20FBC11CE4757E00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1020;
 					};
 					DA4B4B911CE8F83100296A52 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1129,7 +1131,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1155,7 +1157,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
@@ -1182,7 +1184,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1190,6 +1192,7 @@
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1211,13 +1214,14 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1233,11 +1237,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1251,11 +1256,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1273,7 +1279,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/MapboxStatic/Info.plist";
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1302,7 +1308,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/MapboxStatic/Info.plist";
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
@@ -1324,7 +1330,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
@@ -1341,7 +1347,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
@@ -1365,7 +1371,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1395,7 +1401,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = MapboxStatic/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxStatic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStatic;
@@ -1584,7 +1590,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1601,7 +1607,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MapboxStaticTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxStaticTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.StaticTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
