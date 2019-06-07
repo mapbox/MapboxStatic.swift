@@ -1,0 +1,98 @@
+version: 2.1
+
+step-library:
+  - &restore-cache
+      restore_cache:
+        keys:
+          - carthage-cache-mbstatic-v1-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cartfile.resolved" }}
+          - carthage-cache-mbstatic-v1-{{ .Environment.CIRCLE_JOB }} # used if checksum fails
+
+  - &save-cache
+      save_cache:
+        key: carthage-cache-mbstatic-v1-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cartfile.resolved" }}
+        paths:
+          - Carthage
+
+  - &prepare
+      run:
+        name: Prepare
+        command: |
+          echo "foo" > ~/.mapbox
+
+jobs:
+  SPM-job:
+    parameters:
+      xcode:
+        type: string
+    macos:
+      xcode: << parameters.xcode >>
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - run: swift build
+
+  build-job:
+    parameters:
+      xcode:
+        type: string
+      device:
+        type: string
+        default: "iPhone 6 Plus"
+      iOS:
+        type: string
+        default: "12.1"
+      watchOS:
+        type: string
+        default: "5.0"
+      tvOS:
+        type: string
+        default: "12.0"
+      test:
+        type: boolean
+        default: true
+    macos:
+      xcode: << parameters.xcode >>
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - *prepare
+      - *restore-cache
+      - run:
+          name: Install prerequisites
+          command: |
+            if [ $(xcversion simulators | grep -cF "iOS << parameters.iOS >> Simulator (installed)") -eq 0 ]; then xcversion simulators --install="iOS << parameters.iOS >>" || true; fi
+      - run:
+          name: Dependencies
+          command: |
+            carthage bootstrap --platform ios --cache-builds --configuration Debug --no-use-binaries
+            carthage bootstrap --platform tvos --cache-builds --configuration Debug --no-use-binaries
+            carthage bootstrap --platform macos --cache-builds --configuration Debug --no-use-binaries
+            carthage bootstrap --platform watchos --cache-builds --configuration Debug --no-use-binaries
+      - *save-cache
+      - run:
+          name: iOS
+          command: xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination 'platform=iOS Simulator,OS=<< parameters.iOS >>,name=<< parameters.device >>' clean build <<# parameters.test >>test<</ parameters.test >>
+      - run:
+          name: tvOS
+          command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=<< parameters.tvOS >>' clean build <<# parameters.test >>test <</ parameters.test >>
+      - run:
+          name: macOS
+          command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic Mac' clean build<<# parameters.test >> test <</ parameters.test >>
+      - run:
+          name: watchOS
+          command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic watchOS' -destination 'platform=watchOS Simulator,name=Apple Watch Series 3 - 42mm,OS=<< parameters.watchOS >>' clean build
+
+workflows:
+  workflow:
+    jobs:
+      - build-job:
+          name: "Xcode_10.2"
+          xcode: "10.2.0"
+          iOS: "12.2"
+          tvOS: "12.2"
+          watchOS: "5.2"
+      - SPM-job:
+          name: "SPM"
+          xcode: "10.2.1"

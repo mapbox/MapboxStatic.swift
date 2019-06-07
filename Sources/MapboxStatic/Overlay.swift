@@ -4,6 +4,8 @@
     import UIKit
 #endif
 import Polyline
+import CoreLocation
+
 
 let allowedCharacterSet: CharacterSet = {
     var characterSet = CharacterSet.urlPathAllowed

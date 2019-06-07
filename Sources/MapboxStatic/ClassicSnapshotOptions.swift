@@ -5,6 +5,8 @@
 #else
     import UIKit
 #endif
+import CoreLocation
+
 
 /**
  A structure that determines what a snapshot depicts and how it is formatted. A classic snapshot is made by compositing one or more [tile sets](https://www.mapbox.com/help/define-tileset/) with optional overlays using the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).

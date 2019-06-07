@@ -5,6 +5,8 @@
 #else
     import UIKit
 #endif
+import CoreLocation
+
 
 /**
  A structure defining the viewpoint from which a snapshot is taken.
