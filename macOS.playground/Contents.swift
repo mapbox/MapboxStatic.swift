@@ -37,7 +37,7 @@ var options = SnapshotOptions(
     styleURL: styleURL,
     camera: camera,
     size: CGSize(width: 300, height: 200))
-var snapshot = Snapshot(
+var snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 
@@ -68,7 +68,7 @@ let classicOptions = ClassicSnapshotOptions(
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoomLevel: 13,
     size: CGSize(width: 300, height: 200))
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: classicOptions,
     accessToken: accessToken)
 snapshot.image
@@ -88,7 +88,7 @@ let markerOverlay = Marker(
     iconName: "cafe")
 markerOverlay.color = .brown
 options.overlays = [markerOverlay]
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -100,7 +100,7 @@ let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
     url: URL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!)
 options.overlays = [customMarker]
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -115,7 +115,7 @@ do {
     geoJSONOverlay = GeoJSON(objectString: geoJSONString)
 }
 options.overlays = [geoJSONOverlay]
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -148,7 +148,7 @@ path.strokeWidth = 2
 path.strokeColor = .black
 path.fillColor = NSColor.red.withAlphaComponent(0.25)
 options.overlays = [path]
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -166,7 +166,7 @@ options = SnapshotOptions(
     styleURL: styleURL,
     camera: camera,
     size: CGSize(width: 300, height: 200))
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -180,7 +180,7 @@ options = SnapshotOptions(
     styleURL: styleURL,
     size: CGSize(width: 500, height: 300))
 options.overlays = [path, geoJSONOverlay, markerOverlay, customMarker]
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: options,
     accessToken: accessToken)
 snapshot.image
@@ -194,7 +194,7 @@ let markerOptions = MarkerOptions(
     size: .medium,
     iconName: "cafe")
 markerOptions.color = .brown
-snapshot = Snapshot(
+snapshot = MapSnapshot(
     options: markerOptions,
     accessToken: accessToken)
 snapshot.image

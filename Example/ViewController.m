@@ -37,7 +37,7 @@ static NSString * const AccessToken = @"pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4Z
     };
     MBPath *path = [[MBPath alloc] initWithCoordinates:coords count:sizeof(coords) / sizeof(coords[0])];
     options.overlays = @[path];
-    MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options accessToken:AccessToken];
+    MBMapSnapshot *snapshot = [[MBMapSnapshot alloc] initWithOptions:options accessToken:AccessToken];
     __weak typeof(self) weakSelf = self;
     [snapshot imageWithCompletionHandler:^(UIImage * _Nullable image, NSError * _Nullable error) {
         typeof(weakSelf) strongSelf = weakSelf;

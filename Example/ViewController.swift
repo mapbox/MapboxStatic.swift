@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         
         options.overlays.append(path)
         
-        _ = Snapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
+        _ = MapSnapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
             if let error = error {
                 print(error)
                 return

@@ -23,7 +23,7 @@ let userAgent: String = {
         components.append("\(appName)/\(version)")
     }
     
-    let libraryBundle = Bundle(for: Snapshot.self)
+    let libraryBundle = Bundle(for: MapSnapshot.self)
     
     if let libraryName = libraryBundle.infoDictionary?["CFBundleName"] as? String, let version = libraryBundle.infoDictionary?["CFBundleShortVersionString"] as? String {
         components.append("\(libraryName)/\(version)")
@@ -70,12 +70,12 @@ public protocol SnapshotOptionsProtocol: NSObjectProtocol {
 }
 
 /**
- A `Snapshot` instance represents a static snapshot of a map with optional overlays. With a snapshot instance, you can synchronously or asynchronously generate an image based on the options you provide via an HTTP request, or you can get the URL used to make this request. The image is obtained on demand from the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images) or the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic/#retrieve-a-static-map-image), depending on whether you use a `SnapshotOptions` object or a `ClassicSnapshotOptions` object.
+ A `MapSnapshot` instance represents a static snapshot of a map with optional overlays. With a snapshot instance, you can synchronously or asynchronously generate an image based on the options you provide via an HTTP request, or you can get the URL used to make this request. The image is obtained on demand from the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images) or the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic/#retrieve-a-static-map-image), depending on whether you use a `SnapshotOptions` object or a `ClassicSnapshotOptions` object.
  
  The snapshot image can be used in an image view (`UIImage` on iOS and tvOS, `NSImage` on macOS, `WKImage` on watchOS). The image does not respond to user gestures. To add interactivity, use the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/) or the [Mapbox Maps SDK for macOS](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos/), which can optionally display raster tiles. If you are already using the map SDKs for iOS or macOS, use the `MGLMapSnapshotter` object instead of this class to take advantage of caching and offline packs.
  */
-@objc(MBSnapshot)
-open class Snapshot: NSObject {
+@objc(MBMapSnapshot)
+open class MapSnapshot: NSObject {
     #if os(OSX)
     public typealias Image = NSImage
     #else
@@ -180,7 +180,7 @@ open class Snapshot: NSObject {
      
      This method retrieves the image asynchronously over a network connection. If a connection error or server error occurs, details about the error are passed into the given completion handler in lieu of an image.
      
-     On macOS, you may need the same snapshot image at both Retina and non-Retina resolutions to accommodate different displays being connected to the computer. To obtain images at both resolutions, create two different `Snapshot` instances, each with a different `scale` option.
+     On macOS, you may need the same snapshot image at both Retina and non-Retina resolutions to accommodate different displays being connected to the computer. To obtain images at both resolutions, create two different `MapSnapshot` instances, each with a different `scale` option.
      
      - parameter completionHandler: The closure (block) to call with the resulting image. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting image, cancel this task.
@@ -205,7 +205,7 @@ open class Snapshot: NSObject {
             
             let apiMessage = json["message"] as? String
             guard image != nil && error == nil && apiMessage == nil else {
-                let apiError = Snapshot.descriptiveError(json, response: response, underlyingError: error as NSError?)
+                let apiError = MapSnapshot.descriptiveError(json, response: response, underlyingError: error as NSError?)
                 DispatchQueue.main.async {
                     handler(nil, apiError)
                 }
