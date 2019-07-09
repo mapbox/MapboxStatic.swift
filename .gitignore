@@ -5,6 +5,7 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+*.timeline
 
 Carthage/Build
 Carthage/Checkouts
