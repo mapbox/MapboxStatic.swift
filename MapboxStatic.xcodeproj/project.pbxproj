@@ -720,7 +720,7 @@
 				TargetAttributes = {
 					DA20FB9A1CE3DEBB00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1120;
 					};
 					DA20FBB81CE4757E00B07762 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -747,11 +747,11 @@
 					};
 					DDAD19581BD9B1780057AC9F = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1120;
 					};
 					DDAD19771BD9B24F0057AC9F = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -1192,7 +1192,6 @@
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1221,7 +1220,6 @@
 				PRODUCT_NAME = MapboxStatic;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1242,7 +1240,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1261,7 +1258,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticTests;
 				PRODUCT_NAME = MapboxStaticTests;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1495,7 +1491,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1547,7 +1543,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1562,7 +1558,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
 				PRODUCT_NAME = "MapboxStatic (Swift)";
-				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1576,7 +1571,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxStaticExample.Swift;
 				PRODUCT_NAME = "MapboxStatic (Swift)";
-				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
