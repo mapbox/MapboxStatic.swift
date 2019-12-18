@@ -72,7 +72,7 @@ public protocol SnapshotOptionsProtocol: NSObjectProtocol {
 /**
  A `Snapshot` instance represents a static snapshot of a map with optional overlays. With a snapshot instance, you can synchronously or asynchronously generate an image based on the options you provide via an HTTP request, or you can get the URL used to make this request. The image is obtained on demand from the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images) or the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic/#retrieve-a-static-map-image), depending on whether you use a `SnapshotOptions` object or a `ClassicSnapshotOptions` object.
  
- The snapshot image can be used in an image view (`UIImage` on iOS and tvOS, `NSImage` on macOS, `WKImage` on watchOS). The image does not respond to user gestures. To add interactivity, use the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/) or the [Mapbox Maps SDK for macOS](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos/), which can optionally display raster tiles. If you are already using the map SDKs for iOS or macOS, use the `MGLMapSnapshotter` object instead of this class to take advantage of caching and offline packs.
+ The snapshot image can be used in an image view (`UIImage` on iOS and tvOS, `NSImage` on macOS, `WKImage` on watchOS). The image does not respond to user gestures. To add interactivity, use the [Mapbox Maps SDK for iOS](https://docs.mapbox.com/ios/maps/) or the [Mapbox Maps SDK for macOS](https://mapbox.github.io/mapbox-gl-native/macos/), which can optionally display raster tiles. If you are already using the map SDKs for iOS or macOS, use the `MGLMapSnapshotter` object instead of this class to take advantage of caching and offline packs.
  */
 @objc(MBSnapshot)
 open class Snapshot: NSObject {
@@ -103,12 +103,12 @@ open class Snapshot: NSObject {
      Initializes a newly created snapshot instance with the given options and an optional access token and host.
      
      - parameter options: Options that determine the contents and format of the output image.
-     - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
+     - parameter accessToken: A Mapbox [access token](https://docs.mapbox.com/help/glossary/access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      - parameter host: An optional hostname to the server API. The official Mapbox API endpoint is used by default.
      */
     @objc public init(options: SnapshotOptionsProtocol, accessToken: String?, host: String?) {
         let accessToken = accessToken ?? defaultAccessToken
-        assert(accessToken != nil && !accessToken!.isEmpty, "A Mapbox access token is required. Go to <https://www.mapbox.com/studio/account/tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Snapshot(options:accessToken:host:) initializer.")
+        assert(accessToken != nil && !accessToken!.isEmpty, "A Mapbox access token is required. Go to <https://account.mapbox.com/access-tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Snapshot(options:accessToken:host:) initializer.")
         
         self.options = options
         self.accessToken = accessToken!
@@ -125,7 +125,7 @@ open class Snapshot: NSObject {
      The snapshot instance sends requests to the official Mapbox API endpoint.
      
      - parameter options: Options that determine the contents and format of the output image.
-     - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
+     - parameter accessToken: A Mapbox [access token](https://docs.mapbox.com/help/glossary/access-token/). If an access token is not specified when initializing the snapshot object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
     @objc public convenience init(options: SnapshotOptionsProtocol, accessToken: String?) {
         self.init(options: options, accessToken: accessToken, host: nil)

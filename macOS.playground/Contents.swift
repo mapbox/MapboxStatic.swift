@@ -21,7 +21,7 @@ import MapboxStatic
  */
 
 let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
-let mapIdentifiers = ["mapbox.satellite"]
+let tileSetIdentifiers = ["mapbox.satellite"]
 let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
 
 /*:
@@ -64,7 +64,7 @@ snapshot.url
  */
 
 let classicOptions = ClassicSnapshotOptions(
-    mapIdentifiers: mapIdentifiers,
+    tileSetIdentifiers: tileSetIdentifiers,
     centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
     zoomLevel: 13,
     size: CGSize(width: 300, height: 200))
@@ -98,7 +98,7 @@ snapshot.image
  */
 let customMarker = CustomMarker(
     coordinate: CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69),
-    url: URL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!)
+    url: URL(string: "https://docs.mapbox.com/help/img/screenshots/airport-15.png")!)
 options.overlays = [customMarker]
 snapshot = Snapshot(
     options: options,

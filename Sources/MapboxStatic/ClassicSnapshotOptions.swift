@@ -9,9 +9,9 @@ import CoreLocation
 
 
 /**
- A structure that determines what a snapshot depicts and how it is formatted. A classic snapshot is made by compositing one or more [tile sets](https://www.mapbox.com/help/define-tileset/) with optional overlays using the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).
+ A structure that determines what a snapshot depicts and how it is formatted. A classic snapshot is made by compositing one or more [tile sets](https://docs.mapbox.com/help/glossary/tileset/) with optional overlays using the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).
  
- Typically, you use a `ClassicSnapshotOptions` object to generate a snapshot of a [raster tile set](https://www.mapbox.com/help/define-tileset/#raster-tilesets). If you use `ClassicSnapshotOptions` to display a [vector tile set](https://www.mapbox.com/help/define-tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use a `SnapshotOptions` object.
+ Typically, you use a `ClassicSnapshotOptions` object to generate a snapshot of a [raster tile set](https://docs.mapbox.com/help/glossary/tileset/#raster-tilesets). If you use `ClassicSnapshotOptions` to display a [vector tile set](https://docs.mapbox.com/help/glossary/tileset/#vector-tilesets), the snapshot image will depict a wireframe representation of the tile set. To generate a static, styled image of a vector tile set, use a `SnapshotOptions` object.
  */
 @objc(MBClassicSnapshotOptions)
 open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
@@ -66,11 +66,11 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
     // MARK: Configuring the Map Data
     
     /**
-     An array of [map identifiers](https://www.mapbox.com/help/define-map-id/) of the form `username.id`, identifying the [tile sets](https://www.mapbox.com/help/define-tileset/) to display in the snapshot. This array may not be empty.
+     An array of [tile set identifiers](https://docs.mapbox.com/help/glossary/tileset-id/) of the form `username.id`, identifying the [tile sets](https://docs.mapbox.com/help/glossary/tileset/) to display in the snapshot. This array may not be empty.
      
-     The order of the map identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
+     The order of the tile set identifiers in the array reflects their visible order in the snapshot, with the tile set identified at index 0 being the backmost tile set.
      */
-    @objc open var mapIdentifiers: [String]
+    @objc open var tileSetIdentifiers: [String]
     
     /**
      An array of overlays to draw atop the map.
@@ -145,24 +145,24 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      After initializing a snapshot options instance with this initializer, set the `overlays` property to specify the overlays to fit the snapshot to.
      
-     - parameter mapIdentifiers: An array of [map identifiers](https://www.mapbox.com/help/define-map-id/) of the form `username.id`, identifying the [tile sets](https://www.mapbox.com/help/define-tileset/) to display in the snapshot. This array may not be empty.
+     - parameter tileSetIdentifiers: An array of [tile set identifiers](https://docs.mapbox.com/help/glossary/tileset-id/) of the form `username.id`, identifying the [tile sets](https://docs.mapbox.com/help/glossary/tileset/) to display in the snapshot. This array may not be empty.
      - parameter size: The logical size of the image to output, measured in points.
      */
-    @objc public init(mapIdentifiers: [String], size: CGSize) {
-        self.mapIdentifiers = mapIdentifiers
+    @objc public init(tileSetIdentifiers: [String], size: CGSize) {
+        self.tileSetIdentifiers = tileSetIdentifiers
         self.size = size
     }
     
     /**
      Initializes a snapshot options instance that results in a snapshot centered at the given geographical coordinate and showing the given zoom level.
      
-     - parameter mapIdentifiers: An array of [map identifiers](https://www.mapbox.com/help/define-map-id/) of the form `username.id`, identifying the [tile sets](https://www.mapbox.com/help/define-tileset/) to display in the snapshot. This array may not be empty.
+     - parameter tileSetIdentifiers: An array of [tile set identifiers](https://docs.mapbox.com/help/glossary/tileset-id/) of the form `username.id`, identifying the [tile sets](https://docs.mapbox.com/help/glossary/tileset/) to display in the snapshot. This array may not be empty.
      - parameter centerCoordinate: The geographic coordinate at the center of the snapshot.
      - parameter zoomLevel: The zoom level of the snapshot.
      - parameter size: The logical size of the image to output, measured in points.
      */
-    @objc public init(mapIdentifiers: [String], centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
-        self.mapIdentifiers = mapIdentifiers
+    @objc public init(tileSetIdentifiers: [String], centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, size: CGSize) {
+        self.tileSetIdentifiers = tileSetIdentifiers
         self.centerCoordinate = centerCoordinate
         self.zoomLevel = zoomLevel
         self.size = size
@@ -174,8 +174,8 @@ open class ClassicSnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - returns: An HTTP URL path.
      */
     @objc open var path: String {
-        assert(!mapIdentifiers.isEmpty, "At least one map identifier must be specified.")
-        let tileSetComponent = mapIdentifiers.joined(separator: ",")
+        assert(!tileSetIdentifiers.isEmpty, "At least one tile set identifier must be specified.")
+        let tileSetComponent = tileSetIdentifiers.joined(separator: ",")
         
         let position: String
         if let centerCoordinate = centerCoordinate {

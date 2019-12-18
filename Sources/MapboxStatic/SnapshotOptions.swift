@@ -166,7 +166,7 @@ open class SnapshotCamera: NSObject {
 }
 
 /**
- A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://www.mapbox.com/help/define-style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design your own custom style using [Mapbox Studio](https://www.mapbox.com/studio/). You can only snapshot a style hosted by Mapbox.
+ A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://docs.mapbox.com/help/glossary/style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design your own custom style using [Mapbox Studio](https://studio.mapbox.com/). You can only snapshot a style hosted by Mapbox.
  
  To generate a static, styled image of a tile set, especially a raster tile set, use a `Classic SnapshotOptions` object.
  
@@ -177,7 +177,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     // MARK: Configuring the Map Data
     
     /**
-     The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot.
+     The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot.
      
      Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
      */
@@ -191,13 +191,13 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     @objc open var overlays: [Overlay] = []
     
     /**
-     The identifier of the [style layer](https://www.mapbox.com/help/define-layer/) below which any overlays should be inserted.
+     The identifier of the [style layer](https://docs.mapbox.com/help/glossary/layer/) below which any overlays should be inserted.
      
-     This property allows you to insert overlays at any level of the map, not necessarily at the top. For example, if you are adding `Path` overlays to the snapshot, you may want to place them below any [symbol layers](https://www.mapbox.com/mapbox-gl-js/style-spec/#layer-type) to ensure that street and point of interest labels remain legible.
+     This property allows you to insert overlays at any level of the map, not necessarily at the top. For example, if you are adding `Path` overlays to the snapshot, you may want to place them below any [symbol layers](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layer-type) to ensure that street and point of interest labels remain legible.
      
      If this property is set to `nil`, any overlays are placed atop any layers defined by the style. By default, this property is set to `nil`.
      
-     Layer identifiers are not guaranteed to exist across styles or different versions of the same style. To find out the layer identifiers in a particular style, view the style in [Mapbox Studio](https://www.mapbox.com/studio/).
+     Layer identifiers are not guaranteed to exist across styles or different versions of the same style. To find out the layer identifiers in a particular style, view the style in [Mapbox Studio](https://studio.mapbox.com/).
      */
     @objc open var identifierOfLayerAboveOverlays: String?
     
@@ -253,7 +253,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      When shown, the Mapbox logo is located in the lower-left corner of the image. By default, this property is set to `true`.
      
-     - note: The Mapbox terms of service [requires](https://www.mapbox.com/help/attribution/) the [Mapbox logo](https://www.mapbox.com/about/press/brand-guidelines/) to accompany the snapshot. In general, you should not set this property to `false`. Contact your Mapbox sales representative for information about waiving this requirement. This requirement is distinct from the requirement that governs the `showsAttribution` property.
+     - note: The Mapbox terms of service [requires](https://docs.mapbox.com/help/how-mapbox-works/attribution/) the [Mapbox logo](https://www.mapbox.com/about/press/brand-guidelines/) to accompany the snapshot. In general, you should not set this property to `false`. Contact your Mapbox sales representative for information about waiving this requirement. This requirement is distinct from the requirement that governs the `showsAttribution` property.
      */
     @objc open var showsLogo = true
     
@@ -262,7 +262,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      When shown, the attribution is located in the bottom-right corner of the image. By default, this property is set to `true`.
      
-     - note: The Mapbox terms of service, which governs the use of Mapbox-hosted vector tiles and styles, [requires](https://www.mapbox.com/help/attribution/) these copyright notices to accompany any map that features Mapbox-designed styles, OpenStreetMap data, or other Mapbox data such as satellite or terrain data. If this requirement applies to the shapshot and you set this property to `false`, you must provide [proper attribution](https://www.mapbox.com/help/attribution/#static--print) near the snapshot. This requirement is distinct from the requirement that governs the `showsLogo` property.
+     - note: The Mapbox terms of service, which governs the use of Mapbox-hosted vector tiles and styles, [requires](https://docs.mapbox.com/help/how-mapbox-works/attribution/) these copyright notices to accompany any map that features Mapbox-designed styles, OpenStreetMap data, or other Mapbox data such as satellite or terrain data. If this requirement applies to the shapshot and you set this property to `false`, you must provide [proper attribution](https://docs.mapbox.com/help/how-mapbox-works/attribution/#static--print) near the snapshot. This requirement is distinct from the requirement that governs the `showsLogo` property.
      */
     @objc open var showsAttribution = true
     
@@ -271,7 +271,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      After initializing a snapshot options instance with this initializer, set the `overlays` property to specify the overlays to fit the snapshot to.
      
-     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
+     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#mapbox-styles).
      - parameter size: The logical size of the image to output, measured in points.
      */
     @objc public init(styleURL: URL, size: CGSize) {
@@ -282,7 +282,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      Initializes a snapshot options instance that results in a snapshot centered at the given geographical coordinate and showing the given zoom level.
      
-     - parameter styleURL: The [style URL](https://www.mapbox.com/help/define-style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
+     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#mapbox-styles).
      - parameter camera: The viewpoint from which the snapshot is taken.
      - parameter size: The logical size of the image to output, measured in points.
      */
@@ -298,8 +298,8 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - returns: An HTTP URL path.
      */
     @objc open var path: String {
-        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://www.mapbox.com/help/define-style-url/ or https://docs.mapbox.com/api/maps/#styles for valid style URLs.")
-        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://www.mapbox.com/help/define-style-url/ or https://docs.mapbox.com/api/maps/#styles for valid style URLs.")
+        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/#mapbox-styles for valid style URLs.")
+        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/#mapbox-styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
         let position = camera?.string(size: size) ?? "auto"

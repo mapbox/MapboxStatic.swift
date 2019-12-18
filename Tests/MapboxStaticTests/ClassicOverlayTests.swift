@@ -24,7 +24,7 @@ class ClassicOverlayTests: XCTestCase {
         markerOverlay.color = .brown
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.overlays = [markerOverlay]
         options.scale = 1
@@ -47,12 +47,12 @@ class ClassicOverlayTests: XCTestCase {
     
     func testCustomMarker() {
         let coordinate = CLLocationCoordinate2D(latitude: 45.522, longitude: -122.69)
-        let markerURL = URL(string: "https://www.mapbox.com/help/img/screenshots/rocket.png")!
+        let markerURL = URL(string: "https://docs.mapbox.com/help/img/screenshots/airport-15.png")!
         
         let customMarker = CustomMarker(coordinate: coordinate, url: markerURL)
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.overlays = [customMarker]
         options.scale = 1
@@ -74,7 +74,7 @@ class ClassicOverlayTests: XCTestCase {
         let geoJSONOverlay = GeoJSON(objectString: geoJSONString)
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.overlays = [geoJSONOverlay]
         options.scale = 1
@@ -97,7 +97,7 @@ class ClassicOverlayTests: XCTestCase {
         let geoJSONOverlay = try! GeoJSON(object: geoJSON)
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.overlays = [geoJSONOverlay]
         options.scale = 1
@@ -141,7 +141,7 @@ class ClassicOverlayTests: XCTestCase {
         path.fillColor = Color.red.withAlphaComponent(0.25)
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.overlays = [path]
         options.scale = 1
