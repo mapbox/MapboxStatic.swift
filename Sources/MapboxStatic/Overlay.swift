@@ -72,9 +72,9 @@ open class MarkerImage: NSObject {
         /// A number from 0 through 99.
         case number(Int)
         /**
-         The name of a [Maki](https://www.mapbox.com/maki-icons/) icon.
+         The name of a [Maki](https://labs.mapbox.com/maki-icons/) icon.
          
-         The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+         The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
          */
         case iconName(String)
         
@@ -184,15 +184,15 @@ open class Marker: MarkerImage, Point {
     }
     
     /**
-     Initializes a red marker with a [Maki](https://www.mapbox.com/maki-icons/) icon.
+     Initializes a red marker with a [Maki](https://labs.mapbox.com/maki-icons/) icon.
      
      The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
      
-     The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://www.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+     The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
      
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.
-     - parameter iconName: The name of a [Maki](https://www.mapbox.com/maki-icons/) icon to place atop the pin.
+     - parameter iconName: The name of a [Maki](https://labs.mapbox.com/maki-icons/) icon to place atop the pin.
      */
     @objc public convenience init(coordinate: CLLocationCoordinate2D,
                             size: Size = .small,
@@ -247,7 +247,7 @@ open class CustomMarker: NSObject, Overlay {
 }
 
 /**
- A geographic object in [GeoJSON](https://www.mapbox.com/help/define-geojson/) format.
+ A geographic object in [GeoJSON](https://docs.mapbox.com/help/glossary/geojson/) format.
  
  GeoJSON features may be styled according to the [simplestyle specification](https://github.com/mapbox/simplestyle-spec).
  */
@@ -262,7 +262,7 @@ open class GeoJSON: NSObject, Overlay {
     }
     
     /**
-     Initializes a [GeoJSON](https://www.mapbox.com/help/define-geojson/) overlay with the given GeoJSON object.
+     Initializes a [GeoJSON](https://docs.mapbox.com/help/glossary/geojson/) overlay with the given GeoJSON object.
      
      - parameter object: A valid GeoJSON object.
      - returns: A GeoJSON overlay, or `nil` if the given object is not a valid JSON object. This initializer does not check whether the object is valid GeoJSON, but invalid GeoJSON will cause the request to fail.
@@ -273,7 +273,7 @@ open class GeoJSON: NSObject, Overlay {
     }
     
     /**
-     Initializes a [GeoJSON](https://www.mapbox.com/help/define-geojson/) overlay with the given string representation of a GeoJSON object.
+     Initializes a [GeoJSON](https://docs.mapbox.com/help/glossary/geojson/) overlay with the given string representation of a GeoJSON object.
      
      This initializer does not check whether the object is valid JSON or GeoJSON, but invalid JSON or GeoJSON will cause the request to fail. To perform basic JSON validation (but not GeoJSON validation), use the `init(object:)` initializer.
      

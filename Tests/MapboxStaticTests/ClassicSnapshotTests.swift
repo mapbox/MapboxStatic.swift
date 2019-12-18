@@ -11,7 +11,7 @@ class ClassicSnapshotTests: XCTestCase {
     }
     
     func testBasicMap() {
-        let options = ClassicSnapshotOptions(mapIdentifiers: ["mapbox.mapbox-streets-v6"], size: CGSize(width: 200, height: 200))
+        let options = ClassicSnapshotOptions(tileSetIdentifiers: ["mapbox.mapbox-streets-v6"], size: CGSize(width: 200, height: 200))
         options.scale = 1
         
         stub(condition: isHost("api.mapbox.com")
@@ -42,7 +42,7 @@ class ClassicSnapshotTests: XCTestCase {
     
     func testCenter() {
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.mapbox-streets-v6"],
+            tileSetIdentifiers: ["mapbox.mapbox-streets-v6"],
             centerCoordinate: CLLocationCoordinate2D(latitude: 5.971389, longitude: 116.095278),
             zoomLevel: 0,
             size: CGSize(width: 200, height: 200))
@@ -60,7 +60,7 @@ class ClassicSnapshotTests: XCTestCase {
     
     func testZoom() {
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.mapbox-streets-v6"],
+            tileSetIdentifiers: ["mapbox.mapbox-streets-v6"],
             centerCoordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
             zoomLevel: 6,
             size: CGSize(width: 300, height: 300))
@@ -84,7 +84,7 @@ class ClassicSnapshotTests: XCTestCase {
         let height = arc4random_uniform(max - min) + min
         
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.mapbox-streets-v6"],
+            tileSetIdentifiers: ["mapbox.mapbox-streets-v6"],
             size: CGSize(width: CGFloat(width), height: CGFloat(height)))
         options.scale = 1
         
@@ -145,7 +145,7 @@ class ClassicSnapshotTests: XCTestCase {
     
     func testFormat(_ format: ClassicSnapshotOptions.Format, pathExtension: String, mimeType: String) {
         let options = ClassicSnapshotOptions(
-            mapIdentifiers: ["mapbox.streets"],
+            tileSetIdentifiers: ["mapbox.streets"],
             size: CGSize(width: 200, height: 200))
         options.format = format
         options.scale = 1
