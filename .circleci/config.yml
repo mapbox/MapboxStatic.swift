@@ -31,6 +31,7 @@ jobs:
     steps:
       - checkout
       - run: swift build
+      - run: swift test
 
   build-job:
     parameters:
