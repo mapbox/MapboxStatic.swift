@@ -1,12 +1,15 @@
 import Foundation
 import XCTest
 import OHHTTPStubs
+#if canImport(OHHTTPStubsSwift)
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxStatic
 
 class SnapshotTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
@@ -28,14 +31,14 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic-gl", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200@2x")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic-gl@2x", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic-gl@2x", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -59,7 +62,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/116.095278,5.971389,0.0/200x200")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "center-gl", ofType: "png")!
+                let path = Bundle.module.path(forResource: "center-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -74,7 +77,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,6.0/300x300")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "zoom-gl", ofType: "png")!
+                let path = Bundle.module.path(forResource: "zoom-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -90,7 +93,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0,45.0/300x300")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "rotate", ofType: "png")!
+                let path = Bundle.module.path(forResource: "rotate", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -106,7 +109,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/0.0,0.0,0.0,0.0,60.0/300x300")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "tilt", ofType: "png")!
+                let path = Bundle.module.path(forResource: "tilt", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -128,7 +131,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/auto/\(width)x\(height)")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic-gl", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic-gl", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -144,7 +147,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
             && containsQueryParams(["access_token": BogusToken, "logo": "false"])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "no-logo", ofType: "png")!
+                let path = Bundle.module.path(forResource: "no-logo", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -159,7 +162,7 @@ class SnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/styles/v1/mapbox/streets-v9/static/auto/200x200")
             && containsQueryParams(["access_token": BogusToken, "attribution": "false"])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "no-attribution", ofType: "png")!
+                let path = Bundle.module.path(forResource: "no-attribution", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         

@@ -95,4 +95,4 @@ workflows:
           watchOS: "5.2"
       - SPM-job:
           name: "SPM"
-          xcode: "10.2.1"
+          xcode: "12.0.0"
