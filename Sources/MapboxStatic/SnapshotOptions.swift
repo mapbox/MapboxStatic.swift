@@ -1,8 +1,8 @@
-#if os(OSX)
+#if canImport(Cocoa)
     import Cocoa
-#elseif os(watchOS)
+#elseif canImport(WatchKit)
     import WatchKit
-#else
+#elseif canImport(UIKit)
     import UIKit
 #endif
 import CoreLocation
@@ -219,7 +219,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      */
     @objc open var size: CGSize
     
-    #if os(OSX)
+    #if os(macOS)
     /**
      The scale factor of the image.
      
