@@ -24,10 +24,10 @@ Pod::Spec.new do |s|
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   #  When using multiple platforms
-  s.ios.deployment_target = "8.0"
-  s.osx.deployment_target = "10.10"
-  s.watchos.deployment_target = "2.0"
-  s.tvos.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
+  s.osx.deployment_target = "10.12"
+  s.watchos.deployment_target = "3.0"
+  s.tvos.deployment_target = "10.0"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
@@ -43,6 +43,6 @@ Pod::Spec.new do |s|
   s.module_name = "MapboxStatic"
   s.swift_version = "5.0"
 
-  s.dependency "Polyline", "~> 4.2"
+  s.dependency "Polyline", "~> 5.0"
 
 end

@@ -1,8 +1,8 @@
-#if os(OSX)
+#if canImport(Cocoa)
     import Cocoa
-#elseif os(watchOS)
+#elseif canImport(WatchKit)
     import WatchKit
-#else
+#elseif canImport(UIKit)
     import UIKit
 #endif
 
@@ -29,8 +29,10 @@ let userAgent: String = {
         components.append("\(libraryName)/\(version)")
     }
     
+    // `ProcessInfo().operatingSystemVersionString` can replace this when swift-corelibs-foundaton is next released:
+    // https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/ProcessInfo.swift#L104-L202
     let system: String
-    #if os(OSX)
+    #if os(macOS)
         system = "macOS"
     #elseif os(iOS)
         system = "iOS"
@@ -40,6 +42,8 @@ let userAgent: String = {
         system = "tvOS"
     #elseif os(Linux)
         system = "Linux"
+    #else
+        system = "unknown"
     #endif
     let systemVersion = ProcessInfo().operatingSystemVersion
     components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")

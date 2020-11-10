@@ -1,10 +1,17 @@
 import XCTest
-import OHHTTPStubs
 import CoreLocation
 import Foundation
 @testable import MapboxStatic
 
 let BogusToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
+
+#if !SWIFT_PACKAGE
+extension Bundle {
+    static var module: Bundle {
+        return Bundle(for: MapboxStaticTests.self)
+    }
+}
+#endif
 
 class MapboxStaticTests: XCTestCase {
     override func setUp() {

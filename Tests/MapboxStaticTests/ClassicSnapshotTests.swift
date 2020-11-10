@@ -1,12 +1,15 @@
 import Foundation
 import XCTest
 import OHHTTPStubs
+#if canImport(OHHTTPStubsSwift)
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxStatic
 
 class ClassicSnapshotTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
@@ -17,14 +20,14 @@ class ClassicSnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.mapbox-streets-v6/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.mapbox-streets-v6/auto/200x200@2x.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic@2x", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic@2x", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -51,7 +54,7 @@ class ClassicSnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.mapbox-streets-v6/116.095278,5.971389,0/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "center", ofType: "png")!
+                let path = Bundle.module.path(forResource: "center", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -69,7 +72,7 @@ class ClassicSnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.mapbox-streets-v6/0.0,0.0,6/300x300.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "zoom", ofType: "png")!
+                let path = Bundle.module.path(forResource: "zoom", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -91,7 +94,7 @@ class ClassicSnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.mapbox-streets-v6/auto/\(width)x\(height).png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "basic", ofType: "png")!
+                let path = Bundle.module.path(forResource: "basic", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -154,7 +157,7 @@ class ClassicSnapshotTests: XCTestCase {
             && pathStartsWith("/v4/mapbox.streets/auto/200x200")
             && isExtension(pathExtension)
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "format", ofType: pathExtension)!
+                let path = Bundle.module.path(forResource: "format", ofType: pathExtension)!
                 return fixture(filePath: path, headers: ["Content-Type": mimeType])
         }
         
@@ -175,7 +178,7 @@ class ClassicSnapshotTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/marker/pin-m-cafe+\(hexColor).png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "cafe", ofType: "png")!
+                let path = Bundle.module.path(forResource: "cafe", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         

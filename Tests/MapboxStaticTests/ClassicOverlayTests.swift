@@ -1,6 +1,9 @@
 import Foundation
 import XCTest
 import OHHTTPStubs
+#if canImport(OHHTTPStubsSwift)
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxStatic
 
@@ -12,7 +15,7 @@ import CoreLocation
 
 class ClassicOverlayTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
@@ -38,7 +41,7 @@ class ClassicOverlayTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/pin-m-cafe+\(hexColor)(-122.681944,45.52)/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "marker", ofType: "png")!
+                let path = Bundle.module.path(forResource: "marker", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -60,7 +63,7 @@ class ClassicOverlayTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/url-\(markerURL)(-122.69,45.522)/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "rocket", ofType: "png")!
+                let path = Bundle.module.path(forResource: "rocket", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -68,7 +71,7 @@ class ClassicOverlayTests: XCTestCase {
     }
     
     func testGeoJSONString() {
-        let geoJSONURL = Bundle(for: type(of: self)).url(forResource: "polyline", withExtension: "geojson")!
+        let geoJSONURL = Bundle.module.url(forResource: "polyline", withExtension: "geojson")!
         
         let geoJSONString = try! String(contentsOf: geoJSONURL, encoding: .utf8)
         let geoJSONOverlay = GeoJSON(objectString: geoJSONString)
@@ -82,7 +85,7 @@ class ClassicOverlayTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/geojson(\(geoJSONString))/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "geojson", ofType: "png")!
+                let path = Bundle.module.path(forResource: "geojson", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -90,7 +93,7 @@ class ClassicOverlayTests: XCTestCase {
     }
     
     func testGeoJSONObject() {
-        let geoJSONURL = Bundle(for: type(of: self)).url(forResource: "polyline", withExtension: "geojson")!
+        let geoJSONURL = Bundle.module.url(forResource: "polyline", withExtension: "geojson")!
         
         let data = try! Data(contentsOf: geoJSONURL)
         let geoJSON = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
@@ -107,7 +110,7 @@ class ClassicOverlayTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/geojson(\(geoJSONString.sortedJSON))/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "geojson", ofType: "png")!
+                let path = Bundle.module.path(forResource: "geojson", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         
@@ -156,7 +159,7 @@ class ClassicOverlayTests: XCTestCase {
         stub(condition: isHost("api.mapbox.com")
             && isPath("/v4/mapbox.streets/path-2+000000-0.75+\(hexColor)-0.25(\(encodedPolyline))/auto/200x200.png")
             && containsQueryParams(["access_token": BogusToken])) { request in
-                let path = Bundle(for: type(of: self)).path(forResource: "path", ofType: "png")!
+                let path = Bundle.module.path(forResource: "path", ofType: "png")!
                 return fixture(filePath: path, headers: ["Content-Type": "image/png"])
         }
         

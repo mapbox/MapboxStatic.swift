@@ -10,6 +10,19 @@ A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image v
 
 MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/), and the [Mapbox Maps SDK for macOS SDK](https://mapbox.github.io/mapbox-gl-native/macos/). If you’re already using the maps SDK for iOS or macOS for other purposes, consider using an [`MGLMapSnapshotter`](https://docs.mapbox.com/ios/api/maps/5.5.0/Classes/MGLMapSnapshotter.html) object instead of MapboxStatic.swift to produce static images that take advantage of caching and offline packs.
 
+## System requirements
+
+* One of the following package managers:
+   * CocoaPods (CocoaPods 1.10 or above if using Xcode 12)
+   * Carthage 0.19 or above (run [this script](https://github.com/mapbox/MapboxStatic.swift/blob/main/scripts/wcarthage.sh) instead of `carthage` if using Xcode 12)
+   * Swift Package Manager 5.3 or above
+* Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
+* One of the following operating systems:
+   * iOS 10.0 or above
+   * macOS 10.12.0 or above
+   * tvOS 10.0 or above
+   * watchOS 3.0 or above
+
 ## Installation
 
 
