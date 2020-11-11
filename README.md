@@ -45,7 +45,7 @@ pod 'MapboxStatic.swift', '~> 0.11'
 To install MapboxStatic using the [Swift Package Manager](https://swift.org/package-manager/), add the following package to the `dependencies` in your Package.swift file:
 
 ```swift
-.package(url: "https://github.com/mapbox/MapboxStatic.swift.git", from: "0.11.0"),
+.package(url: "https://github.com/mapbox/MapboxStatic.swift.git", .branch("main")),
 ```
 
 Then `import MapboxStatic` or `@import MapboxStatic;`.
