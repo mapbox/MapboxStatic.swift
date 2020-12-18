@@ -30,14 +30,14 @@ MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/m
 Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
 ```sh
-github "mapbox/MapboxStatic.swift" ~> 0.11
+github "mapbox/MapboxStatic.swift" ~> 0.12
 ```
 
 ### CocoaPods
 In your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxStatic.swift', '~> 0.11'
+pod 'MapboxStatic.swift', '~> 0.12'
 ```
 
 ### Swift Package Manager
@@ -45,7 +45,7 @@ pod 'MapboxStatic.swift', '~> 0.11'
 To install MapboxStatic using the [Swift Package Manager](https://swift.org/package-manager/), add the following package to the `dependencies` in your Package.swift file:
 
 ```swift
-.package(url: "https://github.com/mapbox/MapboxStatic.swift.git", from: "0.11.0"),
+.package(url: "https://github.com/mapbox/MapboxStatic.swift.git", from: "0.12.0"),
 ```
 
 Then `import MapboxStatic` or `@import MapboxStatic;`.

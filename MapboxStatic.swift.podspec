@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.name         = "MapboxStatic.swift"
-  s.version      = "0.11.0"
+  s.version      = "0.12.0"
   s.summary      = "Mapbox Static Images API wrapper for Swift and Objective-C."
 
   s.description  = <<-DESC
