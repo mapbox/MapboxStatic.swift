@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the Mapbox Static Images API. Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
                    DESC
 
-  s.homepage     = "https://docs.mapbox.com/api/maps/#static-images"
+  s.homepage     = "https://docs.mapbox.com/api/maps/static-images/"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 

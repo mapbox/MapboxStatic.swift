@@ -5,23 +5,18 @@ import MapboxStatic
 /*:
  # MapboxStatic.swift
  
- MapboxStatic.swift makes it easy to connect your macOS Cocoa application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+ MapboxStatic.swift makes it easy to connect your macOS Cocoa application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/static-images/). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
  
  A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image view, sharing service, printed document, or anyplace else you’d like a quick, custom map without the overhead of an interactive view. A static map is created in a single HTTP request. Overlays are added server-side.
  
  ## Usage
  
-Use this library to generate a _snapshot_ from a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/). Using a style gives you more visual options like rotation, while using a tile set gives you a choice of image formats. If you’re working with vector data, you’ll want to use a style; if you’re working with a single raster imagery source, you may want to use a tile set.
- 
- To generate a snapshot from a style, you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style in the Mapbox macOS SDK.
- 
- To generate a snapshot from a tileset, you’ll need a [map ID](https://www.mapbox.com/help/define-map-id/). You can either choose a [Mapbox-maintained tileset](https://docs.mapbox.com/api/maps/#maps) or upload your own to [Mapbox Studio](https://www.mapbox.com/studio/tilesets/).
+To generate a _snapshot_ from a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/), you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://docs.mapbox.com/api/maps/styles/#mapbox-styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style in the Mapbox macOS SDK.
  
  You’ll also need an [access token](https://www.mapbox.com/help/define-access-token/) with the `styles:tiles` scope enabled in order to use this library. You can specify your access token inline or by setting the `MGLMapboxAccessToken` key in your application’s Info.plist file.
  */
 
 let styleURL = URL(string: "mapbox://styles/mapbox/streets-v9")!
-let tileSetIdentifiers = ["mapbox.satellite"]
 let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
 
 /*:
