@@ -1,5 +1,14 @@
 version: 2.1
 
+commands:
+  install-mbx-ci:
+    steps:
+      - run:
+          name: Install mbx-ci
+          command: |
+            curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-darwin-amd64 > /usr/local/bin/mbx-ci
+            chmod 755 /usr/local/bin/mbx-ci
+
 step-library:
   - &restore-cache
       restore_cache:
@@ -29,6 +38,7 @@ jobs:
     environment:
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
+      - install-mbx-ci
       - checkout
       - run: swift build
       - run: swift test
@@ -57,6 +67,7 @@ jobs:
     environment:
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
+      - install-mbx-ci
       - checkout
       - *prepare
       - *restore-cache
