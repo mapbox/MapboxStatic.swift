@@ -123,7 +123,7 @@ open class SnapshotCamera: NSObject {
         } else if let altitude = altitude {
             zoomLevel = SnapshotCamera.zoomLevelForAltitude(altitude, pitch: pitch, latitude: centerCoordinate.latitude, size: size)
         }
-        assert(0...20 ~= zoomLevel, "Zoom level must be between 0 and 20.")
+        assert(0...22 ~= zoomLevel, "Zoom level must be between 0 and 22.")
         components.append(Double(zoomLevel))
         
         if heading > 0 {
@@ -301,11 +301,6 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
         let position = camera?.string(size: size) ?? "auto"
-        
-        assert(1...1_280 ~= size.width, "Width must be between 1 and 1,280 points.")
-        assert(1...1_280 ~= size.height, "Height must be between 1 and 1,280 points.")
-        
-        assert(overlays.count <= 100, "maximum number of overlays is 100")
         
         let overlaysComponent: String
         if overlays.isEmpty {
