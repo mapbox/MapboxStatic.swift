@@ -47,7 +47,7 @@ open class SnapshotCamera: NSObject {
      
      In addition to affecting the visual size and detail of features on the map, the zoom level may affect style properties that depend on the zoom level.
      
-     `SnapshotCamera` zoom levels differ from `ClassicSnapshotOptions` zoom levels. At zoom level 0, the entire world map is 512 points wide and 512 points tall; at zoom level 1, it is 1,024×1,024 points; at zoom level 2, it is 2,048×2,048 points; and so on. When the map is tilted, the zoom level affects the viewing distance from the viewer to the center coordinate.
+     At zoom level 0, the entire world map is 512 points wide and 512 points tall; at zoom level 1, it is 1,024×1,024 points; at zoom level 2, it is 2,048×2,048 points; and so on. When the map is tilted, the zoom level affects the viewing distance from the viewer to the center coordinate.
      
      The zoom level may not be less than 0 or greater than 20. Fractional zoom levels are rounded to two decimal places.
      */
@@ -123,7 +123,7 @@ open class SnapshotCamera: NSObject {
         } else if let altitude = altitude {
             zoomLevel = SnapshotCamera.zoomLevelForAltitude(altitude, pitch: pitch, latitude: centerCoordinate.latitude, size: size)
         }
-        assert(0...20 ~= zoomLevel, "Zoom level must be between 0 and 20.")
+        assert(0...22 ~= zoomLevel, "Zoom level must be between 0 and 22.")
         components.append(Double(zoomLevel))
         
         if heading > 0 {
@@ -166,11 +166,9 @@ open class SnapshotCamera: NSObject {
 }
 
 /**
- A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://docs.mapbox.com/help/glossary/style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design your own custom style using [Mapbox Studio](https://studio.mapbox.com/). You can only snapshot a style hosted by Mapbox.
+ A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://docs.mapbox.com/help/glossary/style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/static-images/). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/styles/#mapbox-styles) or design your own custom style using [Mapbox Studio](https://studio.mapbox.com/). You can only snapshot a style hosted by Mapbox.
  
- To generate a static, styled image of a tile set, especially a raster tile set, use a `Classic SnapshotOptions` object.
- 
- The Static Images API always outputs images in true-color Portable Network Graphics (PNG) format. For other image formats, use a `ClassicSnapshotOptions` object.
+ The Static Images API always outputs images in true-color Portable Network Graphics (PNG) format.
  */
 @objc(MBSnapshotOptions)
 open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
@@ -179,7 +177,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot.
      
-     Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles).
+     Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/styles/#mapbox-styles).
      */
     @objc open var styleURL: URL
     
@@ -271,7 +269,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      
      After initializing a snapshot options instance with this initializer, set the `overlays` property to specify the overlays to fit the snapshot to.
      
-     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#mapbox-styles).
+     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/styles/#mapbox-styles).
      - parameter size: The logical size of the image to output, measured in points.
      */
     @objc public init(styleURL: URL, size: CGSize) {
@@ -282,7 +280,7 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
     /**
      Initializes a snapshot options instance that results in a snapshot centered at the given geographical coordinate and showing the given zoom level.
      
-     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#mapbox-styles).
+     - parameter styleURL: The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the style to snapshot. Only `mapbox:` URLs are supported. You can only snapshot a style hosted by Mapbox, such as a [Mapbox-designed style](https://docs.mapbox.com/api/maps/styles/#mapbox-styles).
      - parameter camera: The viewpoint from which the snapshot is taken.
      - parameter size: The logical size of the image to output, measured in points.
      */
@@ -298,16 +296,11 @@ open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {
      - returns: An HTTP URL path.
      */
     @objc open var path: String {
-        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/#mapbox-styles for valid style URLs.")
-        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/#mapbox-styles for valid style URLs.")
+        assert(styleURL.scheme == "mapbox", "Only mapbox: URLs are supported. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/styles/#mapbox-styles for valid style URLs.")
+        assert(styleURL.host == "styles", "Invalid mapbox: URL. See https://docs.mapbox.com/help/glossary/style-url/ or https://docs.mapbox.com/api/maps/styles/#mapbox-styles for valid style URLs.")
         let styleIdentifierComponent = "\(styleURL.path)/static"
         
         let position = camera?.string(size: size) ?? "auto"
-        
-        assert(1...1_280 ~= size.width, "Width must be between 1 and 1,280 points.")
-        assert(1...1_280 ~= size.height, "Height must be between 1 and 1,280 points.")
-        
-        assert(overlays.count <= 100, "maximum number of overlays is 100")
         
         let overlaysComponent: String
         if overlays.isEmpty {
