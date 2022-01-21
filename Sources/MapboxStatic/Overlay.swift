@@ -38,17 +38,9 @@ open class MarkerImage: NSObject {
      */
     @objc(MBMarkerSize)
     public enum Size: Int, CustomStringConvertible {
-        /**
-         A small marker.
-         
-         A small marker in a snapshot is the same size as a medium-sized marker in a classic snapshot.
-         */
+        /// A small marker.
         case small
-        /**
-         A medium-sized marker.
-         
-         A medium-sized marker in a snapshot is the same size as a large marker in a classic snapshot.
-         */
+        /// A medium-sized marker.
         case medium
         /// A large marker.
         case large
@@ -74,7 +66,7 @@ open class MarkerImage: NSObject {
         /**
          The name of a [Maki](https://labs.mapbox.com/maki-icons/) icon.
          
-         The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+         The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website.
          */
         case iconName(String)
         
@@ -188,7 +180,7 @@ open class Marker: MarkerImage, Point {
      
      The Maki icon set is [open source](https://github.com/mapbox/maki/) and [dedicated to the public domain](https://creativecommons.org/publicdomain/zero/1.0/).
      
-     The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website. The Legacy Static Images API uses Maki v0.5.0. Valid values for classic snapshots are identified by the `icon` values in [this JSON file](https://github.com/mapbox/maki/blob/v0.5.0/_includes/maki.json).
+     The Static Images API uses Maki v4.0.0. See valid values at the [Maki](https://labs.mapbox.com/maki-icons/) website.
      
      - parameter coordinate: The geographic coordinate to place the marker at.
      - parameter size: The size of the marker.

@@ -47,7 +47,7 @@ open class SnapshotCamera: NSObject {
      
      In addition to affecting the visual size and detail of features on the map, the zoom level may affect style properties that depend on the zoom level.
      
-     `SnapshotCamera` zoom levels differ from `ClassicSnapshotOptions` zoom levels. At zoom level 0, the entire world map is 512 points wide and 512 points tall; at zoom level 1, it is 1,024×1,024 points; at zoom level 2, it is 2,048×2,048 points; and so on. When the map is tilted, the zoom level affects the viewing distance from the viewer to the center coordinate.
+     At zoom level 0, the entire world map is 512 points wide and 512 points tall; at zoom level 1, it is 1,024×1,024 points; at zoom level 2, it is 2,048×2,048 points; and so on. When the map is tilted, the zoom level affects the viewing distance from the viewer to the center coordinate.
      
      The zoom level may not be less than 0 or greater than 20. Fractional zoom levels are rounded to two decimal places.
      */
@@ -168,9 +168,7 @@ open class SnapshotCamera: NSObject {
 /**
  A structure that determines what a snapshot depicts and how it is formatted. A static snapshot is made by compositing a [style](https://docs.mapbox.com/help/glossary/style/) with optional overlays using the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). You can use a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design your own custom style using [Mapbox Studio](https://studio.mapbox.com/). You can only snapshot a style hosted by Mapbox.
  
- To generate a static, styled image of a tile set, especially a raster tile set, use a `Classic SnapshotOptions` object.
- 
- The Static Images API always outputs images in true-color Portable Network Graphics (PNG) format. For other image formats, use a `ClassicSnapshotOptions` object.
+ The Static Images API always outputs images in true-color Portable Network Graphics (PNG) format.
  */
 @objc(MBSnapshotOptions)
 open class SnapshotOptions: NSObject, SnapshotOptionsProtocol {

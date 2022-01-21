@@ -5,13 +5,13 @@ import MapboxStatic
 /*:
  # MapboxStatic.swift
  
- MapboxStatic.swift makes it easy to connect your iOS Cocoa Touch application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images) or the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+ MapboxStatic.swift makes it easy to connect your iOS Cocoa Touch application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
  
  A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image view, user notification, or anyplace else you’d like a quick, custom map without the overhead of an interactive view. A static map is created in a single HTTP request. Overlays are added server-side.
  
  ## Usage
  
- You can either generate a _snapshot_ from a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/), or you can generate a _classic snapshot_ from a raw [tile set](https://www.mapbox.com/help/define-tileset/). Using a style gives you more visual options like rotation, while using a tile set gives you a choice of image formats. If you’re working with vector data, you’ll want to use a style; if you’re working with a single raster imagery source, you may want to use a tile set.
+ Use this library to generate a _snapshot_ from a Mapbox-hosted [style](https://www.mapbox.com/help/define-style/). Using a style gives you more visual options like rotation, while using a tile set gives you a choice of image formats. If you’re working with vector data, you’ll want to use a style; if you’re working with a single raster imagery source, you may want to use a tile set.
  
  To generate a snapshot from a style, you’ll need its [style URL](https://www.mapbox.com/help/define-style-url/). You can either choose a [Mapbox-designed style](https://docs.mapbox.com/api/maps/#styles) or design one yourself in [Mapbox Studio](https://www.mapbox.com/studio/styles/). You can use the same style in the Mapbox Maps SDK for iOS.
  
@@ -58,20 +58,6 @@ snapshot.image { (image, error) in
  If you’re using your own HTTP library or routines, you can also retrieve a snapshot’s `url` property.
  */
 snapshot.url
-
-/*:
- To create a basic classic snapshot, create a `ClassicSnapshotOptions` object instead of a `SnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and size in points:
- */
-
-let classicOptions = ClassicSnapshotOptions(
-    tileSetIdentifiers: tileSetIdentifiers,
-    centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoomLevel: 13,
-    size: CGSize(width: 300, height: 200))
-snapshot = Snapshot(
-    options: classicOptions,
-    accessToken: accessToken)
-snapshot.image
 
 /*:
  ## Overlays
@@ -186,24 +172,6 @@ snapshot = Snapshot(
 snapshot.image
 
 /*:
- ### Standalone markers
- 
- Use the `MarkerOptions` class to get a standalone marker image, which can be useful if you’re trying to composite it atop a map yourself.
- */
-let markerOptions = MarkerOptions(
-    size: .medium,
-    iconName: "cafe")
-markerOptions.color = .brown
-snapshot = Snapshot(
-    options: markerOptions,
-    accessToken: accessToken)
-snapshot.image
-
-/*:
- ### File format and quality
- 
- When creating a classic snapshot, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://docs.mapbox.com/api/legacy/static-classic/#retrieve-a-static-map-image).
- 
  ### Attribution
  
  Be sure to [attribute your map](https://www.mapbox.com/help/attribution/) properly in your application. You can also [find out more](https://www.mapbox.com/about/maps/) about where Mapbox’s map data comes from.

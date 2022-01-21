@@ -4,11 +4,13 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxStatic.swift.svg)](http://cocoadocs.org/docsets/MapboxStatic.swift/)
 
-MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images) or the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
+MapboxStatic.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Static Images API](https://docs.mapbox.com/api/maps/#static-images). Quickly generate a map snapshot – a static map image with overlays – by fetching it synchronously or asynchronously over the Web using first-class Swift or Objective-C data types.
 
 A snapshot is a flattened PNG or JPEG image, ideal for use in a table or image view, user notification, sharing service, printed document, or anyplace else you’d like a quick, custom map without the overhead of an interactive view. A static map is created in a single HTTP request. Overlays are added server-side.
 
 MapboxStatic.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxGeocoder.swift](https://github.com/mapbox/MapboxGeocoder.swift), the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/), and the [Mapbox Maps SDK for macOS SDK](https://mapbox.github.io/mapbox-gl-native/macos/). If you’re already using the maps SDK for iOS or macOS for other purposes, consider using an [`MGLMapSnapshotter`](https://docs.mapbox.com/ios/api/maps/5.5.0/Classes/MGLMapSnapshotter.html) object instead of MapboxStatic.swift to produce static images that take advantage of caching and offline packs.
+
+v0.12.0 was the last version of MapboxStatic to support the [Legacy Static Images API](https://docs.mapbox.com/api/legacy/static-classic).
 
 ## System requirements
 
@@ -50,7 +52,7 @@ To install MapboxStatic using the [Swift Package Manager](https://swift.org/pack
 
 Then `import MapboxStatic` or `@import MapboxStatic;`.
 
-This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. To run them, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies. Open the playgrounds inside of MapboxStatic.xcworkspace. More examples are available in the [Mapbox API Documentation](https://docs.mapbox.com/api/legacy/static-classic).
+This repository includes an example iOS application written in Swift, as well as Swift playgrounds for iOS and macOS. To run them, you need to use [Carthage](https://github.com/Carthage/Carthage) 0.19 or above to install the dependencies. Open the playgrounds inside of MapboxStatic.xcworkspace. More examples are available in the [Mapbox API Documentation](https://docs.mapbox.com/api/maps/static-images/).
 
 ## Usage
 
@@ -138,31 +140,6 @@ let imageURL = snapshot.url
 ```objc
 // main.m
 NSURL *imageURL = snapshot.url;
-```
-
-To create a basic classic snapshot, create a `ClassicSnapshotOptions` or `MBClassicSnapshotOptions` object, specifying the center coordinates, [zoom level](https://www.mapbox.com/help/how-web-maps-work/#tiles-and-zoom-levels), and size in points:
-
-```swift
-// main.swift
-let options = ClassicSnapshotOptions(
-    mapIdentifiers: ["<#your map ID#>"],
-    centerCoordinate: CLLocationCoordinate2D(latitude: 45.52, longitude: -122.681944),
-    zoomLevel: 13,
-    size: CGSize(width: 300, height: 200))
-let snapshot = Snapshot(
-    options: options,
-    accessToken: "<#your access token#>")
-imageView.image = snapshot.image
-```
-
-```objc
-// main.m
-MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithMapIdentifiers:@[@"<#your map ID#>"]
-                                                                     centerCoordinate:CLLocationCoordinate2DMake(45.52, -122.681944)
-                                                                            zoomLevel:13
-                                                                                 size:CGSizeMake(200, 200)];
-MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options accessToken:@"<#your access token#>"];
-imageView.image = snapshot.image;
 ```
 
 ### Overlays
@@ -353,44 +330,12 @@ options.overlays = [path, geojsonOverlay, markerOverlay, customMarker]
 ```objc
 // main.m
 NSURL *styleURL = [NSURL URLWithString:@"<#your mapbox: style URL#>"];
-MBSnapshotOptions *options = [[MBClassicSnapshotOptions alloc] initWithStyleURL:styleURL
-                                                                           size:CGSizeMake(500, 300)];
+MBSnapshotOptions *options = [[MBSnapshotOptions alloc] initWithStyleURL:styleURL
+                                                                    size:CGSizeMake(500, 300)];
 options.overlays = @[path, geojsonOverlay, markerOverlay, customMarker];
 ```
 
 <img src="./screenshots/autofit.png" width="500" alt="">
-
-#### Standalone markers
- 
-Use the `MarkerOptions` class to get a standalone marker image, which can be useful if you’re trying to composite it atop a map yourself.
-
-```swift
-// main.swift
-let options = MarkerOptions(
-    size: .medium,
-    iconName: "cafe")
-options.color = .brown
-let snapshot = Snapshot(
-    options: options,
-    accessToken: "<#your access token#>")
-```
-
-```objc
-// main.m
-MBMarkerOptions *options = [[MBMarkerOptions alloc] initWithSize:MBMarkerSizeMedium
-                                                        iconName:@"cafe"];
-#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
-    options.color = [UIColor brownColor];
-#elif TARGET_OS_MAC
-    options.color = [NSColor brownColor];
-#endif
-MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options
-                                               accessToken:@"<#your access token#>"];
-```
-
-#### File format and quality
-
-When creating a classic snapshot, you can also specify PNG or JPEG image format as well as various [bandwidth-saving image qualities](https://docs.mapbox.com/api/legacy/static-classic/#retrieve-a-static-map-image).
 
 #### Attribution
 
