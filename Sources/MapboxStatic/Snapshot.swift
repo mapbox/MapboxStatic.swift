@@ -62,7 +62,18 @@ let userAgent: String = {
     #else
         chip = "unknown"
     #endif
-    components.append("(\(chip))")
+    
+    var simulator: String? = nil
+    #if targetEnvironment(simulator)
+        simulator = "Simulator"
+    #endif
+    
+    let otherComponents = [
+        chip,
+        simulator
+    ].compactMap({ $0 })
+    
+    components.append("(\(otherComponents.joined(separator: "; ")))")
     
     return components.joined(separator: " ")
 }()
