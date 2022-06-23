@@ -19,6 +19,13 @@ step-library:
         command: |
           echo "foo" > ~/.mapbox
 
+  - &update-carthage-version
+      run:
+        name: Update Carthage version
+        command: |
+          curl -OL "https://github.com/Carthage/Carthage/releases/download/0.38.0/Carthage.pkg"
+          sudo installer -pkg Carthage.pkg -target /
+
 jobs:
   SPM-job:
     parameters:
@@ -60,6 +67,7 @@ jobs:
       - checkout
       - *prepare
       - *restore-cache
+      - *update-carthage-version
       - run:
           name: Install prerequisites
           command: |
@@ -67,10 +75,10 @@ jobs:
       - run:
           name: Dependencies
           command: |
-            ./scripts/wcarthage.sh bootstrap --platform ios --cache-builds --configuration Debug --no-use-binaries
-            ./scripts/wcarthage.sh bootstrap --platform tvos --cache-builds --configuration Debug --no-use-binaries
-            ./scripts/wcarthage.sh bootstrap --platform macos --cache-builds --configuration Debug --no-use-binaries
-            ./scripts/wcarthage.sh bootstrap --platform watchos --cache-builds --configuration Debug --no-use-binaries
+            carthage bootstrap --platform ios --cache-builds --configuration Debug --no-use-binaries --use-xcframeworks
+            carthage bootstrap --platform tvos --cache-builds --configuration Debug --no-use-binaries --use-xcframeworks
+            carthage bootstrap --platform macos --cache-builds --configuration Debug --no-use-binaries --use-xcframeworks
+            carthage bootstrap --platform watchos --cache-builds --configuration Debug --no-use-binaries --use-xcframeworks
       - *save-cache
       - run:
           name: iOS

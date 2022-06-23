@@ -39,7 +39,7 @@ static NSString * const AccessToken = @"pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4Z
     options.overlays = @[path];
     MBSnapshot *snapshot = [[MBSnapshot alloc] initWithOptions:options accessToken:AccessToken];
     __weak typeof(self) weakSelf = self;
-    [snapshot imageWithCompletionHandler:^(UIImage * _Nullable image, NSError * _Nullable error) {
+    (void)[snapshot imageWithCompletionHandler:^(UIImage * _Nullable image, NSError * _Nullable error) {
         typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.imageView.image = image;
     }];
