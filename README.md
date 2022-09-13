@@ -20,10 +20,10 @@ v0.12.0 was the last version of MapboxStatic to support the [Legacy Static Image
    * Swift Package Manager 5.3 or above
 * Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
 * One of the following operating systems:
-   * iOS 10.0 or above
-   * macOS 10.12.0 or above
-   * tvOS 10.0 or above
-   * watchOS 3.0 or above
+   * iOS 12.0 or above
+   * macOS 10.14 or above
+   * tvOS 12.0 or above
+   * watchOS 5.0 or above
 
 ## Installation
 
