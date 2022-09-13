@@ -99,7 +99,7 @@ workflows:
       - build-job:
           name: "Xcode_12.5.1"
           xcode: "12.5.1"
-          iOS: "14.0"
+          iOS: "14.5"
           tvOS: "14.0"
           watchOS: "7.0"
       - SPM-job:
