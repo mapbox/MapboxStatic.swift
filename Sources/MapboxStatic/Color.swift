@@ -15,7 +15,7 @@ extension Color {
 
         let color: Color
         #if os(OSX)
-        color = usingColorSpaceName(NSColorSpaceName.calibratedRGB)!
+        color = usingColorSpace(.deviceRGB)!
         #else
             color = self
         #endif
