@@ -101,7 +101,7 @@ workflows:
           xcode: "12.5.1"
           iOS: "14.5"
           tvOS: "14.5"
-          watchOS: "7.0"
+          watchOS: "7.4"
       - SPM-job:
           name: "SPM"
           xcode: "12.5.1"
