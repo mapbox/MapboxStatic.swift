@@ -85,7 +85,7 @@ jobs:
           command: xcodebuild -sdk iphonesimulator -project MapboxStatic.xcodeproj -scheme 'MapboxStatic iOS' -destination 'platform=iOS Simulator,OS=<< parameters.iOS >>,name=<< parameters.device >>' clean build <<# parameters.test >>test<</ parameters.test >>
       - run:
           name: tvOS
-          command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=<< parameters.tvOS >>' clean build <<# parameters.test >>test <</ parameters.test >>
+          command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p) (2nd generation),OS=<< parameters.tvOS >>' clean build <<# parameters.test >>test <</ parameters.test >>
       - run:
           name: macOS
           command: xcodebuild -project MapboxStatic.xcodeproj -scheme 'MapboxStatic Mac' clean build<<# parameters.test >> test <</ parameters.test >>
@@ -100,7 +100,7 @@ workflows:
           name: "Xcode_12.5.1"
           xcode: "12.5.1"
           iOS: "14.5"
-          tvOS: "14.0"
+          tvOS: "14.5"
           watchOS: "7.0"
       - SPM-job:
           name: "SPM"
