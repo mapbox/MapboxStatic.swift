@@ -393,27 +393,10 @@ open class Path: NSObject, Overlay {
 extension JSONSerialization.WritingOptions {
     
     static var sortedIfAvailable: JSONSerialization.WritingOptions {
-        
         #if DEBUG
-        #if os(OSX)
-        if #available(OSX 10.13, *) {
-            return [.sortedKeys]
-        }
-        #elseif os(iOS)
-        if #available(iOS 11.0, *) {
-            return [.sortedKeys]
-        }
-        #elseif os(tvOS)
-        if #available(tvOS 11.0, *) {
-            return [.sortedKeys]
-        }
-        #elseif os(watchOS)
-        if #available(watchOS 4.0, *) {
-            return [.sortedKeys]
-        }
-        #endif
-        #endif
-        
+        return [.sortedKeys]
+        #else
         return []
+        #endif
     }
 }
