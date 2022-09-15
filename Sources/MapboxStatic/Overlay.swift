@@ -395,8 +395,8 @@ extension JSONSerialization.WritingOptions {
     static var sortedIfAvailable: JSONSerialization.WritingOptions {
         #if DEBUG
         return [.sortedKeys]
-        #endif
-        
+        #else
         return []
+        #endif
     }
 }
