@@ -15,10 +15,10 @@ v0.12.0 was the last version of MapboxStatic to support the [Legacy Static Image
 ## System requirements
 
 * One of the following package managers:
-   * CocoaPods (CocoaPods 1.10 or above if using Xcode 12)
+   * CocoaPods 1.10 or above
    * Carthage 0.19 or above (run [this script](https://github.com/mapbox/MapboxStatic.swift/blob/main/scripts/wcarthage.sh) instead of `carthage` if using Xcode 12)
    * Swift Package Manager 5.3 or above
-* Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
+* Xcode 12.0 or above
 * One of the following operating systems:
    * iOS 12.0 or above
    * macOS 10.14 or above
